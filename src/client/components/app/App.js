@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react';
 import { Route, Switch } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import './app.css';
 import RootState from '../../store/RootState';
 import Jobs from '../jobs/Jobs';
 import Application from '../application/Application';

@@ -1,25 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 import { BrowserRouter } from 'react-router-dom';
-import TestState from './store/TestState';
-import App from './components/app/App';
-import { createMuiTheme } from '@material-ui/core';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-
-const store = new TestState();
-store.load();
-
-const theme = createMuiTheme({
-
-});
+import RootState from './store/RootState';
+import ThemeController from './ThemeController';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <App />
-      </MuiThemeProvider>
-    </Provider>
-  </BrowserRouter>, document.getElementById('root')
+  <Fragment>
+    <BrowserRouter>
+      <Provider store={new RootState()}>
+        <ThemeController />
+      </Provider>
+    </BrowserRouter>
+  </Fragment>, document.getElementById('root')
 );

@@ -1,23 +1,30 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TestState from '../../store/TestState';
-import List from '@material-ui/core/es/List/List';
-import ListItem from '@material-ui/core/es/ListItem/ListItem';
-import Avatar from '@material-ui/core/es/Avatar/Avatar';
-import ListItemText from '@material-ui/core/ListItemText/ListItemText';
-import WorkIcon from '@material-ui/icons/Work';
+import {
+  List,
+  ListItem,
+  Avatar,
+  ListItemText
+} from '@material-ui/core';
+import { Work } from '@material-ui/icons';
+import RootState from '../../store/RootState';
 
 @inject('store')
 @observer
 class Jobs extends Component {
+  componentDidMount() {
+    const { store } = this.props;
+    store.fetchJobs();
+  }
+
   render() {
     const { store } = this.props;
-    const jobs = store.jobs.map(job =>
+    const jobs = store.jobs.map(job => (
       <ListItem key={job}>
-        <Avatar><WorkIcon /></Avatar>
+        <Avatar><Work /></Avatar>
         <ListItemText primary={job} secondary={'Location: TBA'}/>
-      </ListItem>);
+      </ListItem>));
     return (
       <List>
         {jobs}
@@ -27,7 +34,7 @@ class Jobs extends Component {
 }
 
 Jobs.wrappedComponent.propTypes = {
-  store: PropTypes.shape({ store: PropTypes.instanceOf(TestState) }).isRequired
+  store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
 };
 
 export default Jobs;

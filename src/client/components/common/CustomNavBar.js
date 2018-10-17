@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { AppBar, IconButton, Toolbar, Typography, withStyles } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import { inject, observer } from 'mobx-react';
@@ -7,8 +7,10 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import RootState from '../../store/RootState';
 
+// Drawer width when extended
 const drawerWidth = 240;
 
+// Component Styles
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -46,21 +48,52 @@ const styles = theme => ({
   },
 });
 
+// Theme names to display
+const themesNames = [
+  'LIGHT - MSC General',
+  'LIGHT - Education / Employment',
+  'LIGHT - Energy',
+  'LIGHT - Food Bank',
+  'LIGHT - Housing',
+  'LIGHT - LTCOP',
+  'DARK - MSC General',
+  'DARK - Education / Employment',
+  'DARK - Energy',
+  'DARK - Food Bank',
+  'DARK - Housing',
+  'DARK - LTCOP',
+];
 
+/**
+ * Top Navbar component
+ */
 @inject('store')
 @observer
 class CustomNavBar extends Component {
+  /**
+   * Increment the theme counter until it ticks over
+   */
   toggleTheme = () => {
     const { store } = this.props;
-    store.paletteType = store.paletteType === 'dark' ? 'light' : 'dark';
+    store.paletteType = (store.paletteType + 1) % 12;
   };
 
+  /**
+   * Open or close the drawer
+   */
   toggleDrawer = () => {
     const { store, useDrawer } = this.props;
     if (useDrawer) {
       store.open = !store.open;
     }
   };
+
+  /**
+   * Get the current theme name
+   * @param id {Number} Current theme
+   * @returns {string} Theme name
+   */
+  getThemeName = id => themesNames[id];
 
   render() {
     const { store, classes, useDrawer } = this.props;
@@ -71,6 +104,7 @@ class CustomNavBar extends Component {
         className={classNames(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar disableGutters={!open}>
+          {/* Show the menu icon if we are using the sidebar drawer */}
           {useDrawer ? (
             <IconButton
               color="inherit"
@@ -82,10 +116,18 @@ class CustomNavBar extends Component {
             </IconButton>
           ) : (<IconButton />)
           }
-          <Typography className={classes.title} variant="title" color="inherit" noWrap>
+
+          {/* Left Navbar */}
+          <Typography variant="title" color="inherit" noWrap>
             Multi-Service Center
           </Typography>
+
           <div className={classes.grow} />
+
+          {/* Right Navbar */}
+          <Typography className={classes.title} variant="title" color="inherit" noWrap>
+            {this.getThemeName(store.paletteType)}
+          </Typography>
           <div className={classes.flex}>
             <IconButton color="inherit" onClick={this.toggleTheme}>
               <Edit />
@@ -97,14 +139,17 @@ class CustomNavBar extends Component {
   }
 }
 
+// Tell React to use default properties if not provided
 CustomNavBar.defaultProps = {
   useDrawer: false,
 };
 
+// Tell React what properties to expect
 CustomNavBar.propTypes = {
   useDrawer: PropTypes.bool,
 };
 
+// Tell React that these properties are provided
 CustomNavBar.wrappedComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired

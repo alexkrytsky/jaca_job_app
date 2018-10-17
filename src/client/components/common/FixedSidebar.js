@@ -83,7 +83,7 @@ class FixedSidebar extends Component {
             <ListItemIcon><Dashboard /></ListItemIcon>
             <ListItemText inset primary="Dashboard" />
           </ListItem>
-          <ListItem button component={AppLink}>
+          <ListItem button component={AppLink} onClick={store.application.reset()}>
             <ListItemIcon><Assignment /></ListItemIcon>
             <ListItemText inset primary="Application" />
           </ListItem>

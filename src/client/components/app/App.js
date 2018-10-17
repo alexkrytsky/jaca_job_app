@@ -8,7 +8,9 @@ import Jobs from '../jobs/Jobs';
 import Application from '../application/Application';
 import Dashboard from '../dashboard/Dashboard';
 
-// Component Creation
+/**
+ * Main Component, defines url based routes
+ */
 @inject('store')
 @observer
 class App extends Component {
@@ -25,7 +27,7 @@ class App extends Component {
   }
 }
 
-// Properties to be passed in by Providers
+// Tell React that these properties are provided
 App.wrappedComponent.propTypes = {
   store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
 };

@@ -8,11 +8,13 @@ import Submit from './Submit';
 import VoluntarySurvey from './VoluntarySurvey';
 
 
-export { Education };
-export { EmploymentDesired };
-export { EmploymentHistory };
-export { GeneralInfo };
-export { References };
-export { SpecialSkills };
-export { Submit };
-export { VoluntarySurvey };
+export {
+  Education,
+  EmploymentDesired,
+  EmploymentHistory,
+  GeneralInfo,
+  References,
+  SpecialSkills,
+  Submit,
+  VoluntarySurvey
+};

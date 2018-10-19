@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import {
-  Drawer,
-  List,
   Divider,
+  Drawer,
   IconButton,
+  List,
   ListItem,
   ListItemIcon,
   ListItemText,
   withStyles
 } from '@material-ui/core';
-import { ChevronRight, ChevronLeft, Dashboard, Assignment, List as ListIcon } from '@material-ui/icons';
+import {
+  Assignment,
+  ChevronLeft,
+  ChevronRight,
+  Dashboard,
+  List as ListIcon
+} from '@material-ui/icons';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -56,14 +62,9 @@ const Jobs = props => <Link to="/jobs" {...props} />;
 @inject('store')
 @observer
 class FixedSidebar extends Component {
-  toggleDrawer = () => {
-    const { store } = this.props;
-    store.open = !store.open;
-  };
-
   render() {
     const { store, classes, theme } = this.props;
-    const { open } = store;
+    const { open, toggleDrawer } = store;
     return (
       <Drawer
         variant="permanent"
@@ -73,7 +74,7 @@ class FixedSidebar extends Component {
         open={open}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={this.toggleDrawer}>
+          <IconButton onClick={toggleDrawer}>
             {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
           </IconButton>
         </div>

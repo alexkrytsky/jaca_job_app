@@ -1,12 +1,19 @@
+import React from 'react';
 import { action, observable } from 'mobx';
 import ValidatedField from './ValidatedField';
 import Field from './Field';
 import { phoneNumberRegex } from '../../constants/GeneralRegex';
+import EmploymentHistory from '../../components/application/pages/EmploymentHistory';
+import FormState from './FormState';
 
 /**
  * The State for the Employment History Form
  */
-export default class EmploymentHistoryState {
+export default class EmploymentHistoryState extends FormState {
+  constructor() {
+    super('Employment History', <EmploymentHistory />, 'Errors Remaining to save.');
+  }
+
   idCounter = 0;
 
   // Array of entries
@@ -16,7 +23,7 @@ export default class EmploymentHistoryState {
 
   @observable address = new ValidatedField('');
 
-  @observable contactNumber = new ValidatedField('', s => phoneNumberRegex.test(s));
+  @observable contactNumber = new ValidatedField('', s => !phoneNumberRegex.test(s));
 
   @observable position = new ValidatedField('');
 
@@ -33,43 +40,6 @@ export default class EmploymentHistoryState {
   @observable description = new ValidatedField('');
 
   @observable contactPermission = new Field(false);
-
-  /**
-   * Set all validated fields to a set changed state
-   *
-   * @param to {boolean} value to change to
-   */
-  setAllChangedState(to) {
-    this.employer.changed = to;
-    this.address.changed = to;
-    this.contactNumber.changed = to;
-    this.position.changed = to;
-    this.startDate.changed = to;
-    this.endDate.changed = to;
-    this.supervisorName.changed = to;
-    this.supervisorTitle.changed = to;
-    this.reasonLeft.changed = to;
-    this.description.changed = to;
-  }
-
-  /**
-   * Validate the fields
-   *
-   * @returns {boolean} true if the form is incomplete
-   */
-  @action validateFields = () => {
-    this.setAllChangedState(true);
-    return this.employer.validation
-      || this.address.validation
-      || this.contactNumber.validation
-      || this.position.validation
-      || this.startDate.validation
-      || this.endDate.validation
-      || this.supervisorName.validation
-      || this.supervisorTitle.validation
-      || this.reasonLeft.validation
-      || this.description.validation;
-  };
 
   /**
    * Save the entry and clears the form
@@ -101,30 +71,9 @@ export default class EmploymentHistoryState {
     // Increment the id counter
     this.idCounter += 1;
 
-    this.clear();
+    this.reset();
 
     return true;
-  };
-
-  /**
-   * Clear the form
-   */
-  @action clear = () => {
-    // Reset fields to empty
-    this.employer.update('');
-    this.address.update('');
-    this.contactNumber.update('');
-    this.position.update('');
-    this.startDate.update('');
-    this.endDate.update('');
-    this.supervisorName.update('');
-    this.supervisorTitle.update('');
-    this.reasonLeft.update('');
-    this.description.update('');
-    this.contactPermission.update(false);
-
-    // Clear all the change state
-    this.setAllChangedState(false);
   };
 
   /**

@@ -1,7 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
-import { Button, Checkbox, Collapse, FormControlLabel, Grid, withStyles } from '@material-ui/core';
+import {
+  Button,
+  Checkbox,
+  Collapse,
+  FormControlLabel,
+  Grid,
+  withStyles
+} from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import RootState from '../../../store/RootState';
@@ -38,7 +45,7 @@ class EmploymentHistory extends Component {
   closeForm = () => {
     this.setState({ adding: false });
     const { store } = this.props;
-    store.application.employmentHistory.clear();
+    store.application.employmentHistory.reset();
   };
 
   render() {
@@ -83,42 +90,20 @@ class EmploymentHistory extends Component {
         <Collapse in={adding}>
           <Grid container spacing={24}>
             <Grid item xs={12} sm={6}>
-              <ValidatedTextField
-                state={employer}
-                id="employer"
-                name="employer"
-                label="Employer"
-              />
+              <ValidatedTextField state={employer} label="Employer" />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ValidatedTextField
-                state={address}
-                id="address"
-                name="address"
-                label="Address"
-              />
+              <ValidatedTextField state={address} label="Address" />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ValidatedTextField
-                state={contactNumber}
-                id="contactNumber"
-                name="contactNumber"
-                label="Contact Number"
-              />
+              <ValidatedTextField state={contactNumber} label="Contact Number" />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ValidatedTextField
-                state={position}
-                id="position"
-                name="position"
-                label="Position"
-              />
+              <ValidatedTextField state={position} label="Position" />
             </Grid>
             <Grid item xs={12} sm={6}>
               <ValidatedTextField
                 state={startDate}
-                id="startDate"
-                name="startDate"
                 label="Start Date"
                 type="date"
                 InputLabelProps={{ shrink: true }}
@@ -127,36 +112,19 @@ class EmploymentHistory extends Component {
             <Grid item xs={12} sm={6}>
               <ValidatedTextField
                 state={endDate}
-                id="endDate"
-                name="endDate"
                 label="End Date"
                 type="date"
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ValidatedTextField
-                state={supervisorName}
-                id="supervisorName"
-                name="supervisorName"
-                label="Supervisor Name"
-              />
+              <ValidatedTextField state={supervisorName} label="Supervisor Name" />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ValidatedTextField
-                state={supervisorTitle}
-                id="supervisorTitle"
-                name="supervisorTitle"
-                label="Supervisor Title"
-              />
+              <ValidatedTextField state={supervisorTitle} label="Supervisor Title" />
             </Grid>
             <Grid item xs={12}>
-              <ValidatedTextField
-                state={reasonLeft}
-                id="reasonLeft"
-                name="reasonLeft"
-                label="Reason for Leaving"
-              />
+              <ValidatedTextField state={reasonLeft} label="Reason for Leaving" />
             </Grid>
             <Grid item xs={12}>
               <ValidatedTextField
@@ -165,41 +133,31 @@ class EmploymentHistory extends Component {
                 rowsMax="4"
                 margin="normal"
                 helperText="Description"
-                id="description"
-                name="description"
                 label="Description of work"
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
+                className={classes.formControlLabel}
+                label="Check if you authorize us to contact your previous employer."
                 control={(
                   <Checkbox
                     color="secondary"
-                    name="contactPermission"
                     value="true"
                     checked={contactPermission.value}
                     onChange={event => contactPermission.update(event.target.checked)}
                   />
                 )}
-                label="Check if you authorize us to contact your previous employer."
-                className={classes.formControlLabel}
               />
             </Grid>
             <Grid item xs={12}>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => {
-                  if (save()) {
-                    this.closeForm();
-                  }
-                }}
+                onClick={() => save() && this.closeForm()}
               >Save
               </Button>
-              <Button
-                onClick={this.closeForm}
-              >Cancel
-              </Button>
+              <Button onClick={this.closeForm}>Cancel</Button>
             </Grid>
           </Grid>
         </Collapse>
@@ -211,7 +169,7 @@ class EmploymentHistory extends Component {
 // Tell React that these properties are provided
 EmploymentHistory.wrappedComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  store: PropTypes.instanceOf(RootState).isRequired
+  store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
 };
 
 export default withStyles(styles)(withRouter(EmploymentHistory));

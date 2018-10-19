@@ -10,6 +10,7 @@ export default class Field {
    * @param defaultValue {*} Default value to use
    */
   constructor(defaultValue = '') {
+    this.initialValue = defaultValue;
     this.value = defaultValue;
   }
 
@@ -20,5 +21,9 @@ export default class Field {
    */
   @action update(value) {
     this.value = value;
+  }
+
+  @action reset() {
+    this.value = this.initialValue;
   }
 }

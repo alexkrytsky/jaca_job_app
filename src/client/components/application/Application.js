@@ -14,16 +14,6 @@ import { withRouter } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import RootState from '../../store/RootState';
-import {
-  GeneralInfo,
-  EmploymentDesired,
-  EmploymentHistory,
-  Education,
-  SpecialSkills,
-  References,
-  VoluntarySurvey,
-  Submit
-} from './pages';
 import Success from './Success';
 import CustomNavBar from '../common/CustomNavBar';
 
@@ -81,46 +71,6 @@ const styles = theme => ({
   }
 });
 
-// Steps Titles to show in the stepper
-const steps = [
-  'General Information',
-  'Employment Desired',
-  'Education',
-  'Special Skills',
-  'Employment History',
-  'References',
-  'Voluntary Survey',
-  'Submit'
-];
-
-/**
- * Get the component for the related step
- * @param step {Number} current step
- * @returns {Component}
- */
-const getStepComponent = (step) => {
-  switch (step) {
-    case 0:
-      return <GeneralInfo />;
-    case 1:
-      return <EmploymentDesired />;
-    case 2:
-      return <Education />;
-    case 3:
-      return <SpecialSkills />;
-    case 4:
-      return <EmploymentHistory />;
-    case 5:
-      return <References />;
-    case 6:
-      return <VoluntarySurvey />;
-    case 7:
-      return <Submit />;
-    default:
-      throw new Error('Unknown Step');
-  }
-};
-
 /**
  * Job Application Component
  */
@@ -135,7 +85,13 @@ class Application extends Component {
 
   render() {
     const { store, classes } = this.props;
-    const { step, formBack, formNext } = store.application;
+    const {
+      step,
+      listOfSteps,
+      backStep,
+      nextStep,
+      setStep
+    } = store.application;
     return (
       <Fragment>
         <CssBaseline />
@@ -148,25 +104,38 @@ class Application extends Component {
                 Job Application Process
               </Typography>
               <Fragment>
-                {step === steps.length ? (
+                {step === listOfSteps.length ? (
                   <Fragment>
                     <Success />
                   </Fragment>
                 ) : (
                   <Fragment>
                     <Stepper activeStep={step} orientation="vertical" className={classes.stepper}>
-                      {steps.map((label, index) => (
-                        <Step key={label}>
-                          <StepLabel>
-                            <Typography variant="title">{label}</Typography>
+                      {listOfSteps.map((section, index) => (
+                        <Step key={section.label}>
+                          <StepLabel
+                            error={section.error}
+                            optional={section.error && (
+                              <Typography
+                                variant="caption"
+                                color="error"
+                              >{section.errorMessage}
+                              </Typography>
+                            )}
+                          >
+                            <Typography
+                              variant="title"
+                              onClick={() => setStep(index)}
+                            >{section.label}
+                            </Typography>
                           </StepLabel>
                           <StepContent>
                             <div className={classes.padding}>
-                              {getStepComponent(index)}
+                              {section.component}
                               <div className={classes.buttons}>
                                 {step !== 0 && (
                                   <Button
-                                    onClick={formBack}
+                                    onClick={backStep}
                                     className={classes.button}
                                   >Back
                                   </Button>
@@ -174,10 +143,10 @@ class Application extends Component {
                                 <Button
                                   variant="contained"
                                   color="primary"
-                                  onClick={formNext}
+                                  onClick={nextStep}
                                   className={classes.button}
                                 >
-                                  {step === steps.length - 1 ? 'Submit' : 'Next'}
+                                  {step === listOfSteps.length - 1 ? 'Submit' : 'Next'}
                                 </Button>
                               </div>
                             </div>

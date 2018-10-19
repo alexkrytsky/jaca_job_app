@@ -41,6 +41,14 @@ export default class RootState {
   // Authentication State
   @observable authentication = new Authentication();
 
+  @action toggleDrawer = () => {
+    this.open = !this.open;
+  };
+
+  @action closeDrawer = () => {
+    this.open = false;
+  };
+
   /**
    * Fetch jobs from the backend
    */

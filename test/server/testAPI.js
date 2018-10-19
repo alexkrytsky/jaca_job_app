@@ -1,5 +1,5 @@
 const assert = require('assert');
-const user = require('../src/server/user.js');
+const user = require('../../src/server/user.js');
 
 describe('API Functions', () => {
   describe('getUsername', () => {

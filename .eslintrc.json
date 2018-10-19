@@ -5,13 +5,15 @@
     "browser": true,
     "node": true,
     "mocha": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "rules": {
     "no-console": "off",
     "comma-dangle": "off",
-    "react/jsx-filename-extension": "off",
     "linebreak-style": "off",
+    "no-param-reassign": "off",
+    "react/jsx-filename-extension": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/forbid-prop-types": "off"
   }

@@ -84,7 +84,7 @@ class CustomNavBar extends Component {
   toggleDrawer = () => {
     const { store, useDrawer } = this.props;
     if (useDrawer) {
-      store.open = !store.open;
+      store.toggleDrawer();
     }
   };
 

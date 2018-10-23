@@ -48,6 +48,7 @@ class EmploymentDesired extends Component {
         }=store.application.employmentDesired;
         return (
             <Fragment>
+           
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={4}>
                         <ValidatedTextField

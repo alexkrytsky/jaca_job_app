@@ -64,7 +64,7 @@ export default class ApplicationState {
       case 0:
         return !this.generalInfo.validateFields();
       case 1:
-        return true;
+        return !this.employmentDesired.validateFields();
       case 2:
         return true;
       case 3:

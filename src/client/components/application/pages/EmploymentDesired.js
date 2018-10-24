@@ -50,7 +50,7 @@ class EmploymentDesired extends Component {
             <Fragment>
            
                 <Grid container spacing={24}>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} >
                         <ValidatedTextField
                             state={employmentDesired}
                             id="employmentDesired"
@@ -58,7 +58,7 @@ class EmploymentDesired extends Component {
                             label="Employment Desired"
                         />
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} >
                         <ValidatedTextField
                             state={startDate}
                             id="startDate"
@@ -66,7 +66,7 @@ class EmploymentDesired extends Component {
                             label="Start Date"
                         />
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} >
                         <ValidatedTextField
                             state={salaryExpectations}
                             id="salaryExpectations"
@@ -74,7 +74,7 @@ class EmploymentDesired extends Component {
                             label="Salary Expectations"
                         />
                     </Grid>
-                    <Grid item xs={24} sm={4}>
+                    <Grid item xs={12}>
                         <FormControlLabel
                             control={(
                                 <Checkbox
@@ -89,7 +89,7 @@ class EmploymentDesired extends Component {
                             className={classes.formControlLabel}
                         />
                     </Grid>
-                    <Grid item xs={24} sm={24}>
+                    <Grid item xs={12} >
                         <FormControlLabel
                             control={(
                                 <Checkbox

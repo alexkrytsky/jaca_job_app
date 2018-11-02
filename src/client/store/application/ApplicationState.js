@@ -7,6 +7,7 @@ import ReferencesState from './ReferencesState';
 import VoluntarySurveyState from './VoluntarySurveyState';
 import SubmitState from './SubmitState';
 import EducationState from './EducationState';
+import ResumeUploadState from './ResumeUploadState'
 
 export default class ApplicationState {
   @observable step = 0;
@@ -24,6 +25,7 @@ export default class ApplicationState {
   @observable references = new ReferencesState();
 
   @observable voluntarySurvey = new VoluntarySurveyState();
+  @observable resumeUpload = new ResumeUploadState();
 
   @observable submit = new SubmitState();
 
@@ -35,12 +37,13 @@ export default class ApplicationState {
     this.employmentHistory,
     this.references,
     this.voluntarySurvey,
+    this.resumeUpload,
     this.submit
   ];
 
   @action reset = () => {
     this.listOfSteps.forEach(value => value.reset());
-    this.step = 0;
+    this.step = 8;
   };
 
   @action setStep = (step) => {
@@ -77,6 +80,8 @@ export default class ApplicationState {
         return true;
       case 7:
         return true;
+        case 8:
+          return true;
       default:
         throw new Error('No Verification Available');
     }

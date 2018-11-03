@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RootState from '../../../store/RootState';
-import Dropzone from 'react-dropzone';
+import DropZone from 'react-dropzone';
 const styles = () => ({
     root: {}
 });
@@ -13,12 +13,13 @@ const styles = () => ({
 class ResumeUpload extends Component{
     render(){
         const { store, classes } = this.props;
+        const file=store.application.resumeUpload;
         return(
         <Fragment>
           Resume Upload
-            <Dropzone onDrop={(file) => this.onDrop(file)}>
+            <DropZone>
                 <div>Try dropping some files here, or click to select files to upload.</div>
-            </Dropzone>
+            </DropZone>
         </Fragment>
         );
     }

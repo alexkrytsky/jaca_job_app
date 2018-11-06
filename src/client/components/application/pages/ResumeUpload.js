@@ -32,7 +32,7 @@ class ResumeUpload extends Component{
 
         <Fragment>
             <Grid container spacing={24}>
-              Resume Upload
+             
                 <DropZone  onDrop={this.onDrop.bind(this)}
                 >
                     <div>Try dropping some files here, or click to select files to upload.</div>

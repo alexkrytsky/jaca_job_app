@@ -43,7 +43,7 @@ export default class ApplicationState {
 
   @action reset = () => {
     this.listOfSteps.forEach(value => value.reset());
-    this.step = 8;
+    this.step = 0;
   };
 
   @action setStep = (step) => {

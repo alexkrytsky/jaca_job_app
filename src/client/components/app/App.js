@@ -27,7 +27,6 @@ const styles = theme => ({
   content: {
     marginTop: '64px',
     flexGrow: 1,
-    padding: theme.spacing.unit,
   },
   bannerImage: {
     position: 'absolute',

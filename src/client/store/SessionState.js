@@ -9,12 +9,7 @@ export default class SessionState extends BaseState {
   // List of available jobs
   @observable jobs = ['Loading... please wait!'];
 
-  @observable apps = [{
-    key: { id: 0 },
-    firstName: 'Loading...',
-    lastName: 'please wait!',
-    email: '...'
-  }];
+  @observable apps = [];
 
   @observable identity = {
     generalInfo: {},

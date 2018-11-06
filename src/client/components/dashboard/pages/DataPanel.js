@@ -14,25 +14,15 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 
 const styles = theme => ({
+  layout: {
+    width: 'auto',
+    height: '100%',
+    overflow: 'auto',
+  },
   row: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default,
     },
-  },
-  padding: {
-    paddingRight: theme.spacing.unit * 3,
-  },
-  expansionPanelDetails: {
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-  },
-  table: {
-    overflowX: 'auto'
-  },
-  paper: {
-    width: '100%',
-    ...theme.mixins.gutters(),
   }
 });
 
@@ -81,9 +71,8 @@ class DataPanel extends Component {
           .filter(value1 => value1 !== 'id');
 
         return (
-          <Fragment key={i}>
-            <br />
-            <Paper className={classes.table}>
+          <Grid key={i} container spacing={24}>
+            <Grid item xs={12}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -93,14 +82,15 @@ class DataPanel extends Component {
                 <TableBody>
                   {value.map((values, j) => (
                     <TableRow key={j} className={classes.row}>
-                      {keys.map((key, k) => <TableCell
-                        key={k}>{values[key].toString()}</TableCell>)}
+                      {keys.map((key, k) => (
+                        <TableCell key={k}>{values[key].toString()}</TableCell>
+                      ))}
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-            </Paper>
-          </Fragment>
+            </Grid>
+          </Grid>
         );
       }
       return (
@@ -109,24 +99,28 @@ class DataPanel extends Component {
     });
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <Typography variant="title">{title}</Typography>
-          <Typography variant="subheading">{subTitle}</Typography>
+      <div className={classes.layout}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Typography variant="title">{title}</Typography>
+            <Typography variant="subheading">{subTitle}</Typography>
+          </Grid>
+          <Grid item xs={12} container spacing={24}>
+            {basic.length > 0 ? (
+              <Grid item xs={12}>
+                <Table>
+                  <TableBody>
+                    {basic}
+                  </TableBody>
+                </Table>
+              </Grid>
+            ) : (<Fragment />)}
+          </Grid>
+          <Grid item xs={12}>
+            {objMap}
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          {basic.length > 0 && (
-            <Paper>
-              <Table>
-                <TableBody>
-                  {basic}
-                </TableBody>
-              </Table>
-            </Paper>
-          )}
-          {objMap}
-        </Grid>
-      </Grid>
+      </div>
     );
   }
 }

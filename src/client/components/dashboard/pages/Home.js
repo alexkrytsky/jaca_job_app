@@ -25,9 +25,11 @@ const topOffset = 60;
 const styles = theme => ({
   layout: {
     width: 'auto',
+    height: '100%',
+    overflowY: 'auto',
     paddingTop: `${topOffset}px`,
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2
   },
 });
 

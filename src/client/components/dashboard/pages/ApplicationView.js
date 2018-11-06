@@ -23,8 +23,8 @@ const styles = theme => ({
   layout: {
     width: 'auto',
     paddingTop: `${topOffset}px`,
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2
   },
   paper: {
     padding: '5px 10px'
@@ -81,28 +81,6 @@ class ApplicationView extends Component {
         ),
       },
       {
-        label: 'Special Skills',
-        subLabel: 'Skills, Certifications, etc...',
-        component: (
-          <DataPanel
-            title="Special Skills"
-            subTitle="Skills, Certifications, etc..."
-            data={specialSkills}
-          />
-        ),
-      },
-      {
-        label: 'References',
-        subLabel: 'Co-workers, Bosses, etc...',
-        component: (
-          <DataPanel
-            title="References"
-            subTitle="Co-workers, Bosses, etc..."
-            data={references}
-          />
-        ),
-      },
-      {
         label: 'Employment Desired',
         subLabel: 'Start date, availability, etc...',
         component: (
@@ -125,6 +103,17 @@ class ApplicationView extends Component {
         )
       },
       {
+        label: 'Special Skills',
+        subLabel: 'Skills, Certifications, etc...',
+        component: (
+          <DataPanel
+            title="Special Skills"
+            subTitle="Skills, Certifications, etc..."
+            data={specialSkills}
+          />
+        ),
+      },
+      {
         label: 'Employment History',
         subLabel: 'Previous Employer contact, etc...',
         component: (
@@ -132,6 +121,17 @@ class ApplicationView extends Component {
             title="Employment History"
             subTitle="Previous Employer contact, etc..."
             data={employmentHistory}
+          />
+        ),
+      },
+      {
+        label: 'References',
+        subLabel: 'Co-workers, Bosses, etc...',
+        component: (
+          <DataPanel
+            title="References"
+            subTitle="Co-workers, Bosses, etc..."
+            data={references}
           />
         ),
       }
@@ -160,26 +160,23 @@ class ApplicationView extends Component {
                   >Submitted: {new Date(identity.created).toLocaleDateString()}
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12}>
-                  <Hidden smDown>
-                    <List component="nav" dense>
-                      {sections.map((value, index) => (
-                        <ListItem
-                          key={index}
-                          button
-                          selected={selectedIndex === index}
-                          onClick={event => this.handleListItemClick(event, index)}
-                        >
-                          <ListItemText primary={value.label} secondary={value.subLabel} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Hidden>
-                </Grid>
               </Grid>
+            </Paper>
+            <Paper>
+              <Hidden smDown>
+                <List component="nav" dense>
+                  {sections.map((value, index) => (
+                    <ListItem
+                      key={index}
+                      button
+                      selected={selectedIndex === index}
+                      onClick={event => this.handleListItemClick(event, index)}
+                    >
+                      <ListItemText primary={value.label} secondary={value.subLabel} />
+                    </ListItem>
+                  ))}
+                </List>
+              </Hidden>
             </Paper>
           </Grid>
           <Grid item xs={12} md={9} className={classes.main}>
@@ -192,10 +189,9 @@ class ApplicationView extends Component {
 }
 
 ApplicationView.wrappedComponent.propTypes = {
-  width: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
 };
 
-export default withStyles(styles)(withWidth()(withRouter(ApplicationView)));
+export default withStyles(styles)(withRouter(ApplicationView));

@@ -1,45 +1,27 @@
 import { action, observable } from 'mobx';
+import axios from 'axios';
 import ApplicationState from './application/ApplicationState';
-
-/**
- * Authentication State
- */
-export class Authentication {
-  // Whether the user is logged in to the system
-  @observable loggedIn = false;
-
-  // The users email
-  @observable email = '';
-
-  // The users username
-  @observable userName = '';
-
-  /**
-   * Fetch the username of the user
-   */
-  @action fetchUsername = (auth) => {
-    // Login on the server
-  };
-}
+import AuthenticationState from './auth/AuthenticationState';
+import LocalState from './LocalState';
+import SessionState from './SessionState';
 
 /**
  * Default state of the site
  */
 export default class RootState {
-  // List of available jobs
-  @observable jobs = ['Loading... please wait!'];
-
-  // Theme to use
-  @observable paletteType = 1;
-
   // Whether the sidebar is open or not
   @observable open = false;
 
   // Application State
-  @observable application = new ApplicationState();
+  @observable application = new ApplicationState(this);
 
   // Authentication State
-  @observable authentication = new Authentication();
+  @observable authentication = new AuthenticationState(this);
+
+  // Persistent State
+  @observable local = new LocalState(this);
+
+  @observable session = new SessionState(this);
 
   @action toggleDrawer = () => {
     this.open = !this.open;
@@ -53,10 +35,24 @@ export default class RootState {
    * Fetch jobs from the backend
    */
   @action fetchJobs = () => {
-    fetch('/api/jobs')
-      .then(res => res.json())
-      .then((res) => {
-        this.jobs.replace(res.jobs);
-      });
+    return new Promise((resolve => {
+      fetch('/api/jobs')
+        .then(res => res.json())
+        .then((res) => {
+          this.session.jobs.replace(res.jobs);
+          resolve();
+        });
+    }));
   };
+
+  @action fetchApps() {
+    return new Promise((resolve) => {
+      axios.get('/api/identities')
+        .then((response) => {
+          this.session.apps.replace(response.data);
+          this.session.identity = this.session.apps[0];
+          resolve();
+        });
+    });
+  }
 }

@@ -2,7 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import {
-  Button, Collapse, Grid, withStyles,
+  Button,
+  Collapse,
+  Grid,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  Radio,
+  withStyles,
 } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -10,11 +17,6 @@ import RootState from '../../../store/RootState';
 import ValidatedTextField from './components/ValidatedTextField';
 import ValidatedRadioGroup from './components/ValidatedRadioGroup';
 import EducationTable from './components/EducationTable';
-import FormControl from '@material-ui/core/FormControl/FormControl';
-import FormLabel from '@material-ui/core/FormLabel/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
-import Radio from '@material-ui/core/Radio/Radio';
-import Typography from '@material-ui/core/Typography/Typography';
 
 
 // Component Styles
@@ -27,18 +29,10 @@ const styles = theme => ({
 @inject('store')
 @observer
 class Education extends Component {
-
   state = {
     adding: false,
   };
 
-  handleChangeSchoolType = event => {
-    this.setState({ school: event.target.value });
-  };
-
-  handleChangeGraduate = event => {
-    this.setState({ graduate: event.target.value });
-  };
   /**
    * Open the form
    */
@@ -60,15 +54,14 @@ class Education extends Component {
     const { store, classes } = this.props;
     const {
       school,
-      educationLevel: educationLevel,
-      schoolName: schoolName,
-      schoolLocation: schoolLocation,
-      yearsCompleted: yearsCompleted,
-      graduate: graduate,
-      diploma: diploma,
+      educationLevel,
+      schoolName,
+      schoolLocation,
+      yearsCompleted,
+      graduate,
+      diploma,
       save,
     } = store.application.education;
-
 
 
     return (
@@ -77,7 +70,7 @@ class Education extends Component {
           <Grid container spacing={24}>
             {school.length > 0 && (
               <Grid item xs={12}>
-                <EducationTable/>
+                <EducationTable />
               </Grid>
             )}
             <Grid item xs={12}>
@@ -86,7 +79,7 @@ class Education extends Component {
                 color="secondary"
                 onClick={this.openForm}
               >
-                <Add/> Add School
+                <Add /> Add School
               </Button>
             </Grid>
           </Grid>
@@ -100,22 +93,27 @@ class Education extends Component {
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel component="legend">Choose Education Level</FormLabel>
                 <ValidatedRadioGroup
-                  style={{ display: 'flex', flexDirection: 'row' }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row'
+                  }}
                   aria-label="schoolType"
-                  name="schoolType"
                   className={classes.group}
-                  value={this.state.school}
-                  onChange={this.handleChangeSchoolType}
-                  state={educationLevel}>
+                  state={educationLevel}
+                >
                   <FormControlLabel
                     value="High School"
-                    control={<Radio/>}
+                    control={<Radio />}
                     label="High School"
                   />
-                  <FormControlLabel value="College" control={<Radio/>} label="College"/>
+                  <FormControlLabel
+                    value="College"
+                    control={<Radio />}
+                    label="College"
+                  />
                   <FormControlLabel
                     value="Graduate School"
-                    control={<Radio/>}
+                    control={<Radio />}
                     label="Graduate School"
                   />
                 </ValidatedRadioGroup>
@@ -127,8 +125,6 @@ class Education extends Component {
             <Grid item xs={12} sm={12}>
               <ValidatedTextField
                 state={schoolName}
-                id="schoolName"
-                name="schoolName"
                 label="School Name"
               />
             </Grid>
@@ -138,8 +134,6 @@ class Education extends Component {
             <Grid item xs={12} sm={12}>
               <ValidatedTextField
                 state={schoolLocation}
-                id="schoolLocation"
-                name="schoolLocation"
                 label="School Location"
               />
             </Grid>
@@ -150,8 +144,6 @@ class Education extends Component {
             <Grid item xs={12} sm={12}>
               <ValidatedTextField
                 state={yearsCompleted}
-                id="yearsCompleted"
-                name="schoolLocation"
                 label="Years Completed"
                 type="number"
               />
@@ -164,13 +156,14 @@ class Education extends Component {
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel component="legend">Did you graduate?</FormLabel>
                 <ValidatedRadioGroup
-                  style={{ display: 'flex', flexDirection: 'row' }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row'
+                  }}
                   aria-label="Graduate"
-                  name="Graduate"
                   className={classes.group}
-                  value={this.state.graduate}
-                  onChange={this.handleChangeGraduate}
-                  state={graduate}>
+                  state={graduate}
+                >
                   <FormControlLabel value="yes" control={<Radio />} label="yes" />
                   <FormControlLabel value="no" control={<Radio />} label="no" />
                 </ValidatedRadioGroup>

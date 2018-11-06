@@ -1,8 +1,12 @@
 const express = require('express');
 const session = require('express-session');
+const bodyParser = require('body-parser');
 const path = require('path');
-const user = require('./user.js');
 const { ApplicationSession } = require('./session/ApplicationSession');
+const Store = require('./datastore/Store');
+const Identity = require('./datastore/Kinds/Identity');
+const Authentication = require('./routers/Authentication');
+const Application = require('./routers/Application');
 
 const app = express();
 
@@ -43,11 +47,32 @@ const sessionManager = (req, res, next) => {
 // bundled files
 app.use(sessionManager);
 app.use(logger);
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static('dist'));
 
+// Routers
+app.use('/api/auth', Authentication);
+app.use('/api/app', Application);
+
 // API paths
-app.get('/api/getUsername', (req, res) => res.send({ username: user.getUsername() }));
 app.get('/api/jobs', (req, res) => res.send({ jobs }));
+
+app.get('/api/identities', (req, res) => {
+  Identity.queryAll()
+    .then((list) => {
+      res.send(list);
+    });
+});
+
+app.get('/api/identities/:id', (req, res) => {
+  const key = Store.key(['Identity', Number.parseInt(req.params.id, 10)]);
+  console.log(key);
+  Identity.query(key)
+    .then((identity) => {
+      res.send(identity);
+    });
+});
 
 // All other routes should redirect to index
 app.get('/*', (req, res) => {

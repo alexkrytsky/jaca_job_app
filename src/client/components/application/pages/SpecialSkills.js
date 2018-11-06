@@ -53,42 +53,18 @@ class SpecialSkills extends Component {
 
     return (
       <Fragment>
-        <Grid item xs={12}>
-          <Typography variant="subheading">
-            Skills:
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-           <TextField
-            state={description}
-            multiline
-            rowsMax="4"
-            margin="normal"
-            helperText="Description"
-            id="description"
-            name="description"
-            label="Description of skills"
-          />
-
-         {/* <ValidatedTextField
-            state={description}
-            multiline
-            rowsMax="4"
-            margin="normal"
-            helperText="Description"
-            id="description"
-            name="description"
-            label="Description of skills"
-          />*/}
-        </Grid>
-
-        <Grid item xs={12}>
-          <Typography variant="subheading">
-            Certifications
-          </Typography>
-        </Grid>
-
         <Collapse in={!adding}>
+          <Grid item xs={12}>
+            <ValidatedTextField
+              state={description}
+              multiline
+              rowsMax="4"
+              margin="normal"
+              helperText="Description"
+              label="Description of skills"
+            />
+          </Grid>
+
           <Grid container spacing={24}>
             {certificate.length > 0 && (
               <Grid item xs={12}>
@@ -100,8 +76,7 @@ class SpecialSkills extends Component {
                 variant="raised"
                 color="secondary"
                 onClick={this.openForm}
-              >
-                <Add /> Add Certificate
+              ><Add /> Add Certificate
               </Button>
             </Grid>
           </Grid>
@@ -112,8 +87,6 @@ class SpecialSkills extends Component {
             <Grid item xs={12} sm={12}>
               <ValidatedTextField
                 state={name}
-                id="name"
-                name="name"
                 label="name of certificate"
               />
             </Grid>
@@ -121,8 +94,6 @@ class SpecialSkills extends Component {
             <Grid item xs={12} sm={12}>
               <ValidatedTextField
                 state={issuedDate}
-                id="issuedDate"
-                name="issuedDate"
                 label="issued Date"
                 type="date"
                 InputLabelProps={{ shrink: true }}
@@ -132,8 +103,6 @@ class SpecialSkills extends Component {
             <Grid item xs={12} sm={12}>
               <ValidatedTextField
                 state={expirationDate}
-                id="expirationDate"
-                name="expirationDate"
                 label="expiration Date"
                 type="date"
                 InputLabelProps={{ shrink: true }}

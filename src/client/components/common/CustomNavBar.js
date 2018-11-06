@@ -1,11 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { AppBar, IconButton, Toolbar, Typography, withStyles } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import { inject, observer } from 'mobx-react';
-import { Edit, Menu } from '@material-ui/icons';
+import { BrightnessHigh, BrightnessLow, Menu } from '@material-ui/icons';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import RootState from '../../store/RootState';
+import MSC from '../../msc.png';
 
 // Drawer width when extended
 const drawerWidth = 240;
@@ -38,31 +39,12 @@ const styles = theme => ({
     display: 'none',
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    paddingLeft: theme.spacing.unit * 2,
   },
   flex: {
     display: 'flex'
   },
 });
-
-// Theme names to display
-const themesNames = [
-  'LIGHT - MSC General',
-  'LIGHT - Education / Employment',
-  'LIGHT - Energy',
-  'LIGHT - Food Bank',
-  'LIGHT - Housing',
-  'LIGHT - LTCOP',
-  'DARK - MSC General',
-  'DARK - Education / Employment',
-  'DARK - Energy',
-  'DARK - Food Bank',
-  'DARK - Housing',
-  'DARK - LTCOP',
-];
 
 /**
  * Top Navbar component
@@ -75,7 +57,7 @@ class CustomNavBar extends Component {
    */
   toggleTheme = () => {
     const { store } = this.props;
-    store.paletteType = (store.paletteType + 1) % 12;
+    store.local.paletteType = (store.local.paletteType + 1) % 2;
   };
 
   /**
@@ -88,19 +70,12 @@ class CustomNavBar extends Component {
     }
   };
 
-  /**
-   * Get the current theme name
-   * @param id {Number} Current theme
-   * @returns {string} Theme name
-   */
-  getThemeName = id => themesNames[id];
-
   render() {
     const { store, classes, useDrawer } = this.props;
     const { open } = store;
     return (
       <AppBar
-        position="absolute"
+        position="fixed"
         className={classNames(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar disableGutters={!open}>
@@ -118,19 +93,15 @@ class CustomNavBar extends Component {
           }
 
           {/* Left Navbar */}
-          <Typography variant="title" color="inherit" noWrap>
-            Multi-Service Center
-          </Typography>
+          <img src={MSC} alt="MSC" height={64} />
+          <Typography className={classes.title} variant="title" noWrap>Multi-Service Center</Typography>
 
           <div className={classes.grow} />
 
           {/* Right Navbar */}
-          <Typography className={classes.title} variant="title" color="inherit" noWrap>
-            {this.getThemeName(store.paletteType)}
-          </Typography>
           <div className={classes.flex}>
             <IconButton color="inherit" onClick={this.toggleTheme}>
-              <Edit />
+              {store.local.paletteType === 0 ? <BrightnessHigh /> : <BrightnessLow />}
             </IconButton>
           </div>
         </Toolbar>

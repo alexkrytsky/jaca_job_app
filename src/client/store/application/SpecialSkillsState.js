@@ -12,15 +12,20 @@ export default class SpecialSkillsState extends FormState {
   constructor() {
     super('Special Skills', <SpecialSkills />, 'Errors Remaining to save.');
   }
+
   idCounter = 0;
+
   // Array of entries
   @observable certificate = [];
+
+  @observable description = new ValidatedField('');
 
   @observable name = new ValidatedField('');
 
   @observable issuedDate = new ValidatedField('');
 
   @observable expirationDate = new ValidatedField('');
+
   /**
    * Set all validated fields to a set changed state
    *
@@ -41,7 +46,7 @@ export default class SpecialSkillsState extends FormState {
     this.setAllChangedState(true);
     return this.name.validation
       || this.issuedDate.validation
-      || this.expirationDate.validation
+      || this.expirationDate.validation;
   };
 
   /**

@@ -17,7 +17,7 @@ class ThemeController extends Component {
     const { store } = this.props;
 
     return (
-      <MuiThemeProvider theme={Themes[store.paletteType]}>
+      <MuiThemeProvider theme={Themes[store.local.paletteType]}>
         <App />
       </MuiThemeProvider>
     );

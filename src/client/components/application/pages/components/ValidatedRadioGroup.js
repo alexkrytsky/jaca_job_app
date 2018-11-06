@@ -22,9 +22,8 @@ class ValidatedRadioGroup extends Component {
       <RadioGroup
         {...props}
         required // The field is required
-        fullWidth
         value={value} // Value to bind the field to
-        error={validation} // If true, show validation error
+        error={validation.toString()} // If true, show validation error
         onChange={this.handleChange} // Event to update state when input changes
       />
     );

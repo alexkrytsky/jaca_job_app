@@ -23,7 +23,7 @@ class Success extends Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="headline">Success</Typography>
+          <Typography variant="headline">{store.application.submitStatus}</Typography>
         </Grid>
         <Grid item xs={12}>
           <Button variant="raised" onClick={this.reset}>

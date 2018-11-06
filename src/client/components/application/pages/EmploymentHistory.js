@@ -44,8 +44,6 @@ class EmploymentHistory extends Component {
    */
   closeForm = () => {
     this.setState({ adding: false });
-    const { store } = this.props;
-    store.application.employmentHistory.reset();
   };
 
   render() {

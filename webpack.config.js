@@ -8,7 +8,8 @@ module.exports = {
   entry: './src/client/index.js',
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -35,7 +36,9 @@ module.exports = {
     proxy: {
       '/api': 'http://localhost:8080'
     },
-    historyApiFallback: true
+    historyApiFallback: true,
+    contentBase: path.resolve(__dirname),
+    hot: true
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),

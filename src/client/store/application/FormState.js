@@ -41,6 +41,9 @@ export default class FormState {
     Object.values(this)
       .filter(value => value instanceof Field)
       .forEach(value => value.reset());
+    Object.keys(this)
+      .filter(key => this[key] instanceof Array)
+      .forEach((key) => { this[key] = []; });
   };
 
   /**

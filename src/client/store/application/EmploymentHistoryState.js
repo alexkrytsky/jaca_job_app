@@ -71,9 +71,27 @@ export default class EmploymentHistoryState extends FormState {
     // Increment the id counter
     this.idCounter += 1;
 
-    this.reset();
+    this.clear();
 
     return true;
+  };
+
+  /**
+   * Reset all
+   */
+  @action clear = () => {
+    this.setAllChangedState(false);
+    this.employer.reset();
+    this.address.reset();
+    this.contactNumber.reset();
+    this.position.reset();
+    this.startDate.reset();
+    this.endDate.reset();
+    this.supervisorName.reset();
+    this.supervisorTitle.reset();
+    this.reasonLeft.reset();
+    this.description.reset();
+    this.contactPermission.reset();
   };
 
   /**

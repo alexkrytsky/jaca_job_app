@@ -57,7 +57,6 @@ const styles = theme => ({
 
 const DashboardLink = props => <Link to="/" {...props} />;
 const AppLink = props => <Link to="/app" {...props} />;
-const Jobs = props => <Link to="/jobs" {...props} />;
 
 @inject('store')
 @observer
@@ -84,13 +83,9 @@ class FixedSidebar extends Component {
             <ListItemIcon><Dashboard /></ListItemIcon>
             <ListItemText inset primary="Dashboard" />
           </ListItem>
-          <ListItem button component={AppLink} onClick={store.application.reset()}>
+          <ListItem button component={AppLink} onClick={store.application.reset}>
             <ListItemIcon><Assignment /></ListItemIcon>
             <ListItemText inset primary="Application" />
-          </ListItem>
-          <ListItem button component={Jobs}>
-            <ListItemIcon><ListIcon /></ListItemIcon>
-            <ListItemText inset primary="Jobs" />
           </ListItem>
         </List>
       </Drawer>

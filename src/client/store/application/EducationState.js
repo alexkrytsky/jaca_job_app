@@ -13,6 +13,7 @@ export default class EducationState extends FormState {
   }
 
   idCounter = 0;
+
   // Array of entries
   @observable school = [];
 
@@ -27,6 +28,7 @@ export default class EducationState extends FormState {
   @observable graduate = new ValidatedField('');
 
   @observable diploma = new ValidatedField('');
+
   /**
    * Set all validated fields to a set changed state
    *
@@ -53,7 +55,7 @@ export default class EducationState extends FormState {
       || this.schoolLocation.validation
       || this.yearsCompleted.validation
       || this.graduate.validation
-      || this.diploma.validation
+      || this.diploma.validation;
   };
 
   /**
@@ -70,7 +72,7 @@ export default class EducationState extends FormState {
     // Add the entry to the array
     this.school.push({
       id: this.idCounter,
-      educationLevel:  this.educationLevel.value,
+      educationLevel: this.educationLevel.value,
       schoolName: this.schoolName.value,
       schoolLocation: this.schoolLocation.value,
       yearsCompleted: this.yearsCompleted.value,
@@ -112,7 +114,3 @@ export default class EducationState extends FormState {
     this.school = this.school.filter(obj => obj.id !== id);
   };
 }
-
-
-
-

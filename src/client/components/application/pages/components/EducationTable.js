@@ -53,9 +53,6 @@ class EducationTable extends Component {
               <DarkTableCell>Education Level</DarkTableCell>
               <DarkTableCell>School Name</DarkTableCell>
               <DarkTableCell>School Location</DarkTableCell>
-              <DarkTableCell numeric>Years Completed</DarkTableCell>
-              <DarkTableCell>Graduated</DarkTableCell>
-              <DarkTableCell>Diploma/Degree</DarkTableCell>
               <DarkTableCell />
             </TableRow>
           </TableHead>
@@ -67,9 +64,6 @@ class EducationTable extends Component {
                 </TableCell>
                 <TableCell>{entry.schoolName}</TableCell>
                 <TableCell>{entry.schoolLocation}</TableCell>
-                <TableCell>{entry.yearsCompleted}</TableCell>
-                <TableCell>{entry.graduate}</TableCell>
-                <TableCell>{entry.diploma}</TableCell>
                 <TableCell>
                   <Button
                     mini

@@ -12,6 +12,11 @@ export default class ResumeUploadState extends FormState {
     constructor() {
         super('ResumeUpload', <ResumeUpload />, 'Errors Remaining.');
     }
+    onDrop(file){
+        this.setState({
+            file
+        });
+    }
     @observable file = [];
 
 

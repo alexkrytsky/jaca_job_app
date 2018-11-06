@@ -120,9 +120,10 @@ export default class ApplicationState {
         generalInfo.authorizedCheck.update(random.boolean());
         break;
       case 1:
-        this.root.fetchJobs().then(() => {
-          employmentDesired.employmentDesired.update(random.arrayElement(this.root.session.jobs));
-        });
+        this.root.fetchJobs()
+          .then(() => {
+            employmentDesired.employmentDesired.update(random.arrayElement(this.root.session.jobs));
+          });
         employmentDesired.startDate.update(`${startDate.getFullYear()}-${toFixed(startDate.getMonth() + 1)}-${toFixed(startDate.getDay() + 1)}`);
         employmentDesired.salaryExpectations.update(`$${finance.amount()}`);
         employmentDesired.applied.update(random.boolean());
@@ -168,6 +169,20 @@ export default class ApplicationState {
         references.contactNumber.update(phone.phoneNumber());
         references.address.update(address.streetAddress(false));
         references.relation.update(random.arrayElement(['Uncle', 'Aunt', 'Boss', 'Co-worker', 'Friend', 'Neighbor']));
+        break;
+      case 6:
+        voluntarySurvey.gender.update(random.arrayElement(['male', 'female', 'other']));
+        voluntarySurvey.white.update(random.boolean());
+        voluntarySurvey.hispanic.update(random.boolean());
+        voluntarySurvey.americanNative.update(random.boolean());
+        voluntarySurvey.afroAmerican.update(random.boolean());
+        voluntarySurvey.asian.update(random.boolean());
+        voluntarySurvey.pacificIslander.update(random.boolean());
+        voluntarySurvey.vietnamVeteran.update(random.boolean());
+        voluntarySurvey.activeDutyVeteran.update(random.boolean());
+        voluntarySurvey.disabledVeteran.update(random.boolean());
+        voluntarySurvey.newVeteran.update(random.boolean());
+        voluntarySurvey.disability.update(random.boolean());
         break;
       default:
         break;
@@ -227,7 +242,18 @@ export default class ApplicationState {
         references: toJS(references.references)
       },
       voluntarySurvey: {
-        tba: 'soon'
+        gender: voluntarySurvey.gender.value,
+        white: voluntarySurvey.white.value,
+        hispanic: voluntarySurvey.hispanic.value,
+        americanNative: voluntarySurvey.americanNative.value,
+        afroAmerican: voluntarySurvey.afroAmerican.value,
+        asian: voluntarySurvey.asian.value,
+        pacificIslander: voluntarySurvey.pacificIslander.value,
+        vietnamVeteran: voluntarySurvey.vietnamVeteran.value,
+        activeDutyVeteran: voluntarySurvey.activeDutyVeteran.value,
+        disabledVeteran: voluntarySurvey.disabledVeteran.value,
+        newVeteran: voluntarySurvey.newVeteran.value,
+        disability: voluntarySurvey.disability.value
       }
     };
 

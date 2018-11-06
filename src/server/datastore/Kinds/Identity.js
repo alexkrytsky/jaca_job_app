@@ -5,6 +5,7 @@ const Education = require('./Education');
 const SpecialSkills = require('./SpecialSkills');
 const EmploymentHistory = require('./EmploymentHistory');
 const References = require('./References');
+const VoluntarySurvey = require('./VoluntarySurvey');
 
 const kind = 'Identity';
 
@@ -24,6 +25,7 @@ module.exports = class Identity {
     this.specialSkills = new SpecialSkills({});
     this.employmentHistory = new EmploymentHistory({});
     this.references = new References({});
+    this.voluntarySurvey = new VoluntarySurvey({});
 
     Object.keys(this)
       .filter(field => field in entry)
@@ -74,7 +76,8 @@ module.exports = class Identity {
       education: this.education,
       specialSkills: this.specialSkills,
       employmentHistory: this.employmentHistory,
-      references: this.references
+      references: this.references,
+      voluntarySurvey: this.voluntarySurvey
     };
 
     return Store.upsert({

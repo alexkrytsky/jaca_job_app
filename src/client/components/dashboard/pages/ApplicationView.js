@@ -67,6 +67,7 @@ class ApplicationView extends Component {
     const specialSkills = identity != null && 'specialSkills' in identity ? identity.specialSkills : {};
     const employmentHistory = identity != null && 'employmentHistory' in identity ? identity.employmentHistory : {};
     const references = identity != null && 'references' in identity ? identity.references : {};
+    const voluntarySurvey = identity != null && 'voluntarySurvey' in identity ? identity.voluntarySurvey : {};
 
     const sections = [
       {
@@ -132,6 +133,17 @@ class ApplicationView extends Component {
             title="References"
             subTitle="Co-workers, Bosses, etc..."
             data={references}
+          />
+        ),
+      },
+      {
+        label: 'Voluntary Survey',
+        subLabel: 'Gender, Ethnicity, etc...',
+        component: (
+          <DataPanel
+            title="Voluntary Survey"
+            subTitle="Gender, Ethnicity, etc..."
+            data={voluntarySurvey}
           />
         ),
       }

@@ -43,8 +43,6 @@ class EmploymentDesired extends Component {
             startDate,
             applied,
             workedAtMsc
-
-
         }=store.application.employmentDesired;
         return (
             <Fragment>
@@ -64,6 +62,8 @@ class EmploymentDesired extends Component {
                             id="startDate"
                             name="startDate"
                             label="Start Date"
+                            type="date"
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
                     <Grid item xs={12} >

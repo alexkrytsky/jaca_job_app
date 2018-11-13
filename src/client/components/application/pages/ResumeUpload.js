@@ -12,6 +12,15 @@ import {
   InputLabel
 } from '@material-ui/core';
 import RootState from '../../../store/RootState';
+const getFiles = field => (e) => {
+  e.preventDefault();
+  field.file.forEach(function (file) {
+    console.log(file.name,'>>',file.size)
+  });
+  console.log(field.file.name, '>> getFiles', field.files,"   ",field.file);
+
+
+};
 
 const styles = () => ({
   root: {}
@@ -19,6 +28,7 @@ const styles = () => ({
 @inject('store')
 @observer
 class ResumeUpload extends Component {
+
   render() {
     const { store, classes } = this.props;
     const file = store.application.resumeUpload;
@@ -34,11 +44,23 @@ class ResumeUpload extends Component {
           <aside>
             <h2>Dropped files</h2>
             <button
-              onClick={file.getFiles(file)}
-
+              onClick={getFiles(file)}
             >
-              Get Files
             </button>
+              {/*{(this.field.file && field.file[0].length) ? <div>*/}
+                  {/*<h2>Uploading {field.file[0].length} files...</h2>*/}
+                  {/*<div>{field.file[0].map(file =>*/}
+                    {/*<button*/}
+                      {/*key={file.name}*/}
+                    {/*>*/}
+                      {/*<img*/}
+                        {/*className="w-10 h-10"*/}
+                        {/*src={file.preview}*/}
+                        {/*alt={file.name}*/}
+                      {/*/>*/}
+                    {/*</button>)};*/}
+                  {/*</div>*/}
+                {/*</div>:null};*/}
           </aside>
         </Grid>
       </Fragment>

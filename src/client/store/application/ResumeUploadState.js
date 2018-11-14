@@ -6,6 +6,7 @@ import {observable} from "mobx/lib/mobx";
 import ValidatedField from "./ValidatedField";
 
 
+
 export default class ResumeUploadState extends FormState {
     constructor() {
         super('ResumeUpload', <ResumeUpload />, 'Errors Remaining.');
@@ -17,15 +18,21 @@ export default class ResumeUploadState extends FormState {
 
       //console.log(file.name, '>> getFiles', file.files);
 
-      file.forEach(function (file) {
-        console.log(file.name,'>>',file.size)
+      file.forEach(function (f) {
+        console.log(f.name,'>>',f.size)
+        return <div>{file.name}</div>
+
+
       });
+      console.log(file[0].name);
+
     }
 
 
 
 
   @observable file = [];
+    @observable fileNames=[];
 
 
 

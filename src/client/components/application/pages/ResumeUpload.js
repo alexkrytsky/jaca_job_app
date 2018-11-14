@@ -17,7 +17,7 @@ const getFiles = field => (e) => {
   field.file.forEach(function (file) {
     console.log(file.name,'>>',file.size)
   });
-  console.log(field.file.name, '>> getFiles', field.files,"   ",field.file);
+  console.log(field.file[0], '>> getFiles', field.files,"   ",field.file);
 
 
 };
@@ -37,8 +37,9 @@ class ResumeUpload extends Component {
 
       <Fragment>
         <Grid container spacing={24}>
-
-          <DropZone onDrop={file.onDrop.bind(this)}>
+          <label>Hello</label>
+          <input type="file" state={file}/>
+          <DropZone onDrop={file.onDrop.bind(this)} >
             <div>Try dropping some files here, or click to select files to upload.</div>
           </DropZone>
           <aside>
@@ -47,6 +48,9 @@ class ResumeUpload extends Component {
               onClick={getFiles(file)}
             >
             </button>
+            <label >
+              {(file.file[0])? file.file.getState():"aasdadads"}
+            </label>
               {/*{(this.field.file && field.file[0].length) ? <div>*/}
                   {/*<h2>Uploading {field.file[0].length} files...</h2>*/}
                   {/*<div>{field.file[0].map(file =>*/}

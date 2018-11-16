@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
-import { withStyles } from '@material-ui/core';
+import { Avatar, List, ListItem, ListItemText, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import DropZone from 'react-dropzone';
 import {
@@ -14,6 +14,7 @@ import {
   Button
 } from '@material-ui/core';
 import RootState from '../../../store/RootState';
+import { Work } from '@material-ui/icons';
 const getFiles = field => (e) => {
   e.preventDefault();
   field.file.forEach(function (file) {
@@ -35,7 +36,18 @@ class ResumeUpload extends Component {
   render() {
     const { store, classes } = this.props;
     const file = store.application.resumeUpload;
-
+    //const files = store.application.resumeUpload.map(file=>({file}));
+    return {file};
+    // const jobs = store.jobs.map(job => (
+    //   <ListItem key={job}>
+    //     <Avatar><Work /></Avatar>
+    //     <ListItemText primary={job} secondary={'Location: TBA'}/>
+    //   </ListItem>));
+    // return (
+    //   <List>
+    //     {jobs}
+    //   </List>
+    // );
     return (
 
       <Fragment>
@@ -56,8 +68,7 @@ class ResumeUpload extends Component {
               Upload
             </Button>
           </label>
-          <div>{(this.file)? file.file.name:"Hello "}</div>
-
+          <div >{(file.name)}</div>
           {/*<DropZone onDrop={file.onDrop.bind(this)} >*/}
             {/*<div>Try dropping some files here, or click to select files to upload.</div>*/}
           {/*</DropZone>*/}

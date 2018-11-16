@@ -9,7 +9,9 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  InputLabel
+  InputLabel,
+  Input,
+  Button
 } from '@material-ui/core';
 import RootState from '../../../store/RootState';
 const getFiles = field => (e) => {
@@ -21,6 +23,7 @@ const getFiles = field => (e) => {
 
 
 };
+
 
 const styles = () => ({
   root: {}
@@ -37,35 +40,35 @@ class ResumeUpload extends Component {
 
       <Fragment>
         <Grid container spacing={24}>
-          <label>Hello</label>
-          <input type="file" state={file}/>
-          <DropZone onDrop={file.onDrop.bind(this)} >
-            <div>Try dropping some files here, or click to select files to upload.</div>
-          </DropZone>
-          <aside>
-            <h2>Dropped files</h2>
-            <button
-              onClick={getFiles(file)}
-            >
-            </button>
-            <label >
-              {(file.file[0])? file.file.getState():"aasdadads"}
-            </label>
-              {/*{(this.field.file && field.file[0].length) ? <div>*/}
-                  {/*<h2>Uploading {field.file[0].length} files...</h2>*/}
-                  {/*<div>{field.file[0].map(file =>*/}
-                    {/*<button*/}
-                      {/*key={file.name}*/}
-                    {/*>*/}
-                      {/*<img*/}
-                        {/*className="w-10 h-10"*/}
-                        {/*src={file.preview}*/}
-                        {/*alt={file.name}*/}
-                      {/*/>*/}
-                    {/*</button>)};*/}
-                  {/*</div>*/}
-                {/*</div>:null};*/}
-          </aside>
+          <input
+            accept="application/pdf/*"
+            className={classes.input}
+            style={{ display: 'none' }}
+            id="raised-button-file"
+            multiple
+            type="file"
+            state={file}
+            onChange={file.onDrop.bind(this)}
+
+          />
+          <label htmlFor="raised-button-file">
+            <Button variant="raised" component="span" className={classes.button}>
+              Upload
+            </Button>
+          </label>
+          <div>{(this.file)? file.file.name:"Hello "}</div>
+
+          {/*<DropZone onDrop={file.onDrop.bind(this)} >*/}
+            {/*<div>Try dropping some files here, or click to select files to upload.</div>*/}
+          {/*</DropZone>*/}
+          {/*<aside>*/}
+            {/*<h2>Dropped files</h2>*/}
+            {/*<button*/}
+              {/*onClick={getFiles(file)}*/}
+            {/*>*/}
+            {/*</button>*/}
+
+          {/*</aside>*/}
         </Grid>
       </Fragment>
     );

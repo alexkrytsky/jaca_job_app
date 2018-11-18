@@ -54,11 +54,13 @@ export default class ApplicationState {
   @action setStep = (step) => {
     if (step <= this.step || this.validate()) {
       this.step = step;
+      window.scrollTo(0, 0);
     }
   };
 
   @action backStep = () => {
     this.step -= 1;
+    window.scrollTo(0, 0);
   };
 
   @action nextStep = () => {
@@ -67,6 +69,7 @@ export default class ApplicationState {
       if (this.step >= this.listOfSteps.length) {
         this.submitToServer();
       }
+      window.scrollTo(0, 0);
     }
   };
 

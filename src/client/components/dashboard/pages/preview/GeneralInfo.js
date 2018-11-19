@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RootState from '../../../../store/RootState';
-import Tabs from '@material-ui/core/Tabs/Tabs';
 import Tab from '@material-ui/core/Tab/Tab';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MapIcon from '@material-ui/icons/Map';
@@ -36,12 +35,6 @@ const styles = theme => ({
 @observer
 class GeneralInfo extends Component {
 
-  state = {
-    contact: 'CONTACT',
-    location: 'LOCATION',
-
-  };
-
   render() {
     const { store, classes } = this.props;
     const { identity } = store.session;
@@ -52,14 +45,7 @@ class GeneralInfo extends Component {
       <form className={classes.container} noValidate autoComplete="off">
 
         <Grid item xs={12}>
-          <Tabs
-            value={this.state.contact}
-            indicatorColor="secondary"
-            textColor="secondary"
-            style={{ marginBottom: 10, marginTop: 10}}
-          >
-            <Tab icon={<PhoneIcon />} label="Contact" />
-          </Tabs>
+            <Tab icon={<PhoneIcon />} label="Contact" style={{ marginBottom: 10, marginTop: 10}}/>
         </Grid>
 
         <TextField
@@ -78,24 +64,17 @@ class GeneralInfo extends Component {
           variant="filled"
           disabled={true}
         />
-        <TextField
+        {/*<TextField
           label="Email"
           className={classes.textField}
           value={generalInfo.email}
           margin="normal"
           variant="filled"
           disabled={true}
-        />
+        />*/}
 
         <Grid item xs={12}>
-          <Tabs
-            value={this.state.contact}
-            indicatorColor="secondary"
-            textColor="secondary"
-            style={{ marginBottom: 10, marginTop: 30}}
-          >
-            <Tab icon={<MapIcon />} label="Location" />
-          </Tabs>
+            <Tab icon={<MapIcon />} label="Location" style={{ marginBottom: 10, marginTop: 30}}/>
         </Grid>
 
         <TextField

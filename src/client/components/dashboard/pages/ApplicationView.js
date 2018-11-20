@@ -16,6 +16,9 @@ import {
 import PropTypes from 'prop-types';
 import RootState from '../../../store/RootState';
 import DataPanel from './DataPanel';
+import EmploymentDesired from './preview/EmploymentDesired';
+import GeneralInfo from './preview/GeneralInfo';
+
 
 const topOffset = 60;
 
@@ -61,8 +64,8 @@ class ApplicationView extends Component {
     const { store, classes } = this.props;
     const { identity } = store.session;
 
-    const generalInfo = identity != null && 'generalInfo' in identity ? identity.generalInfo : {};
-    const employmentDesired = identity != null && 'employmentDesired' in identity ? identity.employmentDesired : {};
+    //const generalInfo = identity != null && 'generalInfo' in identity ? identity.generalInfo : {};
+    // const employmentDesired = identity != null && 'employmentDesired' in identity ? identity.employmentDesired : {};
     const education = identity != null && 'education' in identity ? identity.education : {};
     const specialSkills = identity != null && 'specialSkills' in identity ? identity.specialSkills : {};
     const employmentHistory = identity != null && 'employmentHistory' in identity ? identity.employmentHistory : {};
@@ -73,24 +76,12 @@ class ApplicationView extends Component {
       {
         label: 'General Information',
         subLabel: 'Address, phone, etc...',
-        component: (
-          <DataPanel
-            title="General Information"
-            subTitle="Address, phone, etc..."
-            data={generalInfo}
-          />
-        ),
+        component: (<GeneralInfo/>),
       },
       {
         label: 'Employment Desired',
         subLabel: 'Start date, availability, etc...',
-        component: (
-          <DataPanel
-            title="Employment Desired"
-            subTitle="Start date, availability, etc..."
-            data={employmentDesired}
-          />
-        ),
+          component: (<EmploymentDesired/>),
       },
       {
         label: 'Education',

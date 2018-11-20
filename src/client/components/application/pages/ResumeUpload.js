@@ -82,9 +82,7 @@ class ResumeUpload extends Component {
                   <TableCell component="th" scope="row">
                     {entry.name}
                   </TableCell>
-                  <TableCell>{entry.size}</TableCell>
-                  <TableCell>{entry.expirationDate}</TableCell>
-
+              
 
                 </TableRow>
               ))}

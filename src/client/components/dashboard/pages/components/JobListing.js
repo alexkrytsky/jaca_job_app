@@ -1,4 +1,3 @@
-import React, { Component, Fragment } from 'react';
 import {
   Avatar,
   IconButton,
@@ -9,17 +8,25 @@ import {
   MenuItem,
   withStyles
 } from '@material-ui/core';
-import { Menu as MenuIcon, Person } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
-import * as PropTypes from 'prop-types';
+import { Menu as MenuIcon, Work } from '@material-ui/icons';
 import { inject, observer } from 'mobx-react';
+import * as PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import RootState from '../../../../store/RootState';
 
 @withStyles(theme => ({}))
 @inject('store')
 @observer
-export default class ApplicationListing extends Component {
+export default class JobListing extends Component {
+  static wrappedComponent = {
+    propTypes: {
+      store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
+    }
+  };
+
   static propTypes = {
-    app: PropTypes.object.isRequired
+    position: PropTypes.string.isRequired
   };
 
   state = {
@@ -34,24 +41,23 @@ export default class ApplicationListing extends Component {
     this.setState({ anchorEl: null });
   };
 
-  searchUser = () => {
-    const { app, store } = this.props;
+  searchJob = () => {
+    const { position, store } = this.props;
     const { filter } = store;
     filter.clear();
-    filter.search.update(app.email);
+    filter.job.update(position);
     this.handleClose();
   };
 
   render() {
     const { anchorEl } = this.state;
-    const { app } = this.props;
-    const link = `/application/${app.key.id}`;
+    const { position, store } = this.props;
+    const { filter } = store;
     return (
-      <ListItem key={app.key.id}>
-        <Avatar><Person /></Avatar>
+      <ListItem>
+        <Avatar><Work /></Avatar>
         <ListItemText
-          primary={`${app.firstName} ${app.lastName} - ${app.email}`}
-          secondary={app.employmentDesired.employmentDesired}
+          primary={position}
         />
         <ListItemSecondaryAction>
           <IconButton
@@ -68,16 +74,15 @@ export default class ApplicationListing extends Component {
             onClose={this.handleClose}
           >
             <MenuItem
-              onClick={this.handleClose}
-              component={Link}
-              to={link}
-            >View Application
-            </MenuItem>
-            <MenuItem
-              onClick={this.searchUser}
+              onClick={this.searchJob}
               component={Link}
               to="/search"
-            >View All Users Applications
+            >View All Applications
+            </MenuItem>
+            <MenuItem
+              disabled
+              onClick={this.handleClose}
+            >Remove Position
             </MenuItem>
           </Menu>
         </ListItemSecondaryAction>

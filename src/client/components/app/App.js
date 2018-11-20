@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { CssBaseline, Paper, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import Search from '../dashboard/pages/Search';
 import Jobs from '../jobs/Jobs';
 import Application from '../application/Application';
 import CustomNavBar from '../common/CustomNavBar';
@@ -15,16 +16,20 @@ import ApplicationView from '../dashboard/pages/ApplicationView';
 
 const bannerImageHeight = 200;
 
-const styles = theme => ({
+
+/**
+ * Main Component, defines url based routes
+ */
+@withStyles(theme => ({
   root: {
     flexGrow: 1,
-    height: window.innerHeight,
+    height: '100%',
     zIndex: 1,
-    overflow: 'hidden',
     position: 'relative',
     display: 'flex',
   },
   content: {
+    marginLeft: '72px',
     marginTop: '64px',
     flexGrow: 1,
   },
@@ -36,11 +41,7 @@ const styles = theme => ({
     height: `${bannerImageHeight}px`,
     zIndex: -1
   }
-});
-
-/**
- * Main Component, defines url based routes
- */
+}))
 @inject('store')
 @observer
 class App extends Component {
@@ -75,6 +76,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/app" component={Application} />
+              <Route path="/search" component={Search} />
               <Route path="/application/:appId" component={ApplicationView} />
               <Route path="/jobs" component={Jobs} />
             </Switch>
@@ -95,4 +97,4 @@ App.wrappedComponent.propTypes = {
   store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
 };
 
-export default withStyles(styles)(withRouter(App));
+export default withRouter(App);

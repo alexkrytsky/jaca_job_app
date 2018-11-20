@@ -1,24 +1,17 @@
-import React, { Component } from 'react';
-import {
-  Avatar,
-  Card,
-  CardContent,
-  CardHeader,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  withStyles
-} from '@material-ui/core';
+import { List, Typography, withStyles } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { MoreVert, Work } from '@material-ui/icons';
+import React, { Component } from 'react';
 import RootState from '../../../../store/RootState';
+import JobListing from './JobListing';
 
-const styles = theme => ({
-  root: {},
-});
 
+@withStyles(theme => ({
+  paper: {
+    width: '100%',
+    margin: theme.spacing.unit,
+  },
+}))
 @inject('store')
 @observer
 class OpenPositions extends Component {
@@ -28,25 +21,16 @@ class OpenPositions extends Component {
   }
 
   render() {
-    const { store } = this.props;
-    const jobs = store.session.jobs.map(job => (
-      <ListItem key={job}>
-        <Avatar><Work /></Avatar>
-        <ListItemText primary={job} />
-      </ListItem>));
+    const { classes, store } = this.props;
 
     return (
-      <Card>
-        <CardHeader
-          title="Open Positions"
-          subheader="Job openings available to applicants"
-        />
-        <CardContent>
-          <List dense>
-            {jobs}
-          </List>
-        </CardContent>
-      </Card>
+      <div className={classes.paper}>
+        <Typography variant="display1">Open Positions</Typography>
+        <Typography variant="subheading">Job openings available to applicants</Typography>
+        <List dense>
+          {store.session.jobs.map(job => (<JobListing position={job} key={job} />))}
+        </List>
+      </div>
     );
   }
 }
@@ -56,4 +40,4 @@ OpenPositions.wrappedComponent.propTypes = {
   store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired,
 };
 
-export default withStyles(styles)(OpenPositions);
+export default OpenPositions;

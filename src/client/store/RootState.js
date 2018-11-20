@@ -3,6 +3,7 @@ import axios from 'axios';
 import ApplicationState from './application/ApplicationState';
 import AuthenticationState from './auth/AuthenticationState';
 import LocalState from './LocalState';
+import FilterState from './search/FilterState';
 import SessionState from './SessionState';
 
 /**
@@ -17,6 +18,9 @@ export default class RootState {
 
   // Authentication State
   @observable authentication = new AuthenticationState(this);
+
+  // Filter State
+  @observable filter = new FilterState(this);
 
   // Persistent State
   @observable local = new LocalState(this);

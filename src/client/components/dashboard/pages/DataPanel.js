@@ -16,8 +16,6 @@ import { observer } from 'mobx-react';
 const styles = theme => ({
   layout: {
     width: 'auto',
-    height: '100%',
-    overflow: 'auto',
   },
   row: {
     '&:nth-of-type(odd)': {

@@ -11,6 +11,7 @@ export default class ResumeUploadState extends FormState {
     constructor() {
         super('ResumeUpload', <ResumeUpload />, 'Errors Remaining.');
     }
+  @observable file= [];
     onDrop(InFile){
       if(InFile.target.files[0].size>10000000){
         alert("The file is too larges");
@@ -27,22 +28,15 @@ export default class ResumeUploadState extends FormState {
         console.log(this.file);
         return;
       }
-        this.file=InFile.target.files[0];
+      // this.file.push({
+      //   name: InFile.target.files[0].name,
+      //   fileByte: InFile.target.files[0],
+      //   fileType:docType,
+      // });
+
+      console.log();
+       this.file=(InFile.target.files[0]);
+        alert("File successfully uploaded");
       console.log(this.file.name, '>> 11111getFiles', this.file.size);
-
-
-
-
-
-
     }
-
-
-
-
-  @observable file = [];
-
-
-
-
 }

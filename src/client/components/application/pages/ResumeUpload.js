@@ -1,7 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
-import { Avatar, List, ListItem, ListItemText, withStyles } from '@material-ui/core';
+import {
+  Avatar,
+  Collapse,
+  List,
+  ListItem,
+  ListItemText, Table, TableBody, TableCell,
+  TableHead, TableRow,
+  withStyles
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import DropZone from 'react-dropzone';
 import {
@@ -14,7 +22,9 @@ import {
   Button
 } from '@material-ui/core';
 import RootState from '../../../store/RootState';
-import { Work } from '@material-ui/icons';
+import SpecialSkillsTable from './components/SpecialSkillsTable';
+import { Delete } from '@material-ui/icons';
+
 const getFiles = field => (e) => {
   e.preventDefault();
   field.file.forEach(function (file) {
@@ -35,19 +45,8 @@ class ResumeUpload extends Component {
 
   render() {
     const { store, classes } = this.props;
-    const file = store.application.resumeUpload;
-    //const files = store.application.resumeUpload.map(file=>({file}));
-    return {file};
-    // const jobs = store.jobs.map(job => (
-    //   <ListItem key={job}>
-    //     <Avatar><Work /></Avatar>
-    //     <ListItemText primary={job} secondary={'Location: TBA'}/>
-    //   </ListItem>));
-    // return (
-    //   <List>
-    //     {jobs}
-    //   </List>
-    // );
+    const files = store.application.resumeUpload;
+
     return (
 
       <Fragment>
@@ -59,30 +58,44 @@ class ResumeUpload extends Component {
             id="raised-button-file"
             multiple
             type="file"
-            state={file}
-            onChange={file.onDrop.bind(this)}
-
+            state={files}
+           onChange={files.onDrop.bind(this)}
           />
           <label htmlFor="raised-button-file">
             <Button variant="raised" component="span" className={classes.button}>
               Upload
             </Button>
           </label>
-          <div >{(file.name)}</div>
-          {/*<DropZone onDrop={file.onDrop.bind(this)} >*/}
-            {/*<div>Try dropping some files here, or click to select files to upload.</div>*/}
-          {/*</DropZone>*/}
-          {/*<aside>*/}
-            {/*<h2>Dropped files</h2>*/}
-            {/*<button*/}
-              {/*onClick={getFiles(file)}*/}
-            {/*>*/}
-            {/*</button>*/}
+          {files.length > 0 && (
+          <Table>
+            <TableHead>
+              <TableRow>
+                <DarkTableCell>File Name</DarkTableCell>
+                <DarkTableCell>File Type</DarkTableCell>
 
-          {/*</aside>*/}
-        </Grid>
+                <DarkTableCell />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {files.map(entry => (
+                <TableRow className={classes.row} key={entry.id}>
+                  <TableCell component="th" scope="row">
+                    {entry.name}
+                  </TableCell>
+                  <TableCell>{entry.size}</TableCell>
+                  <TableCell>{entry.expirationDate}</TableCell>
+
+
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          )}
+          </Grid>
+
+
       </Fragment>
-    );
+    )
   }
 }
 ResumeUpload.wrappedComponent.propTypes = {

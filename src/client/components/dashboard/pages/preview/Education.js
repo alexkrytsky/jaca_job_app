@@ -50,20 +50,21 @@ class Education extends Component {
     const education = identity != null && 'education' in identity ? identity.education : [];
 
     return (
+      /*form which holds class for the styles*/
       <form className={classes.container} noValidate autoComplete="off">
 
+        {/*Title and Icon*/}
         <Grid item xs={12}>
           <Tab icon={<SchoolIcon />} label="Education" style={{ marginBottom: 10, marginTop: 10}}/>
         </Grid>
 
-        {/*map up here and goes around the expansion panel*/}
-
-        {/*panel1 should be the school name*/}
-
-        {/*change this to this  ======== onChange={() => this.handleChange('panel1')}*/}
+        {/*map that loops over array and shows each part as entry*/}
         {education.school.map(entry => (
+          /*expansion panel to hold the data*/
         <ExpansionPanel expanded={expanded === entry.schoolName} onChange={this.handleChange(entry.schoolName)} key={entry.id}>
+          {/*Main title the person will see*/}
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+           {/*holds the diploma information*/}
             <TextField
               label="Diploma/Degree/Certificate"
               className={classes.textField}
@@ -73,8 +74,8 @@ class Education extends Component {
               fullWidth
               disabled={true}
             />
-
           </ExpansionPanelSummary>
+          {/*holds the school name information*/}
           <ExpansionPanelDetails>
             <TextField
               label="School Name"
@@ -86,7 +87,7 @@ class Education extends Component {
               disabled={true}
             />
           </ExpansionPanelDetails>
-
+          {/*holds the school location information*/}
           <ExpansionPanelDetails>
             <TextField
               label="School Location"
@@ -98,7 +99,7 @@ class Education extends Component {
               disabled={true}
             />
           </ExpansionPanelDetails>
-
+          {/*holds the education level information*/}
           <ExpansionPanelDetails>
             <TextField
               label="Education Level"
@@ -108,7 +109,7 @@ class Education extends Component {
               variant="filled"
               disabled={true}
             />
-
+            {/*holds the graduated information*/}
             <TextField
               label="Graduated"
               className={classes.textField}
@@ -117,7 +118,7 @@ class Education extends Component {
               variant="filled"
               disabled={true}
             />
-
+            {/*holds the years completed information*/}
             <TextField
               label="Years Completed"
               className={classes.textField}

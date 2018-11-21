@@ -9,6 +9,11 @@ import PropTypes from 'prop-types';
 import RootState from '../../../../store/RootState';
 import Tab from '@material-ui/core/Tab/Tab';
 import SchoolIcon from '@material-ui/icons/School';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails/ExpansionPanelDetails';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel/ExpansionPanel';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 // Component Styles
 const styles = theme => ({
   container: {
@@ -28,31 +33,21 @@ const styles = theme => ({
 @inject('store')
 @observer
 class Education extends Component {
+  state = {
+    expanded: null,
+  };
+
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
 
   render() {
     const { store, classes } = this.props;
+    const { expanded } = this.state;
     const { identity } = store.session;
-    const education = identity != null && 'education' in identity ? identity.education : {};
-
-    /* const schoolList = education.school.map(school => {
-         return(
-             <TextField
-                 key={school.id}
-                 label="School Location"
-                 className={classes.textField}
-                 value={school.schoolLocation}
-                 margin="normal"
-                 variant="filled"
-                 fullWidth
-                 disabled={true}
-             />
-         )
-
-        /!*console.log(school.schoolName);
-         console.log(school.schoolLocation);
-         console.log("diploma" + school.diploma);
-         console.log(school.schoolName);*!/
-     });*/
+    const education = identity != null && 'education' in identity ? identity.education : [];
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
@@ -61,80 +56,79 @@ class Education extends Component {
           <Tab icon={<SchoolIcon />} label="Education" style={{ marginBottom: 10, marginTop: 10}}/>
         </Grid>
 
-        {education.school.map(school => (
-          <TextField
-            key={school.id}
-            label="Education Level"
-            className={classes.textField}
-            value={school.educationLevel}
-            margin="normal"
-            variant="filled"
-            disabled={true}
-          />
-        ))}
+        {/*map up here and goes around the expansion panel*/}
 
-        {education.school.map(school => (
-          <TextField
-            key={school.id}
-            label="Graduated"
-            className={classes.textField}
-            value={school.graduate}
-            margin="normal"
-            variant="filled"
-            disabled={true}
-          />
-        ))}
+        {/*panel1 should be the school name*/}
 
-        {education.school.map(school => (
-          <TextField
-            key={school.id}
-            label="Years Completed"
-            className={classes.textField}
-            value={school.yearsCompleted}
-            margin="normal"
-            variant="filled"
-            disabled={true}
-          />
-        ))}
+        {/*change this to this  ======== onChange={() => this.handleChange('panel1')}*/}
+        {education.school.map(entry => (
+        <ExpansionPanel expanded={expanded === entry.schoolName} onChange={this.handleChange(entry.schoolName)} key={entry.id}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <TextField
+              label="Diploma/Degree/Certificate"
+              className={classes.textField}
+              value={entry.diploma}
+              margin="normal"
+              variant="filled"
+              fullWidth
+              disabled={true}
+            />
 
-        {education.school.map(school => (
-          <TextField
-            key={school.id}
-            label="School Name"
-            className={classes.textField}
-            value={school.schoolName}
-            margin="normal"
-            variant="filled"
-            fullWidth
-            disabled={true}
-          />
-        ))}
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <TextField
+              label="School Name"
+              className={classes.textField}
+              value={entry.schoolName}
+              margin="normal"
+              variant="filled"
+              fullWidth
+              disabled={true}
+            />
+          </ExpansionPanelDetails>
 
-        {education.school.map(school => (
-          <TextField
-            key={school.id}
-            label="School Location"
-            className={classes.textField}
-            value={school.schoolLocation}
-            margin="normal"
-            variant="filled"
-            fullWidth
-            disabled={true}
-          />
-        ))}
+          <ExpansionPanelDetails>
+            <TextField
+              label="School Location"
+              className={classes.textField}
+              value={entry.schoolLocation}
+              margin="normal"
+              variant="filled"
+              fullWidth
+              disabled={true}
+            />
+          </ExpansionPanelDetails>
 
-        {education.school.map(school => (
-          <TextField
-            key={school.id}
-            label="Diploma/Degree/Certificate"
-            className={classes.textField}
-            value={school.diploma}
-            margin="normal"
-            variant="filled"
-            fullWidth
-            disabled={true}
-          />
-        ))}    
+          <ExpansionPanelDetails>
+            <TextField
+              label="Education Level"
+              className={classes.textField}
+              value={entry.educationLevel}
+              margin="normal"
+              variant="filled"
+              disabled={true}
+            />
+
+            <TextField
+              label="Graduated"
+              className={classes.textField}
+              value={entry.graduate}
+              margin="normal"
+              variant="filled"
+              disabled={true}
+            />
+
+            <TextField
+              label="Years Completed"
+              className={classes.textField}
+              value={entry.yearsCompleted}
+              margin="normal"
+              variant="filled"
+              disabled={true}
+            />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+        ))}
       </form>
     );
   }

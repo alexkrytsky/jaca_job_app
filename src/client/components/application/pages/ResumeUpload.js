@@ -24,13 +24,15 @@ import {
 import RootState from '../../../store/RootState';
 import SpecialSkillsTable from './components/SpecialSkillsTable';
 import { Delete } from '@material-ui/icons';
+import ValidatedTextField from './components/ValidatedTextField';
+import ReactiveTextField from './components/ReactiveTextField';
 
 const getFiles = field => (e) => {
   e.preventDefault();
   field.file.forEach(function (file) {
-    console.log(file.name,'>>',file.size)
+    console.log(file.name, '>>', file.size);
   });
-  console.log(field.file[0], '>> getFiles', field.files,"   ",field.file);
+  console.log(field.file[0], '>> getFiles', field.files, '   ', field.file);
 
 
 };
@@ -39,27 +41,32 @@ const getFiles = field => (e) => {
 const styles = () => ({
   root: {}
 });
+
 @inject('store')
 @observer
 class ResumeUpload extends Component {
 
   render() {
     const { store, classes } = this.props;
-    const files = store.application.resumeUpload;
+    const { files, file, save } = store.application.resumeUpload;
 
     return (
 
       <Fragment>
         <Grid container spacing={24}>
           <input
-            accept="application/pdf/*"
+
             className={classes.input}
             style={{ display: 'none' }}
             id="raised-button-file"
             multiple
             type="file"
-            state={files}
-           onChange={files.onDrop.bind(this)}
+
+            onChange={(event) => {
+              // this.file.bind;
+              console.dir(event.target);
+              save(event.target.files);
+            }}
           />
           <label htmlFor="raised-button-file">
             <Button variant="raised" component="span" className={classes.button}>
@@ -67,35 +74,48 @@ class ResumeUpload extends Component {
             </Button>
           </label>
           {files.length > 0 && (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <DarkTableCell>File Name</DarkTableCell>
-                <DarkTableCell>File Type</DarkTableCell>
+            files.map((entry, id) => {
+                console.log(entry);
+                return (
 
-                <DarkTableCell />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {files.map(entry => (
-                <TableRow className={classes.row} key={entry.id}>
-                  <TableCell component="th" scope="row">
-                    {entry.name}
-                  </TableCell>
-              
+                  <Table key={id}>
+                    <TableBody>
+                      <TableRow className={classes.row}>
+                        <TableCell component="th" scope="row">
+                          {entry.name}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>);
+              }
+            )
+          )
+          }
 
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          )}
-          </Grid>
+          {/*<Table>*/}
+          {/*<TableHead>*/}
+          {/*<TableRow>*/}
+          {/*<DarkTableCell>File Name</DarkTableCell>*/}
+          {/*<DarkTableCell>File Type</DarkTableCell>*/}
+
+          {/*<DarkTableCell />*/}
+          {/*</TableRow>*/}
+          {/*</TableHead>*/}
+          {/*<TableBody>*/}
+
+
+          {/*</TableRow>*/}
+          {/*))}*/}
+          {/*</TableBody>*/}
+          {/*</Table>*/}
+        </Grid>
 
 
       </Fragment>
-    )
+    );
   }
 }
+
 ResumeUpload.wrappedComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired

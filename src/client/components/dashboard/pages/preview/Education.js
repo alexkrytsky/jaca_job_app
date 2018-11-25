@@ -13,6 +13,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary/Expan
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails/ExpansionPanelDetails';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel/ExpansionPanel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// THIS PAGE IS USED TO DISPLAY ADMIN CONSOLE EDUCATION SECTION
 
 // Component Styles
 const styles = theme => ({
@@ -62,7 +63,7 @@ class Education extends Component {
         {education.school.map(entry => (
           /*expansion panel to hold the data*/
         <ExpansionPanel expanded={expanded === entry.schoolName} onChange={this.handleChange(entry.schoolName)} key={entry.id}>
-          {/*Main title the person will see*/}
+          {/*Main title the admin will see*/}
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
            {/*holds the diploma information*/}
             <TextField

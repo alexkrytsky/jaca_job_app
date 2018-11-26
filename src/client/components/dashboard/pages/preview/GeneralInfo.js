@@ -48,7 +48,7 @@ class GeneralInfo extends Component {
         <Grid item xs={12}>
             <Tab icon={<PhoneIcon />} label="Contact" style={{ marginBottom: 10, marginTop: 10}}/>
         </Grid>
-          {/*holds the home phone information*/}
+          {/*holds the Primary phone information*/}
         <TextField
           label="Primary Phone"
           className={classes.textField}
@@ -57,15 +57,20 @@ class GeneralInfo extends Component {
           variant="filled"
           disabled={true}
         />
-          {/*holds the cell phone information*/}
-        <TextField
-          label="Secondary Phone"
-          className={classes.textField}
-          value={generalInfo.cellPhone}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-        />
+          {/*holds the secondary phone information*/}
+          {generalInfo.cellPhone ?
+              <TextField
+                  label="Secondary Phone"
+                  className={classes.textField}
+                  value={generalInfo.cellPhone}
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+              />
+              :
+              false
+          }
+
           {/*Title and Icon*/}
         <Grid item xs={12}>
             <Tab icon={<MapIcon />} label="Location" style={{ marginBottom: 10, marginTop: 30}}/>
@@ -85,19 +90,23 @@ class GeneralInfo extends Component {
           }}
         />
           {/*holds the address 2 information*/}
-        <TextField
-          label="Address 2"
-          style={{ margin: 8 }}
-          fullWidth
-          className={classes.textField}
-          value={generalInfo.address2}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
+          {generalInfo.address2 ?
+              <TextField
+                  label="Address 2"
+                  style={{margin: 8}}
+                  fullWidth
+                  className={classes.textField}
+                  value={generalInfo.address2}
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+                  InputLabelProps={{
+                      shrink: true,
+                  }}
+              />
+              :
+              false
+          }
           {/*holds the city information*/}
         <TextField
           label="City"

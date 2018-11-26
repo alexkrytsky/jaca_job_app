@@ -30,9 +30,9 @@ export default class GeneralInfoState extends FormState {
 
   @observable zipCode = new ValidatedField('', s => !zipCodeRegex.test(s));
 
-  @observable primaryPhone = new ValidatedField('', s => !phoneNumberRegex.test(s));
+  @observable homePhone = new ValidatedField('', s => !phoneNumberRegex.test(s));
 
-  @observable secondaryPhone = new Field('', s => !phoneNumberRegex.test(s));
+  @observable cellPhone = new Field('', s => !phoneNumberRegex.test(s));
 
   @observable email = new ValidatedField('', s => !emailRegex.test(s));
 

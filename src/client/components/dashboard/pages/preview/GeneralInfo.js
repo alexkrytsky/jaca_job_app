@@ -50,7 +50,7 @@ class GeneralInfo extends Component {
         </Grid>
           {/*holds the home phone information*/}
         <TextField
-          label="Home Phone"
+          label="Primary Phone"
           className={classes.textField}
           value={generalInfo.homePhone}
           margin="normal"
@@ -59,7 +59,7 @@ class GeneralInfo extends Component {
         />
           {/*holds the cell phone information*/}
         <TextField
-          label="Cell Phone"
+          label="Secondary Phone"
           className={classes.textField}
           value={generalInfo.cellPhone}
           margin="normal"

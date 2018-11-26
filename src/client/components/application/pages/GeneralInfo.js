@@ -50,8 +50,8 @@ class GeneralInfo extends Component {
       city,
       state,
       zipCode,
-      homePhone,
-      cellPhone,
+      primaryPhone,
+      secondaryPhone,
       email,
       ageCheck,
       authorizedCheck
@@ -105,10 +105,10 @@ class GeneralInfo extends Component {
             <Typography variant="subheading">Contact Information</Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <ValidatedTextField state={homePhone} label="Home Phone" />
+            <ValidatedTextField state={primaryPhone} label="Primary Phone" />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <ValidatedTextField state={cellPhone} label="Cell Phone" />
+            <ReactiveTextField state={secondaryPhone} label="Secondary Phone" />
           </Grid>
           <Grid item xs={12} sm={6}>
             <ValidatedTextField state={email} label="Email" />

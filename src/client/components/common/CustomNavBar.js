@@ -96,7 +96,7 @@ class CustomNavBar extends Component {
 
           {/* Left Navbar */}
           <Link to="/"><img src={MSC} alt="MSC" height={64} /></Link>
-          <Typography to="/" component={Link} className={classes.title} variant="title" noWrap>Multi-Service Center</Typography>
+          <Typography to="/" component={Link} className={classes.title} variant="display1" noWrap>Multi-Service Center</Typography>
 
           <div className={classes.grow} />
 

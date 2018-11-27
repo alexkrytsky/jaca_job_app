@@ -2,15 +2,9 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 
 import {
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    Paper,
+
     withStyles,
-    Typography, Grid
+    Grid
 } from '@material-ui/core';
 import { Cancel, CheckCircle, MonetizationOn, AccountCircle } from '@material-ui/icons';
 import PropTypes from 'prop-types';

@@ -6,6 +6,7 @@ import References from './References';
 import SpecialSkills from './SpecialSkills';
 import Submit from './Submit';
 import VoluntarySurvey from './VoluntarySurvey';
+import ResumeUpload from './ResumeUpload';
 
 
 export {
@@ -15,6 +16,7 @@ export {
   GeneralInfo,
   References,
   SpecialSkills,
+    ResumeUpload,
   Submit,
   VoluntarySurvey
 };

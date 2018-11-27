@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 import {
   Divider,
   Drawer,
@@ -14,20 +12,23 @@ import {
   Assignment,
   ChevronLeft,
   ChevronRight,
+  Close,
   Dashboard,
-  List as ListIcon
+  Search
 } from '@material-ui/icons';
+import classNames from 'classnames';
+import { inject, observer } from 'mobx-react';
+import * as PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import RootState from '../../store/RootState';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+@withStyles(theme => ({
   drawerPaper: {
-    position: 'relative',
+    position: 'fixed',
     whiteSpace: 'nowrap',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -53,17 +54,24 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-});
-
-const DashboardLink = props => <Link to="/" {...props} />;
-const AppLink = props => <Link to="/app" {...props} />;
-
+}), { withTheme: true })
+@withRouter
 @inject('store')
 @observer
-class FixedSidebar extends Component {
+export default class FixedSidebar extends Component {
+  static wrappedComponent = {
+    propTypes: {
+      classes: PropTypes.object.isRequired,
+      theme: PropTypes.object.isRequired,
+      store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
+    }
+  };
+
   render() {
     const { store, classes, theme } = this.props;
     const { open, toggleDrawer } = store;
+
+
     return (
       <Drawer
         variant="permanent"
@@ -79,24 +87,27 @@ class FixedSidebar extends Component {
         </div>
         <Divider />
         <List>
-          <ListItem button component={DashboardLink}>
+          <ListItem button to="/" component={Link}>
             <ListItemIcon><Dashboard /></ListItemIcon>
             <ListItemText inset primary="Dashboard" />
           </ListItem>
-          <ListItem button component={AppLink} onClick={store.application.reset}>
+          <ListItem button to="/search" component={Link}>
+            <ListItemIcon><Search /></ListItemIcon>
+            <ListItemText inset primary="Search" />
+          </ListItem>
+          <ListItem button to="/app" component={Link} onClick={store.application.reset}>
             <ListItemIcon><Assignment /></ListItemIcon>
             <ListItemText inset primary="Application" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button onClick={store.authentication.logout}>
+            <ListItemIcon><Close /></ListItemIcon>
+            <ListItemText inset primary="Logout" />
           </ListItem>
         </List>
       </Drawer>
     );
   }
 }
-
-FixedSidebar.wrappedComponent.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-  store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
-};
-
-export default withStyles(styles, { withTheme: true })(withRouter(FixedSidebar));

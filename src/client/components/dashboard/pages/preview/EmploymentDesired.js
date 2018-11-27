@@ -2,15 +2,9 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 
 import {
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    Paper,
+
     withStyles,
-    Typography, Grid
+    Grid
 } from '@material-ui/core';
 import { Cancel, CheckCircle, MonetizationOn, AccountCircle } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -39,24 +33,14 @@ class EmploymentDesired extends Component {
         // const { selectedIndex } = this.state;
         const { store, classes } = this.props;
         const { identity } = store.session;
-        // Style the Table header
-        const DarkTableCell = withStyles(theme => ({
-            head: {
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.secondary.contrastText
-            }
-        }))(TableCell);
+
         const employmentDesired = identity != null && 'employmentDesired' in identity ? identity.employmentDesired : {};
-        console.log(employmentDesired);
+        //console.log(employmentDesired);
         const redColor = {
             color: 'red'
         };
         const greenColor = {
             color: 'green'
-        };
-        const cell = {
-            textAlign: 'center',
-            padding: '0 10px'
         };
         return (
                 <Grid container>
@@ -70,31 +54,6 @@ class EmploymentDesired extends Component {
                     <Grid item xs={12}>
                         <h4>{employmentDesired.workedAtMsc ? <CheckCircle style={greenColor}/> : <Cancel style={redColor}/>} Worked at MSC before</h4>
                     </Grid>
-                    <Grid item xs={12}>
-                        <h3>Availability:</h3>
-                    </Grid>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <DarkTableCell style={cell}>Start Date</DarkTableCell>
-                                <DarkTableCell style={cell}>Monday</DarkTableCell>
-                                <DarkTableCell style={cell}>Tuesday</DarkTableCell>
-                                <DarkTableCell style={cell}>Wednesday</DarkTableCell>
-                                <DarkTableCell style={cell}>Thursday</DarkTableCell>
-                                <DarkTableCell style={cell}>Friday</DarkTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow className={classes.row}>
-                                <TableCell style={cell}><strong>{employmentDesired.startDate}</strong></TableCell>
-                                <TableCell style={cell}>{employmentDesired.monday ? <CheckCircle style={greenColor}/> : <Cancel style={redColor}/>}</TableCell>
-                                <TableCell style={cell}>{employmentDesired.tuesday ? <CheckCircle style={greenColor}/> : <Cancel style={redColor}/>}</TableCell>
-                                <TableCell style={cell}>{employmentDesired.wednesday ? <CheckCircle style={greenColor}/> : <Cancel style={redColor}/>}</TableCell>
-                                <TableCell style={cell}>{employmentDesired.thursday ? <CheckCircle style={greenColor}/> : <Cancel style={redColor}/>}</TableCell>
-                                <TableCell style={cell}>{employmentDesired.friday ? <CheckCircle style={greenColor}/> : <Cancel style={redColor}/>}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
                 </Grid>
         );
     }

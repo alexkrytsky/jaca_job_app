@@ -42,8 +42,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 3,
     padding: theme.spacing.unit * 2,
-    height: `calc(${window.innerHeight}px - 88px - ${topOffset}px)`,
-    overflow: 'auto',
     backgroundColor: theme.palette.background.default,
     [theme.breakpoints.up(appWidth + theme.spacing.unit * 3 * 2)]: {
       marginTop: theme.spacing.unit,
@@ -67,9 +65,10 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   devTools: {
-    position: 'absolute',
-    bottom: 0,
-    right: '17px'
+    zIndex: 10000,
+    position: 'fixed',
+    top: '16px',
+    right: '72px'
   },
 });
 

@@ -57,9 +57,27 @@ class Login extends Component {
           <Typography variant="display3">
             Sign in
           </Typography>
-          {error !== '' ? (<Chip label={error} color="error" icon={<Error />} />) : (<Fragment />)}
-          <ValidatedTextField state={email} label="Email Address" autoFocus />
-          <ValidatedTextField state={password} label="Password" type="password" />
+          {error !== '' ? (<Chip label={error} color="secondary" icon={<Error />} />) : (<Fragment />)}
+          <ValidatedTextField
+            state={email}
+            label="Email Address"
+            autoFocus
+            onKeyUp={(event) => {
+              if (event.key === 'Enter') {
+                login();
+              }
+            }}
+          />
+          <ValidatedTextField
+            state={password}
+            label="Password"
+            type="password"
+            onKeyUp={(event) => {
+              if (event.key === 'Enter') {
+                login();
+              }
+            }}
+          />
           <Button
             fullWidth
             variant="contained"

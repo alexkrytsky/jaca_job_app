@@ -17,12 +17,6 @@ export default class EmploymentDesiredState extends FormState {
   @observable employmentDesired = new ValidatedField('');
   @observable salaryExpectations = new ValidatedField('');
   @observable startDate = new ValidatedField('');
-  @observable monday = new Field(false);
-  @observable tuesday = new Field(false);
-  @observable wednesday = new Field(false);
-  @observable thursday = new Field(false);
-
-  @observable friday = new Field(false);
   @observable applied = new Field(false);
   @observable workedAtMsc = new Field(false);
 

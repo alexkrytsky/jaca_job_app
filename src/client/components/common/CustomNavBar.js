@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react';
 import { BrightnessHigh, BrightnessLow, Menu } from '@material-ui/icons';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import RootState from '../../store/RootState';
 import MSC from '../../msc.png';
 
@@ -40,6 +41,7 @@ const styles = theme => ({
   },
   title: {
     paddingLeft: theme.spacing.unit * 2,
+    textDecoration: 'none'
   },
   flex: {
     display: 'flex'
@@ -93,8 +95,8 @@ class CustomNavBar extends Component {
           }
 
           {/* Left Navbar */}
-          <img src={MSC} alt="MSC" height={64} />
-          <Typography className={classes.title} variant="title" noWrap>Multi-Service Center</Typography>
+          <Link to="/"><img src={MSC} alt="MSC" height={64} /></Link>
+          <Typography to="/" component={Link} className={classes.title} variant="title" noWrap>Multi-Service Center</Typography>
 
           <div className={classes.grow} />
 

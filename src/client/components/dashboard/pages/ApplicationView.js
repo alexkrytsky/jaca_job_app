@@ -18,7 +18,9 @@ import RootState from '../../../store/RootState';
 import DataPanel from './DataPanel';
 import EmploymentDesired from './preview/EmploymentDesired';
 import GeneralInfo from './preview/GeneralInfo';
-
+import Education from './preview/Education';
+import References from './preview/References';
+import VoluntarySurvey from "./preview/VoluntarySurvey";
 
 const topOffset = 60;
 
@@ -66,11 +68,11 @@ class ApplicationView extends Component {
 
     //const generalInfo = identity != null && 'generalInfo' in identity ? identity.generalInfo : {};
     // const employmentDesired = identity != null && 'employmentDesired' in identity ? identity.employmentDesired : {};
-    const education = identity != null && 'education' in identity ? identity.education : {};
+    //const education = identity != null && 'education' in identity ? identity.education : {};
     const specialSkills = identity != null && 'specialSkills' in identity ? identity.specialSkills : {};
     const employmentHistory = identity != null && 'employmentHistory' in identity ? identity.employmentHistory : {};
-    const references = identity != null && 'references' in identity ? identity.references : {};
-    const voluntarySurvey = identity != null && 'voluntarySurvey' in identity ? identity.voluntarySurvey : {};
+    //const references = identity != null && 'references' in identity ? identity.references : {};
+    //const voluntarySurvey = identity != null && 'voluntarySurvey' in identity ? identity.voluntarySurvey : {};
 
     const sections = [
       {
@@ -81,18 +83,12 @@ class ApplicationView extends Component {
       {
         label: 'Employment Desired',
         subLabel: 'Start date, availability, etc...',
-          component: (<EmploymentDesired/>),
+        component: (<EmploymentDesired/>),
       },
       {
         label: 'Education',
         subLabel: 'College, High School, Degrees, etc...',
-        component: (
-          <DataPanel
-            title="Education"
-            subTitle="College, High School, Degrees, etc..."
-            data={education}
-          />
-        )
+        component: (<Education/>),
       },
       {
         label: 'Special Skills',
@@ -119,25 +115,13 @@ class ApplicationView extends Component {
       {
         label: 'References',
         subLabel: 'Co-workers, Bosses, etc...',
-        component: (
-          <DataPanel
-            title="References"
-            subTitle="Co-workers, Bosses, etc..."
-            data={references}
-          />
-        ),
+        component: (<References/>)
       },
       {
         label: 'Voluntary Survey',
         subLabel: 'Gender, Ethnicity, etc...',
-        component: (
-          <DataPanel
-            title="Voluntary Survey"
-            subTitle="Gender, Ethnicity, etc..."
-            data={voluntarySurvey}
-          />
-        ),
-      }
+        component: (<VoluntarySurvey/>)
+      },
     ];
 
     return (
@@ -198,3 +182,4 @@ ApplicationView.wrappedComponent.propTypes = {
 };
 
 export default withStyles(styles)(withRouter(ApplicationView));
+

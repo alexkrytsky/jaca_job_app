@@ -11,6 +11,7 @@ import RootState from '../../../../store/RootState';
 import Tab from '@material-ui/core/Tab/Tab';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MapIcon from '@material-ui/icons/Map';
+// THIS PAGE IS USED TO DISPLAY ADMIN CONSOLE GENERAL INFORMATION SECTION
 
 // Component Styles
 const styles = theme => ({
@@ -39,44 +40,42 @@ class GeneralInfo extends Component {
     const { store, classes } = this.props;
     const { identity } = store.session;
     const generalInfo = identity != null && 'generalInfo' in identity ? identity.generalInfo : {};
-    console.log(generalInfo);
 
     return (
+        /*form which holds class for the styles*/
       <form className={classes.container} noValidate autoComplete="off">
-
+          {/*Title and Icon*/}
         <Grid item xs={12}>
             <Tab icon={<PhoneIcon />} label="Contact" style={{ marginBottom: 10, marginTop: 10}}/>
         </Grid>
-
+          {/*holds the Primary phone information*/}
         <TextField
-          label="Home Phone"
+          label="Primary Phone"
           className={classes.textField}
           value={generalInfo.homePhone}
           margin="normal"
           variant="filled"
           disabled={true}
         />
-        <TextField
-          label="Cell Phone"
-          className={classes.textField}
-          value={generalInfo.cellPhone}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-        />
-        {/*<TextField
-          label="Email"
-          className={classes.textField}
-          value={generalInfo.email}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-        />*/}
+          {/*holds the secondary phone information*/}
+          {generalInfo.cellPhone ?
+              <TextField
+                  label="Secondary Phone"
+                  className={classes.textField}
+                  value={generalInfo.cellPhone}
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+              />
+              :
+              false
+          }
 
+          {/*Title and Icon*/}
         <Grid item xs={12}>
             <Tab icon={<MapIcon />} label="Location" style={{ marginBottom: 10, marginTop: 30}}/>
         </Grid>
-
+          {/*holds the address 1 information*/}
         <TextField
           label="Address"
           style={{ margin: 8 }}
@@ -90,20 +89,25 @@ class GeneralInfo extends Component {
             shrink: true,
           }}
         />
-        <TextField
-          label="Address 2"
-          style={{ margin: 8 }}
-          fullWidth
-          className={classes.textField}
-          value={generalInfo.address2}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-
+          {/*holds the address 2 information*/}
+          {generalInfo.address2 ?
+              <TextField
+                  label="Address 2"
+                  style={{margin: 8}}
+                  fullWidth
+                  className={classes.textField}
+                  value={generalInfo.address2}
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+                  InputLabelProps={{
+                      shrink: true,
+                  }}
+              />
+              :
+              false
+          }
+          {/*holds the city information*/}
         <TextField
           label="City"
           className={classes.textField}
@@ -112,6 +116,7 @@ class GeneralInfo extends Component {
           variant="filled"
           disabled={true}
         />
+          {/*holds the state information*/}
         <TextField
           label="State"
           className={classes.textField}
@@ -120,6 +125,7 @@ class GeneralInfo extends Component {
           variant="filled"
           disabled={true}
         />
+          {/*holds the zip code information*/}
         <TextField
           label="zip Code"
           className={classes.textField}
@@ -129,7 +135,6 @@ class GeneralInfo extends Component {
           disabled={true}
         />
       </form>
-
     );
   }
 }

@@ -44,7 +44,7 @@ class VoluntarySurvey extends Component {
         const {identity} = store.session;
         const voluntarySurvey = identity != null && 'voluntarySurvey' in identity ? identity.voluntarySurvey : [];
 
-        console.log(voluntarySurvey);
+        //console.log(voluntarySurvey);
 
         return (
             /*form which holds class for the styles*/

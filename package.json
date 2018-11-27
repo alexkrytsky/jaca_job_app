@@ -18,6 +18,7 @@
     "Alex"
   ],
   "dependencies": {
+    "@google-cloud/datastore": "^2.0.0",
     "@material-ui/core": "^3.1.2",
     "@material-ui/icons": "^3.0.1",
     "@material-ui/lab": "^3.0.0-alpha.23",

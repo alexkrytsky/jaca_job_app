@@ -20,6 +20,7 @@ import EmploymentDesired from './preview/EmploymentDesired';
 import GeneralInfo from './preview/GeneralInfo';
 import Education from './preview/Education';
 import References from './preview/References';
+import VoluntarySurvey from "./preview/VoluntarySurvey";
 
 const topOffset = 60;
 
@@ -71,7 +72,7 @@ class ApplicationView extends Component {
     const specialSkills = identity != null && 'specialSkills' in identity ? identity.specialSkills : {};
     const employmentHistory = identity != null && 'employmentHistory' in identity ? identity.employmentHistory : {};
     //const references = identity != null && 'references' in identity ? identity.references : {};
-    const voluntarySurvey = identity != null && 'voluntarySurvey' in identity ? identity.voluntarySurvey : {};
+    //const voluntarySurvey = identity != null && 'voluntarySurvey' in identity ? identity.voluntarySurvey : {};
 
     const sections = [
       {
@@ -119,14 +120,8 @@ class ApplicationView extends Component {
       {
         label: 'Voluntary Survey',
         subLabel: 'Gender, Ethnicity, etc...',
-        component: (
-          <DataPanel
-            title="Voluntary Survey"
-            subTitle="Gender, Ethnicity, etc..."
-            data={voluntarySurvey}
-          />
-        ),
-      }
+        component: (<VoluntarySurvey/>)
+      },
     ];
 
     return (

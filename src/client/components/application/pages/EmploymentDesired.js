@@ -33,11 +33,6 @@ class EmploymentDesired extends Component {
     const { store, classes } = this.props;
     const {
       employmentDesired,
-      monday,
-      tuesday,
-      wednesday,
-      thursday,
-      friday,
       salaryExpectations,
       startDate,
       applied,
@@ -55,7 +50,7 @@ class EmploymentDesired extends Component {
               className={classes.formControl}
               error={employmentDesired.validation}
             >
-              <InputLabel htmlFor="state">Position Applying For</InputLabel>
+              <InputLabel htmlFor="state">Job Applying For</InputLabel>
               <Select
                 value={employmentDesired.value}
                 onChange={event => employmentDesired.update(event.target.value)}
@@ -73,7 +68,7 @@ class EmploymentDesired extends Component {
               state={startDate}
               id="startDate"
               name="startDate"
-              label="Start Date"
+              label="Available Start Date"
             />
           </Grid>
           <Grid item xs={12}>
@@ -111,84 +106,6 @@ class EmploymentDesired extends Component {
                 />
               )}
               label="Have you worked at MSC before?"
-              className={classes.formControlLabel}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="subheading">Days Available</Typography>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <FormControlLabel
-              control={(
-                <Checkbox
-                  color="secondary"
-                  name="monday"
-                  value="true"
-                  checked={monday.value}
-                  onChange={event => monday.update(event.target.checked)}
-                />
-              )}
-              label="Monday"
-              className={classes.formControlLabel}
-            />
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <FormControlLabel
-              control={(
-                <Checkbox
-                  color="secondary"
-                  name="tuesday"
-                  value="true"
-                  checked={tuesday.value}
-                  onChange={event => tuesday.update(event.target.checked)}
-                />
-              )}
-              label="Tuesday"
-              className={classes.formControlLabel}
-            />
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <FormControlLabel
-              control={(
-                <Checkbox
-                  color="secondary"
-                  name="tuesday"
-                  value="true"
-                  checked={wednesday.value}
-                  onChange={event => wednesday.update(event.target.checked)}
-                />
-              )}
-              label="Wednesday"
-              className={classes.formControlLabel}
-            />
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <FormControlLabel
-              control={(
-                <Checkbox
-                  color="secondary"
-                  name="thursday"
-                  value="true"
-                  checked={thursday.value}
-                  onChange={event => thursday.update(event.target.checked)}
-                />
-              )}
-              label="Thursday"
-              className={classes.formControlLabel}
-            />
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <FormControlLabel
-              control={(
-                <Checkbox
-                  color="secondary"
-                  name="friday"
-                  value="true"
-                  checked={friday.value}
-                  onChange={event => friday.update(event.target.checked)}
-                />
-              )}
-              label="Friday"
               className={classes.formControlLabel}
             />
           </Grid>

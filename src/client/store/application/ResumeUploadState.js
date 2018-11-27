@@ -11,8 +11,7 @@ export default class ResumeUploadState extends FormState {
         super('ResumeUpload', <ResumeUpload />, 'Errors Remaining.');
     }
   @observable files= [];
-    @observable file;
-    @observable fileName;
+    @observable fileIssues="";
 
     // @action onDrop(InFile){
     //   if(InFile.target.files[0].size>10000000){
@@ -49,15 +48,21 @@ export default class ResumeUploadState extends FormState {
           } else if (docType === 'doc') {
           } else if (docType === 'txt') {
           } else {
-            alert('Please upload a txt,doc, docx, or pdf file');
-          
-            return;
+            this.fileIssues="Please Upload a docx,doc,txt,or pdf";
+            console.dir(this.fileIssues);
+            return false;
           }
       if(data[0].size>10000000) {
-            alert("The file is too larges");
-            return;
+            this.fileIssues="The file you are trying to upload is too large";
+        //this.errorFiles.push('The file is too larges');
+
+        return false;
       }
       this.files.push(data[0]);
+      this.fileIssues="";
       return true;
+    };
+    @action remove = (data)=>{
+      this.files.splice(data);
     }
 }

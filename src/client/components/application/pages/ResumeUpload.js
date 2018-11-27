@@ -2,12 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import {
-  Avatar,
-  Collapse,
-  List,
-  ListItem,
-  ListItemText, Table, TableBody, TableCell,
-  TableHead, TableRow,
+
+ Table, TableBody, TableCell,
+ TableRow, Typography,
   withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -48,7 +45,7 @@ class ResumeUpload extends Component {
 
   render() {
     const { store, classes } = this.props;
-    const { files, file, save } = store.application.resumeUpload;
+    const { files, fileIssues, save,remove } = store.application.resumeUpload;
 
     return (
 
@@ -64,18 +61,32 @@ class ResumeUpload extends Component {
 
             onChange={(event) => {
               // this.file.bind;
-              console.dir(event.target);
-              save(event.target.files);
+              //console.dir(event.target);s
+              if(!save(event.target.files)){
+                return "Hello please fix the errors"
+              }
             }}
           />
           <label htmlFor="raised-button-file">
             <Button variant="raised" component="span" className={classes.button}>
               Upload
             </Button>
+
           </label>
+          {fileIssues !=="" &&
+
+              <Typography
+
+                color="error"
+              >{fileIssues}
+              </Typography>
+
+
+
+          }
           {files.length > 0 && (
             files.map((entry, id) => {
-                console.log(entry);
+
                 return (
 
                   <Table key={id}>
@@ -84,6 +95,13 @@ class ResumeUpload extends Component {
                         <TableCell component="th" scope="row">
                           {entry.name}
                         </TableCell>
+                        <TableCell component="th" scope="row">
+                          <button variant="raised" color="error" component="span" className={classes.button} onClick={(event) => {
+
+                            remove(id);
+                          }}>X
+                            </button>
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>);
@@ -91,6 +109,10 @@ class ResumeUpload extends Component {
             )
           )
           }
+
+
+
+
 
           {/*<Table>*/}
           {/*<TableHead>*/}

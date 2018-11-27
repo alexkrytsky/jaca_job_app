@@ -95,7 +95,7 @@ class ResumeUpload extends Component {
                         <TableCell component="th" scope="row">
                           {entry.name}
                         </TableCell>
-                        <TableCell component="th" scope="row">
+                        <TableCell >
                           <button variant="raised" color="error" component="span" className={classes.button} onClick={(event) => {
 
                             remove(id);

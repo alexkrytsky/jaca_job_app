@@ -54,28 +54,40 @@ class VoluntarySurvey extends Component {
                     <Tab icon={<GenderIcon/>} label="Gender" style={{marginBottom: 5, marginTop: 5}}/>
                 </Grid>
                 {/*holds the gender information*/}
-                <TextField
-                    label="Gender"
-                    className={classes.textField}
-                    value={voluntarySurvey.gender}
-                    margin="normal"
-                    variant="filled"
-                    disabled={true}
-                />
+                {voluntarySurvey.gender ?
+                    <TextField
+                        label="Gender"
+                        className={classes.textField}
+                        value={voluntarySurvey.gender}
+                        margin="normal"
+                        variant="filled"
+                        disabled={true}
+                    />
+                    :
+                    <TextField
+                        label=""
+                        className={classes.textField}
+                        value="No gender was chosen"
+                        margin="normal"
+                        variant="filled"
+                        disabled={true}
+                    />
+                }
+
                 {/*holds the Ethnic Code information*/}
                 {/*Title and Icon for Ethnic Code*/}
                 <Grid item xs={12}>
-                    <Tab icon={<PeopleIcon/>} label="Ethnic Code" style={{marginBottom: 5, marginTop: 5}}/>
+                    <Tab icon={<PeopleIcon/>} label="Ethnicity" style={{marginBottom: 5, marginTop: 5}}/>
                 </Grid>
 
                 <Grid item xs={12}>
                     {/*Show information if person is African American */}
                     {voluntarySurvey.afroAmerican ?
                         <TextField
-                            label="Black/African-American"
+                            label=""
                             style={{margin: 8}}
                             className={classes.textField}
-                            value="Yes"
+                            value="Black/African-American"
                             margin="normal"
                             variant="filled"
                             disabled={true}
@@ -85,10 +97,10 @@ class VoluntarySurvey extends Component {
                     {/*Show information if person is Asian */}
                     {voluntarySurvey.asian ?
                         <TextField
-                            label="Asian"
+                            label=""
                             style={{margin: 8}}
                             className={classes.textField}
-                            value="Yes"
+                            value="Asian"
                             margin="normal"
                             variant="filled"
                             disabled={true}
@@ -98,10 +110,10 @@ class VoluntarySurvey extends Component {
                     {/*Show information if person is Pacific Islander */}
                     {voluntarySurvey.pacificIslander ?
                         <TextField
-                            label="Pacific Islander"
+                            label=""
                             style={{margin: 8}}
                             className={classes.textField}
-                            value="Yes"
+                            value="Pacific Islander"
                             margin="normal"
                             variant="filled"
                             disabled={true}
@@ -111,10 +123,10 @@ class VoluntarySurvey extends Component {
                     {/*Show information if person is White */}
                     {voluntarySurvey.white ?
                         <TextField
-                            label="White"
+                            label=""
                             style={{margin: 8}}
                             className={classes.textField}
-                            value="Yes"
+                            value="White"
                             margin="normal"
                             variant="filled"
                             disabled={true}
@@ -124,10 +136,10 @@ class VoluntarySurvey extends Component {
                     {/*Show information if person is Hispanic */}
                     {voluntarySurvey.hispanic ?
                         <TextField
-                            label="Hispanic"
+                            label=""
                             style={{margin: 8}}
                             className={classes.textField}
-                            value="Yes"
+                            value="Hispanic"
                             margin="normal"
                             variant="filled"
                             disabled={true}
@@ -138,16 +150,47 @@ class VoluntarySurvey extends Component {
                     {/*Show information if person is American Native */}
                     {voluntarySurvey.americanNative ?
                         <TextField
-                            label="American Native/ Indian"
+                            label=""
                             style={{margin: 8}}
                             className={classes.textField}
-                            value="Yes"
+                            value="American Native/ Indian"
                             margin="normal"
                             variant="filled"
                             disabled={true}
                         />
                         :
                         false}
+                    {/*Show information if person is other Ethnicity */}
+                    {voluntarySurvey.otherEthnicity ?
+                        <TextField
+                            label=""
+                            style={{margin: 8}}
+                            className={classes.textField}
+                            value="Other"
+                            margin="normal"
+                            variant="filled"
+                            disabled={true}
+                        />
+                        :
+                        false}
+
+                        {/*shows if no ethnicity is chosen on the list*/}
+                    {voluntarySurvey.otherEthnicity || voluntarySurvey.afroAmerican || voluntarySurvey.asian
+                    || voluntarySurvey.pacificIslander || voluntarySurvey.white || voluntarySurvey.otherEthnicity
+                    || voluntarySurvey.hispanic || voluntarySurvey.americanNative ?
+                        ""
+                        :
+                        <TextField
+                            label=""
+                            style={{margin: 8}}
+                            className={classes.textField}
+                            value="No ethnicity was chosen"
+                            margin="normal"
+                            variant="filled"
+                            disabled={true}
+                        />
+                    }
+
                 </Grid>
 
                 {/*Title and Icon*/}
@@ -185,7 +228,7 @@ class VoluntarySurvey extends Component {
                     <Tab icon={<StarIcon/>} label="Veteran" style={{marginBottom: 5, marginTop: 5}}/>
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={5}>
                 {/*Show information if person is a Vietnam Era Veteran */}
                 {voluntarySurvey.vietnamVeteran ?
                     <TextField
@@ -218,10 +261,10 @@ class VoluntarySurvey extends Component {
                 }
                 </Grid>
                 {/*puts a gap inbetween textfields*/}
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={5}>
                 {/*Show information if person is a veteran */}
                 {voluntarySurvey.activeDutyVeteran ?
                     <TextField
@@ -254,7 +297,7 @@ class VoluntarySurvey extends Component {
                 }
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={5}>
                 {/*Show information if person is a a special disabled American Veteran */}
                 {voluntarySurvey.disabledVeteran ?
                     <TextField
@@ -287,10 +330,10 @@ class VoluntarySurvey extends Component {
                 }
                 </Grid>
                 {/*puts a gap inbetween textfields*/}
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={5}>
                 {/*Show information if person is a newly separated veteran */}
                 {voluntarySurvey.newVeteran ?
                     <TextField

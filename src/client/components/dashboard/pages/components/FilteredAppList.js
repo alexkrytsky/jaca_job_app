@@ -297,7 +297,7 @@ export default class FilteredAppList extends Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: this.props.apps.list.map(app => app.key.id) }));
+      this.setState(state => ({ selected: this.props.apps.list.map(app => app.id) }));
       return;
     }
     this.setState({ selected: [] });
@@ -357,15 +357,15 @@ export default class FilteredAppList extends Component {
                 stableSort(apps.list, getStorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map(app => {
-                    const isSelected = this.isSelected(app.key.id);
+                    const isSelected = this.isSelected(app.id);
                     return (
                       <TableRow
                         hover
-                        onClick={event => this.handleClick(event, app.key.id)}
+                        onClick={event => this.handleClick(event, app.id)}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
-                        key={app.key.id}
+                        key={app.id}
                         selected={isSelected}
                       >
                         <TableCell padding="checkbox">
@@ -376,13 +376,13 @@ export default class FilteredAppList extends Component {
                         <TableCell padding="none">{app.email}</TableCell>
                         <Hidden mdDown>
                           <TableCell
-                            padding="none">{app.employmentDesired.employmentDesired}</TableCell>
+                            padding="none">{app.position || app.employmentDesired.employmentDesired}</TableCell>
                           <TableCell
                             padding="none">{new Date(app.created).toLocaleString()}</TableCell>
                         </Hidden>
                         <TableCell>
                           <Tooltip title="View Application">
-                            <IconButton component={Link} to={`/application/${app.key.id}`}
+                            <IconButton component={Link} to={`/application/${app.id}`}
                                         aria-label="View Application">
                               <OpenInNew fontSize="small" />
                             </IconButton>

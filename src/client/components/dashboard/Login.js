@@ -56,7 +56,7 @@ class Login extends Component {
     return (
       <Grid
         container
-        spacing={48}
+        spacing={40}
         direction="row"
         justify="space-around"
         alignItems="stretch"

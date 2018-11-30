@@ -49,9 +49,9 @@ export default class RootState {
     }));
   };
 
-  @action fetchApps() {
+  @action fetchApps(full = false) {
     return new Promise((resolve) => {
-      axios.get('/api/identities')
+      axios.get(full ? '/api/app/search' : '/api/app/list')
         .then((response) => {
           this.session.apps.replace(response.data);
           this.session.identity = this.session.apps[0];

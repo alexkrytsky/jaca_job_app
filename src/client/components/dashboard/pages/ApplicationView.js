@@ -51,7 +51,7 @@ class ApplicationView extends Component {
 
   componentWillMount() {
     const { store, match } = this.props;
-    store.fetchApps()
+    store.fetchApps(true)
       .then(() => {
         store.session.identity = store.session.apps.filter(a => a.key.id === match.params.appId)[0];
       });

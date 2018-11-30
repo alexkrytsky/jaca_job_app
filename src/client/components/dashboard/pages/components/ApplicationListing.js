@@ -45,13 +45,13 @@ export default class ApplicationListing extends Component {
   render() {
     const { anchorEl } = this.state;
     const { app } = this.props;
-    const link = `/application/${app.key.id}`;
+    const link = `/application/${app.id}`;
     return (
-      <ListItem key={app.key.id}>
+      <ListItem key={app.id}>
         <Avatar><Person /></Avatar>
         <ListItemText
           primary={`${app.firstName} ${app.lastName} - ${app.email}`}
-          secondary={app.employmentDesired.employmentDesired}
+          secondary={app.position || app.employmentDesired.employmentDesired}
         />
         <ListItemSecondaryAction>
           <IconButton

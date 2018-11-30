@@ -203,8 +203,17 @@ export default class ApplicationState {
       specialSkills,
       employmentHistory,
       references,
+      resumeUpload,
       voluntarySurvey
     } = this;
+
+    const formData = new FormData();
+
+    Object.values(resumeUpload.files)
+      .filter(value => value instanceof File)
+      .forEach((file, index) => {
+        formData.append(`files[${index}]`, file);
+      });
 
     const data = {
       firstName: generalInfo.firstName.value,
@@ -228,11 +237,6 @@ export default class ApplicationState {
         salaryExpectations: employmentDesired.salaryExpectations.value,
         applied: employmentDesired.applied.value,
         workedAtMsc: employmentDesired.workedAtMsc.value,
-        monday: employmentDesired.monday.value,
-        tuesday: employmentDesired.tuesday.value,
-        wednesday: employmentDesired.wednesday.value,
-        thursday: employmentDesired.thursday.value,
-        friday: employmentDesired.friday.value,
       },
       education: {
         school: toJS(education.school)
@@ -263,7 +267,12 @@ export default class ApplicationState {
       }
     };
 
-    axios.post('/api/app/submit', data)
+    formData.append('data', JSON.stringify(data));
+
+    axios.post('/api/app/submit', formData,
+      {
+        headers: { 'Content-Type': `multipart/form-data; boundary=${formData._boundary}` }
+      })
       .then(() => {
         this.submitStatus = 'Success';
       })

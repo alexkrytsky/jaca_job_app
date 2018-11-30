@@ -24,6 +24,8 @@ export default class VoluntarySurveyState extends FormState {
 
     @observable asian = new Field(false);
 
+    @observable otherEthnicity = new Field(false);
+
     @observable pacificIslander = new Field(false);
 
     @observable vietnamVeteran = new Field(false);

@@ -11,9 +11,8 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RootState from '../../../store/RootState';
-
+import ReactiveTextField from './components/ReactiveTextField';
 import ValidatedTextField from './components/ValidatedTextField';
-import StatesList from '../../../constants/states';
 
 const styles = theme => ({
   padding: {
@@ -34,7 +33,6 @@ class EmploymentDesired extends Component {
     const {
       employmentDesired,
       salaryExpectations,
-      startDate,
       applied,
       workedAtMsc
     } = store.application.employmentDesired;
@@ -64,15 +62,7 @@ class EmploymentDesired extends Component {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <ValidatedTextField
-              state={startDate}
-              id="startDate"
-              name="startDate"
-              label="Available Start Date"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <ValidatedTextField
+            <ReactiveTextField
               state={salaryExpectations}
               id="salaryExpectations"
               name="salaryExpectations"

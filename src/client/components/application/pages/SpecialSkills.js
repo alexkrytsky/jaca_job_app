@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
-import { Button, Typography, Collapse, Grid, TextField, withStyles } from '@material-ui/core';
+import { Button, Collapse, Grid, withStyles } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import RootState from '../../../store/RootState';
@@ -47,24 +47,12 @@ class SpecialSkills extends Component {
       name: name,
       issuedDate: issuedDate,
       expirationDate: expirationDate,
-      description,
       save,
     } = store.application.specialSkills;
 
     return (
       <Fragment>
         <Collapse in={!adding}>
-          <Grid item xs={12}>
-            <ValidatedTextField
-              state={description}
-              multiline
-              rowsMax="4"
-              margin="normal"
-              helperText="Description"
-              label="Description of skills"
-            />
-          </Grid>
-
           <Grid container spacing={24}>
             {certificate.length > 0 && (
               <Grid item xs={12}>

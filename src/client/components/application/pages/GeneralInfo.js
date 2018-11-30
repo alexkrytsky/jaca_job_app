@@ -51,7 +51,6 @@ class GeneralInfo extends Component {
       state,
       zipCode,
       homePhone,
-      cellPhone,
       email,
       ageCheck,
       authorizedCheck
@@ -106,9 +105,6 @@ class GeneralInfo extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <ValidatedTextField state={homePhone} label="Primary Phone" />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <ReactiveTextField state={cellPhone} label="Secondary Phone" />
           </Grid>
           <Grid item xs={12} sm={6}>
             <ValidatedTextField state={email} label="Email" />

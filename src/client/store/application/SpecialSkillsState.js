@@ -10,15 +10,13 @@ import FormState from './FormState';
  */
 export default class SpecialSkillsState extends FormState {
   constructor() {
-    super('Special Skills', <SpecialSkills />, 'Errors Remaining to save.');
+    super('Certification', <SpecialSkills />, 'Errors Remaining to save.');
   }
 
   idCounter = 0;
 
   // Array of entries
   @observable certificate = [];
-
-  @observable description = new ValidatedField('');
 
   @observable name = new ValidatedField('');
 

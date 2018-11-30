@@ -38,6 +38,7 @@ class VoluntarySurvey extends Component {
           americanNative,
           afroAmerican,
           asian,
+            otherEthnicity,
           pacificIslander,
           vietnamVeteran,
           activeDutyVeteran,
@@ -67,7 +68,7 @@ class VoluntarySurvey extends Component {
                 </FormControl>
             </Grid>
             <Grid item xs={12}>
-                <Typography variant="subheading">Ethnic Code (Check all that apply):</Typography>
+                <Typography variant="subheading">Ethnicity (Check all that apply):</Typography>
             </Grid>
             <Grid item xs={4} sm={4}>
                 <FormControlLabel
@@ -159,6 +160,23 @@ class VoluntarySurvey extends Component {
                     className={classes.formControlLabel}
                 />
             </Grid>
+
+          <Grid item xs={4} sm={4}>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  color="secondary"
+                  name="Other"
+                  value="true"
+                  checked={otherEthnicity.value}
+                  onChange={event => otherEthnicity.update(event.target.checked)}
+                />
+              )}
+              label="Other"
+              className={classes.formControlLabel}
+            />
+          </Grid>
+
             <Grid item xs={12}>
                 <Typography variant="subheading">Check all that apply</Typography>
             </Grid>

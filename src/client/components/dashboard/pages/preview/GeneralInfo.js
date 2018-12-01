@@ -3,15 +3,17 @@ import React, { Component } from 'react';
 
 import {
   Grid,
-  TextField,
+  ListItemIcon,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RootState from '../../../../store/RootState';
-import Tab from '@material-ui/core/Tab/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
-import MapIcon from '@material-ui/icons/Map';
-import CheckIcon from '@material-ui/icons/AlarmOn';
+import {
+  Phone,
+  Map,
+  AlarmOn
+} from '@material-ui/icons';
 // THIS PAGE IS USED TO DISPLAY ADMIN CONSOLE GENERAL INFORMATION SECTION
 
 // Component Styles
@@ -26,7 +28,7 @@ const styles = theme => ({
     fontWeight: 'bold',
   },
   inputCenter: {
-    textAlign: "center"
+    textAlign: 'center'
   },
 });
 
@@ -43,142 +45,110 @@ class GeneralInfo extends Component {
     const generalInfo = identity != null && 'generalInfo' in identity ? identity.generalInfo : {};
 
     return (
-        /*form which holds class for the styles*/
+      /*form which holds class for the styles*/
       <form className={classes.container} noValidate autoComplete="off">
-          {/*Title and Icon*/}
-        <Grid item xs={12}>
-            <Tab icon={<PhoneIcon />} label="Contact" style={{ marginBottom: 10, marginTop: 10}}/>
-        </Grid>
-          {/*holds the Primary phone information*/}
-        <TextField
-          label="Primary Phone"
-          className={classes.textField}
-          value={generalInfo.homePhone}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-        />
 
-          {/*Title and Icon*/}
-        <Grid item xs={12}>
-            <Tab icon={<MapIcon />} label="Location" style={{ marginBottom: 10, marginTop: 30}}/>
+        {/*Title and Icon*/}
+        <Grid item xs={12} style={{marginLeft: 80, marginTop: 40}}>
+          <ListItemIcon><Phone /></ListItemIcon>
         </Grid>
-          {/*holds the address 1 information*/}
-        <TextField
-          label="Address"
-          style={{ margin: 8 }}
-          fullWidth
-          className={classes.textField}
-          value={generalInfo.address1}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-          {/*holds the address 2 information*/}
-          {generalInfo.address2 ?
-              <TextField
-                  label="Address 2"
-                  style={{margin: 8}}
-                  fullWidth
-                  className={classes.textField}
-                  value={generalInfo.address2}
-                  margin="normal"
-                  variant="filled"
-                  disabled={true}
-                  InputLabelProps={{
-                      shrink: true,
-                  }}
-              />
-              :
-              false
-          }
-          {/*holds the city information*/}
-        <TextField
-          label="City"
-          className={classes.textField}
-          value={generalInfo.city}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-        />
-          {/*holds the state information*/}
-        <TextField
-          label="State"
-          className={classes.textField}
-          value={generalInfo.state}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-        />
-          {/*holds the zip code information*/}
-        <TextField
-          label="zip Code"
-          className={classes.textField}
-          value={generalInfo.zipCode}
-          margin="normal"
-          variant="filled"
-          disabled={true}
-        />
+        <Grid item xs={12} style={{marginLeft: 40, marginBottom: 20}}>
+          <Typography style={{ fontSize: 20 }} gutterBottom>
+            CONTACT
+          </Typography>
+        </Grid>
 
-          {/*Title and Icon*/}
-          <Grid item xs={12}>
-              <Tab icon={<CheckIcon />} label="Age & Work" style={{ marginBottom: 10, marginTop: 30}}/>
+        {/*holds the Primary phone information*/}
+        <Grid item xs={12} style={{marginBottom: 20}}>
+          <Typography style={{ fontSize: 15 }} gutterBottom>
+            <span style={{fontWeight: 'bold'}}>Phone:</span> {generalInfo.homePhone}
+          </Typography>
+        </Grid>
+
+        {/*Title and Icon*/}
+        <Grid item xs={12} style={{marginLeft: 80, marginTop: 20}}>
+          <ListItemIcon><Map /></ListItemIcon>
+        </Grid>
+        <Grid item xs={12} style={{marginLeft: 40, marginBottom: 20}}>
+          <Typography style={{ fontSize: 20 }} gutterBottom>
+            LOCATION
+          </Typography>
+        </Grid>
+
+        {/*holds the address 1 information*/}
+
+        <Grid item xs={12} style={{marginBottom: 20}}>
+          <Typography style={{ fontSize: 15}} gutterBottom>
+            <span style={{fontWeight: 'bold'}}>Address:</span> {generalInfo.address1}
+          </Typography>
+        </Grid>
+
+        {/*holds the address 2 information*/}
+
+        {generalInfo.address2 ?
+          <Grid item xs={12} style={{marginBottom: 20}}>
+            <Typography style={{ fontSize: 15}} gutterBottom>
+              <span style={{fontWeight: 'bold'}}>Address 2:</span> {generalInfo.address2}
+            </Typography>
           </Grid>
+          :
+          false}
 
-          {/*checked if person is over 18 years old*/}
+
+        {/*holds the city information*/}
+        <Grid item xs={4}>
+          <Typography style={{ fontSize: 15 }} gutterBottom>
+            <span style={{fontWeight: 'bold'}}>City:</span> {generalInfo.city}
+          </Typography>
+        </Grid>
+        {/*holds the state information*/}
+        <Grid item xs={4}>
+          <Typography style={{ fontSize: 15 }} gutterBottom>
+            <span style={{fontWeight: 'bold'}}>State:</span> {generalInfo.state}
+          </Typography>
+        </Grid>
+        {/*holds the zip code information*/}
+        <Grid item xs={3}>
+          <Typography style={{ fontSize: 15 }} gutterBottom>
+            <span style={{fontWeight: 'bold'}}>Zip Code:</span> {generalInfo.zipCode}
+          </Typography>
+        </Grid>
+
+        {/*Title and Icon*/}
+        <Grid item xs={12} style={{marginLeft: 80, marginTop: 20}}>
+          <ListItemIcon><AlarmOn /></ListItemIcon>
+        </Grid>
+        <Grid item xs={12} style={{marginLeft: 40, marginBottom: 20}}>
+          <Typography style={{ fontSize: 20 }} gutterBottom>
+            AGE & WORK
+          </Typography>
+        </Grid>
+
+        {/*checked if person is over 18 years old*/}
+        <Grid item xs={12} style={{marginBottom: 20}}>
           {generalInfo.ageCheck ?
-              <TextField
-                  label="Is the applicant 18 years or older?"
-                  style={{margin: 8}}
-                  fullWidth
-                  className={classes.textField}
-                  value="Yes"
-                  margin="normal"
-                  variant="filled"
-                  disabled={true}
-              />
-              :
-              <TextField
-                  label="Is the applicant 18 years or older?"
-                  style={{margin: 8}}
-                  fullWidth
-                  className={classes.textField}
-                  value="No"
-                  margin="normal"
-                  variant="filled"
-                  disabled={true}
-              />
+            <Typography style={{ fontSize: 15 }} gutterBottom>
+              <span style={{fontWeight: 'bold'}}>Is the applicant 18 years or older?</span> Yes
+            </Typography>
+            :
+            <Typography style={{ fontSize: 15 }} gutterBottom>
+              <span style={{fontWeight: 'bold'}}>Is the applicant 18 years or older?</span> No
+            </Typography>
           }
+        </Grid>
 
-          {/*checked if person is authorixed to work in the U.S.*/}
+        {/*checked if person is authorixed to work in the U.S.*/}
+        <Grid item xs={12} style={{marginBottom: 20}}>
           {generalInfo.authorizedCheck ?
-              <TextField
-                  label="Is the applicant authorized to work in the United States?"
-                  style={{margin: 8}}
-                  fullWidth
-                  className={classes.textField}
-                  value="Yes"
-                  margin="normal"
-                  variant="filled"
-                  disabled={true}
-              />
-              :
-              <TextField
-                  label="Is the applicant authorized to work in the United States?"
-                  style={{margin: 8}}
-                  fullWidth
-                  className={classes.textField}
-                  value="No"
-                  margin="normal"
-                  variant="filled"
-                  disabled={true}
-              />
+            <Typography style={{ fontSize: 15 }} gutterBottom>
+              <span style={{fontWeight: 'bold'}}>Is the applicant authorized to work in the United States?</span> Yes
+            </Typography>
+            :
+            <Typography style={{ fontSize: 15 }} gutterBottom>
+              <span style={{fontWeight: 'bold'}}>Is the applicant authorized to work in the United States?</span> No
+            </Typography>
           }
-
-
+        </Grid>
       </form>
     );
   }

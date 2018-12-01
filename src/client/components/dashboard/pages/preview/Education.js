@@ -2,13 +2,13 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import {
   Grid,
-  TextField,
+  ListItemIcon,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RootState from '../../../../store/RootState';
-import Tab from '@material-ui/core/Tab/Tab';
-import SchoolIcon from '@material-ui/icons/School';
+import { School } from '@material-ui/icons';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails/ExpansionPanelDetails';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel/ExpansionPanel';
@@ -55,105 +55,99 @@ class Education extends Component {
       <form className={classes.container} noValidate autoComplete="off">
 
         {/*Title and Icon*/}
-        <Grid item xs={12}>
-          <Tab icon={<SchoolIcon/>} label="Education" style={{
-            marginBottom: 10,
-            marginTop: 10
-          }}/>
+        <Grid item xs={12} style={{
+          marginLeft: 80,
+          marginTop: 40
+        }}>
+          <ListItemIcon><School/></ListItemIcon>
+        </Grid>
+        <Grid item xs={12} style={{
+          marginLeft: 40,
+          marginBottom: 20
+        }}>
+          <Typography style={{ fontSize: 20 }} gutterBottom>
+            EDUCATION
+          </Typography>
         </Grid>
 
         {/*If statement to check if there is any listing. If its is empty show message*/}
         {education.school.length === 0 ?
-          <TextField
-            label=""
-            className={classes.textField}
-            value="No school information was added"
-            margin="normal"
-            variant="filled"
-            fullWidth
-            disabled={true}
-          />
-        :
-         ""
+          <Grid item xs={12}>
+            <Typography style={{ fontSize: 15 }} gutterBottom>
+              <span style={{ fontWeight: 'bold' }}>NO SCHOOL INFORMATION WAS ADDED</span>
+            </Typography>
+          </Grid>
+          :
+          ''
         }
+
         {/*map that loops over array and shows each part as entry*/}
         {education.school.map(entry => (
           /*expansion panel to hold the data*/
-          <ExpansionPanel expanded={expanded === entry.schoolName}
-                          onChange={this.handleChange(entry.schoolName)} key={entry.id}>
-            {/*Main title the admin will see*/}
+          <Grid item xs={12} style={{ marginBottom: 20 }} key={entry.id}>
 
+            <ExpansionPanel expanded={expanded === entry.schoolName}
+                            onChange={this.handleChange(entry.schoolName)}>
+
+              {/*Main title the admin will see*/}
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                 {/*holds the diploma information*/}
-                <TextField
-                  label="Diploma/Degree/Certificate"
-                  className={classes.textField}
-                  value={entry.diploma}
-                  margin="normal"
-                  variant="filled"
-                  fullWidth
-                  disabled={true}
-                />
+                <Grid item xs={12}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span style={{ fontWeight: 'bold' }}>Diploma/Degree:</span> {entry.diploma}
+                  </Typography>
+                </Grid>
               </ExpansionPanelSummary>
-            {/*holds the school name information*/}
-            <ExpansionPanelDetails>
-              <TextField
-                label="School Name"
-                className={classes.textField}
-                value={entry.schoolName}
-                margin="normal"
-                variant="filled"
-                fullWidth
-                disabled={true}
-              />
-            </ExpansionPanelDetails>
-            {/*holds the school location information*/}
-            <ExpansionPanelDetails>
-              <TextField
-                label="School Location"
-                className={classes.textField}
-                value={entry.schoolLocation}
-                margin="normal"
-                variant="filled"
-                fullWidth
-                disabled={true}
-              />
-            </ExpansionPanelDetails>
-            {/*holds the education level information*/}
-            <ExpansionPanelDetails>
-              <TextField
-                label="Education Level"
-                className={classes.textField}
-                value={entry.educationLevel}
-                margin="normal"
-                variant="filled"
-                disabled={true}
-              />
-              {/*holds the graduated information*/}
-              <TextField
-                label="Graduated"
-                className={classes.textField}
-                value={entry.graduate}
-                margin="normal"
-                variant="filled"
-                disabled={true}
-              />
-              {/*holds the years completed information*/}
-              <TextField
-                label="Years Completed"
-                className={classes.textField}
-                value={entry.yearsCompleted}
-                margin="normal"
-                variant="filled"
-                disabled={true}
-              />
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+              {/*holds the school name information*/}
+              <ExpansionPanelDetails>
+                <Grid item xs={12}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span style={{ fontWeight: 'bold' }}>School Name:</span> {entry.schoolName}
+                  </Typography>
+                </Grid>
+              </ExpansionPanelDetails>
+
+              {/*holds the school location information*/}
+              <ExpansionPanelDetails>
+                <Grid item xs={12}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span
+                      style={{ fontWeight: 'bold' }}>School Location:</span> {entry.schoolLocation}
+                  </Typography>
+                </Grid>
+              </ExpansionPanelDetails>
+
+              {/*holds the education level information*/}
+              <ExpansionPanelDetails>
+                <Grid item xs={4}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span style={{ fontWeight: 'bold' }}>Level:</span> {entry.educationLevel}
+                  </Typography>
+                </Grid>
+
+                {/*holds the graduated information*/}
+                <Grid item xs={4}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span style={{ fontWeight: 'bold' }}>Graduated:</span> {entry.graduate}
+                  </Typography>
+                </Grid>
+
+                {/*holds the years completed information*/}
+                <Grid item xs={4}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span
+                      style={{ fontWeight: 'bold' }}>Years Completed:</span> {entry.yearsCompleted}
+                  </Typography>
+                </Grid>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
         ))}
       </form>
     );
   }
 }
+
 // Tell React that these properties are provided
 Education.wrappedComponent.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -161,4 +155,3 @@ Education.wrappedComponent.propTypes = {
 };
 
 export default withStyles(styles)(Education);
-

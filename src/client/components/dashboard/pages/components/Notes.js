@@ -5,6 +5,7 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   Grid,
+  Chip,
   Typography,
   withStyles
 } from '@material-ui/core';
@@ -43,7 +44,11 @@ import ReactiveTextField from '../../../application/pages/components/ReactiveTex
   },
   hide: {
     width: 0,
-  }
+  },
+  chip: {
+    margin: theme.spacing.unit,
+    float: 'right',
+  },
 }))
 @inject('store')
 @observer
@@ -96,26 +101,30 @@ class Notes extends Component {
                   </Button>
                 </Grid>
                 <Grid item xs={12}>
-                  {notes && notes.slice().sort((first, second) => second.added - first.added).map((note) => {
-                    const date = new Date(note.added);
-                    return (
-                      <ExpansionPanel key={note.added}>
-                        <ExpansionPanelSummary>
-                          <Grid container spacing={8} justify="space-between">
-                            <Grid item xs>
-                              <Typography>{note.noteName} at {date.toLocaleString()}</Typography>
+                  {notes && notes.slice()
+                    .sort((first, second) => second.added - first.added)
+                    .map((note) => {
+                      const date = new Date(note.added);
+                      return (
+                        <ExpansionPanel key={note.added}>
+                          <ExpansionPanelSummary>
+                            <Grid container spacing={8} justify="space-between">
+                              <Grid item xs>
+                                <Typography>{note.noteName} at {date.toLocaleString()}</Typography>
+                              </Grid>
+                              <Grid item xs>
+                                {note.noteLabels && note.noteLabels.map(label =>
+                                  <Chip key={label} className={classes.chip} label={label} />
+                                )}
+                              </Grid>
                             </Grid>
-                            <Grid item xs>
-                              <Typography>{note.noteLabels && note.noteLabels.map(label => `${label}, `)}</Typography>
-                            </Grid>
-                          </Grid>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                          {note.noteMessage}
-                        </ExpansionPanelDetails>
-                      </ExpansionPanel>
-                    );
-                  })}
+                          </ExpansionPanelSummary>
+                          <ExpansionPanelDetails>
+                            {note.noteMessage}
+                          </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                      );
+                    })}
                 </Grid>
               </Grid>
             </Collapse>

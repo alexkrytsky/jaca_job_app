@@ -1,14 +1,12 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import {
-    Grid,
-    TextField,
-    withStyles,
+  Grid, ListItemIcon, Typography,
+  withStyles,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RootState from '../../../../store/RootState';
-import Tab from '@material-ui/core/Tab/Tab';
-import PersonIcon from '@material-ui/icons/Person';
+import { Person, School } from '@material-ui/icons';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails/ExpansionPanelDetails';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel/ExpansionPanel';
@@ -17,15 +15,15 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Component Styles
 const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        fontWeight: 'bold',
-    },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    fontWeight: 'bold',
+  },
 });
 
 /**
@@ -34,100 +32,104 @@ const styles = theme => ({
 @inject('store')
 @observer
 class References extends Component {
-    state = {
-        expanded: null,
-    };
+  state = {
+    expanded: null,
+  };
 
-    handleChange = panel => (event, expanded) => {
-        this.setState({
-            expanded: expanded ? panel : false,
-        });
-    };
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
 
-    render() {
-        const { store, classes } = this.props;
-        const { expanded } = this.state;
-        const { identity } = store.session;
-        const references = identity != null && 'references' in identity ? identity.references : [];
+  render() {
+    const { store, classes } = this.props;
+    const { expanded } = this.state;
+    const { identity } = store.session;
+    const references = identity != null && 'references' in identity ? identity.references : [];
 
-        return (
-            /*form which holds class for the styles*/
-            <form className={classes.container} noValidate autoComplete="off">
+    return (
+      /*form which holds class for the styles*/
+      <form className={classes.container} noValidate autoComplete="off">
 
-                {/*Title and Icon*/}
+        {/*Title and Icon*/}
+        <Grid item xs={12} style={{
+          marginLeft: 80,
+          marginTop: 40
+        }}>
+          <ListItemIcon><Person/></ListItemIcon>
+        </Grid>
+        <Grid item xs={12} style={{
+          marginLeft: 40,
+          marginBottom: 20
+        }}>
+          <Typography style={{ fontSize: 20 }} gutterBottom>
+            REFERENCES
+          </Typography>
+        </Grid>
+
+        {/*If statement to check if there is any listing. If its is empty show message*/}
+        {references.references.length === 0 ?
+          <Grid item xs={12}>
+            <Typography style={{ fontSize: 15 }} gutterBottom>
+              <span style={{ fontWeight: 'bold' }}>NO REFERENCES WERE ADDED</span>
+            </Typography>
+          </Grid>
+          :
+          ''
+        }
+
+        {/*map that loops over array and shows each part as entry*/}
+        {references.references.map(entry => (
+          /*expansion panel to hold the data*/
+          <Grid item xs={4} style={{
+            marginRight: 10,
+            marginBottom: 20
+          }} key={entry.id}>
+
+            <ExpansionPanel expanded={expanded === entry.schoolName}
+                            onChange={this.handleChange(entry.schoolName)}>
+              {/*Main title the admin will see*/}
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                {/*holds the reference name information*/}
                 <Grid item xs={12}>
-                    <Tab icon={<PersonIcon />} label="References" style={{ marginBottom: 10, marginTop: 10}}/>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span style={{ fontWeight: 'bold' }}>Name:</span> {entry.referenceName}
+                  </Typography>
                 </Grid>
+              </ExpansionPanelSummary>
 
-              {/*If statement to check if there is any listing. If its is empty show message*/}
-              {references.references.length === 0 ?
-                <TextField
-                  label=""
-                  className={classes.textField}
-                  value="No references were added"
-                  margin="normal"
-                  variant="filled"
-                  fullWidth
-                  disabled={true}
-                />
-                :
-                ""
-              }
+              {/*holds the reference contact name information*/}
+              <ExpansionPanelDetails>
+                <Grid item xs={12}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span
+                      style={{ fontWeight: 'bold' }}>Contact Number:</span> {entry.contactNumber}
+                  </Typography>
+                </Grid>
+              </ExpansionPanelDetails>
 
-              {/*map that loops over array and shows each part as entry*/}
-                {references.references.map(entry => (
-                        /*expansion panel to hold the data*/
-                    <ExpansionPanel expanded={expanded === entry.schoolName} onChange={this.handleChange(entry.schoolName)} key={entry.id}>
-                        {/*Main title the admin will see*/}
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                            {/*holds the reference name information*/}
-                            <TextField
-                                label="Name"
-                                className={classes.textField}
-                                value={entry.referenceName}
-                                margin="normal"
-                                variant="filled"
-                                fullWidth
-                                disabled={true}
-                            />
-                        </ExpansionPanelSummary>
+              {/*holds the reference relationship information*/}
+              <ExpansionPanelDetails>
+                <Grid item xs={12}>
+                  <Typography style={{ fontSize: 15 }} gutterBottom>
+                    <span style={{ fontWeight: 'bold' }}>Relationship:</span> {entry.relation}
+                  </Typography>
+                </Grid>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
 
-                        {/*holds the reference contact name information*/}
-                        <ExpansionPanelDetails>
-                            <TextField
-                                label="Contact Number"
-                                className={classes.textField}
-                                value={entry.contactNumber}
-                                margin="normal"
-                                variant="filled"
-                                fullWidth
-                                disabled={true}
-                            />
-                        </ExpansionPanelDetails>
-                        {/*holds the reference relationship information*/}
-                        <ExpansionPanelDetails>
-                            <TextField
-                                label="Relationship"
-                                className={classes.textField}
-                                value={entry.relation}
-                                margin="normal"
-                                variant="filled"
-                                fullWidth
-                                disabled={true}
-                            />
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                ))}
-            </form>
-        );
-    }
+        ))}
+      </form>
+    );
+  }
 }
 
 // Tell React that these properties are provided
 References.wrappedComponent.propTypes = {
-    classes: PropTypes.object.isRequired,
-    store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
+  classes: PropTypes.object.isRequired,
+  store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
 };
 
 export default withStyles(styles)(References);
-

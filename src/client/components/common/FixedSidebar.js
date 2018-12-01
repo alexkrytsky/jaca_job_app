@@ -6,6 +6,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Tooltip,
   withStyles
 } from '@material-ui/core';
 import {
@@ -87,25 +88,33 @@ export default class FixedSidebar extends Component {
         </div>
         <Divider />
         <List>
-          <ListItem button to="/" component={Link}>
-            <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText inset primary="Dashboard" />
-          </ListItem>
-          <ListItem button to="/search" component={Link}>
-            <ListItemIcon><Search /></ListItemIcon>
-            <ListItemText inset primary="Search" />
-          </ListItem>
-          <ListItem button to="/app" component={Link} onClick={store.application.reset}>
-            <ListItemIcon><Assignment /></ListItemIcon>
-            <ListItemText inset primary="Application" />
-          </ListItem>
+          <Tooltip title="Dashboard" placement="right">
+            <ListItem button to="/" component={Link}>
+              <ListItemIcon><Dashboard /></ListItemIcon>
+              <ListItemText inset primary="Dashboard" />
+            </ListItem>
+          </Tooltip>
+          <Tooltip title="Search" placement="right">
+            <ListItem button to="/search" component={Link}>
+              <ListItemIcon><Search /></ListItemIcon>
+              <ListItemText inset primary="Search" />
+            </ListItem>
+          </Tooltip>
+          <Tooltip title="Application" placement="right">
+            <ListItem button to="/app" component={Link} onClick={store.application.reset}>
+              <ListItemIcon><Assignment /></ListItemIcon>
+              <ListItemText inset primary="Application" />
+            </ListItem>
+          </Tooltip>
         </List>
         <Divider />
         <List>
-          <ListItem button onClick={store.authentication.logout}>
-            <ListItemIcon><Close /></ListItemIcon>
-            <ListItemText inset primary="Logout" />
-          </ListItem>
+          <Tooltip title="Logout" placement="right">
+            <ListItem button onClick={store.authentication.logout}>
+              <ListItemIcon><Close /></ListItemIcon>
+              <ListItemText inset primary="Logout" />
+            </ListItem>
+          </Tooltip>
         </List>
       </Drawer>
     );

@@ -1,12 +1,27 @@
+// Import the Google Cloud client Lib
+const gstore = require('gstore-node')();
+const Datastore = require('@google-cloud/datastore');
+const { Storage } = require('@google-cloud/storage');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { ApplicationSession } = require('./session/ApplicationSession');
-const Store = require('./datastore/Store');
-const Identity = require('./datastore/Kinds/Identity');
 const Authentication = require('./routers/Authentication');
 const Application = require('./routers/Application');
+
+
+const projectId = process.env.GOOGLE_CLOUD_PROJECT;
+
+const store = new Datastore({
+  projectId
+});
+
+const storage = new Storage({
+  projectId
+});
+
+gstore.connect(store);
 
 const app = express();
 
@@ -58,21 +73,21 @@ app.use('/api/app', Application);
 // API paths
 app.get('/api/jobs', (req, res) => res.send({ jobs }));
 
-app.get('/api/identities', (req, res) => {
-  Identity.queryAll()
-    .then((list) => {
-      res.send(list);
-    });
-});
-
-app.get('/api/identities/:id', (req, res) => {
-  const key = Store.key(['Identity', Number.parseInt(req.params.id, 10)]);
-  console.log(key);
-  Identity.query(key)
-    .then((identity) => {
-      res.send(identity);
-    });
-});
+// app.get('/api/identities', (req, res) => {
+//   Identity.queryAll()
+//     .then((list) => {
+//       res.send(list);
+//     });
+// });
+//
+// app.get('/api/identities/:id', (req, res) => {
+//   const key = Store.key(['Identity', Number.parseInt(req.params.id, 10)]);
+//   console.log(key);
+//   Identity.query(key)
+//     .then((identity) => {
+//       res.send(identity);
+//     });
+// });
 
 // All other routes should redirect to index
 app.get('/*', (req, res) => {

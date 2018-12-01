@@ -32,7 +32,7 @@ class RecentApplications extends Component {
             .sort((a, b) => new Date(a.created) <= new Date(b.created) ? 1 : -1) // Sort by time
             .slice(0, 5) // Limit to five entries
             .map(value => (
-              <ApplicationListing key={value.key.id} app={value} />
+              <ApplicationListing key={value.id} app={value} />
             ))}
         </List>
       </div>

@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RootState from '../../../store/RootState';
+import Notes from './components/Notes';
 import DataPanel from './DataPanel';
 import EmploymentDesired from './preview/EmploymentDesired';
 import GeneralInfo from './preview/GeneralInfo';
@@ -51,9 +52,9 @@ class ApplicationView extends Component {
 
   componentWillMount() {
     const { store, match } = this.props;
-    store.fetchApps()
+    store.fetchApps(true)
       .then(() => {
-        store.session.identity = store.session.apps.filter(a => a.key.id === match.params.appId)[0];
+        store.session.identity = store.session.apps.filter(a => (a.id || a.key.id) === match.params.appId)[0];
       });
   }
 
@@ -121,6 +122,11 @@ class ApplicationView extends Component {
         label: 'Voluntary Survey',
         subLabel: 'Gender, Ethnicity, etc...',
         component: (<VoluntarySurvey/>)
+      },
+      {
+        label: 'Notes',
+        subLabel: 'Staff comments, Interview Times, etc...',
+        component: (<Notes />)
       },
     ];
 

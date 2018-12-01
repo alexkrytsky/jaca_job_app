@@ -4,16 +4,17 @@ import {
   Avatar,
   Button,
   Chip,
+  Grid,
   Paper,
   Typography,
   withStyles
 } from '@material-ui/core';
-import { Error, Lock } from '@material-ui/icons';
+import { Error, Lock, FiberNewOutlined } from '@material-ui/icons';
 import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RootState from '../../store/RootState';
 import ValidatedTextField from '../application/pages/components/ValidatedTextField';
-import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   paper: {
@@ -29,9 +30,13 @@ const styles = theme => ({
       marginRight: 'auto',
     }
   },
-  avatar: {
+  avatarSecondary: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: '100%', // Fix IE11 issue.
@@ -49,59 +54,75 @@ class Login extends Component {
     const { store, classes } = this.props;
     const { email, password, login, error } = store.authentication;
     return (
-      <Fragment>
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <Lock />
-          </Avatar>
-          <Typography variant="display3">
-            Sign in
-          </Typography>
-          {error !== '' ? (<Chip label={error} color="secondary" icon={<Error />} />) : (<Fragment />)}
-          <ValidatedTextField
-            state={email}
-            label="Email Address"
-            autoFocus
-            onKeyUp={(event) => {
-              if (event.key === 'Enter') {
-                login();
-              }
-            }}
-          />
-          <ValidatedTextField
-            state={password}
-            label="Password"
-            type="password"
-            onKeyUp={(event) => {
-              if (event.key === 'Enter') {
-                login();
-              }
-            }}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={login}
-          >
-            Sign in
-          </Button>
-          <Typography className={classes.submit} variant="subheading">
-            ----- OR -----
-          </Typography>
-          <Button
-            fullWidth
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            component={Link}
-            to="/app"
-          >
-            Go to Application
-          </Button>
-        </Paper>
-      </Fragment>
+      <Grid
+        container
+        spacing={40}
+        direction="row"
+        justify="space-around"
+        alignItems="stretch"
+      >
+        <Grid item sm={12} md={6}>
+          <Paper className={classes.paper}>
+            <Avatar className={classes.avatarSecondary}>
+              <FiberNewOutlined />
+            </Avatar>
+            <Typography variant="display3">
+              Apply Here
+            </Typography>
+            <Button
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              component={Link}
+              to="/app"
+            >
+              Go to Application
+            </Button>
+          </Paper>
+        </Grid>
+        <Grid item sm={12} md={6}>
+          <Paper className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <Lock />
+            </Avatar>
+            <Typography variant="display3">
+              Sign in
+            </Typography>
+            {error !== '' ? (<Chip label={error} color="secondary" icon={<Error />} />) : (
+              <Fragment />)}
+            <ValidatedTextField
+              state={email}
+              label="Email Address"
+              autoFocus
+              onKeyUp={(event) => {
+                if (event.key === 'Enter') {
+                  login();
+                }
+              }}
+            />
+            <ValidatedTextField
+              state={password}
+              label="Password"
+              type="password"
+              onKeyUp={(event) => {
+                if (event.key === 'Enter') {
+                  login();
+                }
+              }}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={login}
+            >
+              Sign in
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 }

@@ -1,7 +1,7 @@
 import {
   Checkbox,
-  Hidden,
   Grid,
+  Hidden,
   IconButton,
   Table,
   TableBody,
@@ -25,6 +25,13 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import ReactiveTextField from '../../../application/pages/components/ReactiveTextField';
 
+/**
+ * Comparator function
+ * @param a {object} Object one
+ * @param b {object} Object two
+ * @param orderBy {string} parameter to sort by
+ * @returns {number} sorting order
+ */
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -35,6 +42,12 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
+/**
+ * Sort an array
+ * @param array {array} array to sort
+ * @param cmp
+ * @returns {*}
+ */
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -45,6 +58,12 @@ function stableSort(array, cmp) {
   return stabilizedThis.map(el => el[0]);
 }
 
+/**
+ * get sorting function
+ * @param order {string} order to sort by
+ * @param orderBy {string} parameter to sort by
+ * @returns {function(*=, *=): number}
+ */
 function getStorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
@@ -204,9 +223,9 @@ class SortableTableToolbar extends Component {
           <Grid item xs>
             <div className={classes.title}>
               {numSelected > 0 ? (
-                <Typography color="inherit" variant="subheading">{numSelected} selected</Typography>
+                <Typography color="inherit" variant="title">{numSelected} selected</Typography>
               ) : (
-                <Typography variant="title" id="tableTitle">Applications</Typography>
+                <Typography variant="display1" id="tableTitle">Applications</Typography>
               )}
             </div>
           </Grid>
@@ -278,7 +297,7 @@ export default class FilteredAppList extends Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: this.props.apps.list.map(app => app.key.id) }));
+      this.setState(state => ({ selected: this.props.apps.list.map(app => app.id) }));
       return;
     }
     this.setState({ selected: [] });
@@ -338,15 +357,15 @@ export default class FilteredAppList extends Component {
                 stableSort(apps.list, getStorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map(app => {
-                    const isSelected = this.isSelected(app.key.id);
+                    const isSelected = this.isSelected(app.id);
                     return (
                       <TableRow
                         hover
-                        onClick={event => this.handleClick(event, app.key.id)}
+                        onClick={event => this.handleClick(event, app.id)}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
-                        key={app.key.id}
+                        key={app.id}
                         selected={isSelected}
                       >
                         <TableCell padding="checkbox">
@@ -357,13 +376,13 @@ export default class FilteredAppList extends Component {
                         <TableCell padding="none">{app.email}</TableCell>
                         <Hidden mdDown>
                           <TableCell
-                            padding="none">{app.employmentDesired.employmentDesired}</TableCell>
+                            padding="none">{app.position || app.employmentDesired.employmentDesired}</TableCell>
                           <TableCell
                             padding="none">{new Date(app.created).toLocaleString()}</TableCell>
                         </Hidden>
                         <TableCell>
                           <Tooltip title="View Application">
-                            <IconButton component={Link} to={`/application/${app.key.id}`}
+                            <IconButton component={Link} to={`/application/${app.id}`}
                                         aria-label="View Application">
                               <OpenInNew fontSize="small" />
                             </IconButton>

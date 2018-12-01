@@ -1,6 +1,7 @@
 import { action, observable } from 'mobx';
 import axios from 'axios';
 import ApplicationState from './application/ApplicationState';
+import Field from './application/Field';
 import AuthenticationState from './auth/AuthenticationState';
 import LocalState from './LocalState';
 import FilterState from './search/FilterState';
@@ -27,6 +28,34 @@ export default class RootState {
 
   @observable session = new SessionState(this);
 
+  // Various Forms
+  @observable addingNote = false;
+
+  @observable noteMessage = new Field('');
+
+  @observable noteName = new Field('');
+
+  @observable noteLabels = [];
+
+  @action saveNote = () => {
+    axios.post('/api/app/note', {
+      id: this.session.identity.id,
+      noteName: this.noteName.value,
+      noteMessage: this.noteMessage.value,
+      noteLabels: this.noteLabels
+    })
+      .then(() => {
+        this.noteMessage.update('');
+        this.noteName.update('');
+        this.noteLabels = [];
+        this.addingNote = false;
+        this.fetchApps(true);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   @action toggleDrawer = () => {
     this.open = !this.open;
   };
@@ -49,9 +78,9 @@ export default class RootState {
     }));
   };
 
-  @action fetchApps() {
+  @action fetchApps(full = false) {
     return new Promise((resolve) => {
-      axios.get('/api/identities')
+      axios.get(full ? '/api/app/search' : '/api/app/list')
         .then((response) => {
           this.session.apps.replace(response.data);
           this.session.identity = this.session.apps[0];

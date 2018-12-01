@@ -1,7 +1,5 @@
-import React, { Component, Fragment } from 'react';
 import {
   Grid,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -10,8 +8,9 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
 
 const styles = theme => ({
   layout: {

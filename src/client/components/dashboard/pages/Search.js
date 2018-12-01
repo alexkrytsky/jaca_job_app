@@ -62,7 +62,7 @@ export default class Search extends Component {
   componentWillMount() {
     const { store } = this.props;
     store.fetchJobs();
-    store.fetchApps();
+    store.fetchApps(true);
   }
 
   handleToggle = () => {

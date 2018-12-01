@@ -11,6 +11,7 @@ import RootState from '../../../../store/RootState';
 import Tab from '@material-ui/core/Tab/Tab';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MapIcon from '@material-ui/icons/Map';
+import CheckIcon from '@material-ui/icons/AlarmOn';
 // THIS PAGE IS USED TO DISPLAY ADMIN CONSOLE GENERAL INFORMATION SECTION
 
 // Component Styles
@@ -57,19 +58,6 @@ class GeneralInfo extends Component {
           variant="filled"
           disabled={true}
         />
-          {/*holds the secondary phone information*/}
-          {generalInfo.cellPhone ?
-              <TextField
-                  label="Secondary Phone"
-                  className={classes.textField}
-                  value={generalInfo.cellPhone}
-                  margin="normal"
-                  variant="filled"
-                  disabled={true}
-              />
-              :
-              false
-          }
 
           {/*Title and Icon*/}
         <Grid item xs={12}>
@@ -134,6 +122,63 @@ class GeneralInfo extends Component {
           variant="filled"
           disabled={true}
         />
+
+          {/*Title and Icon*/}
+          <Grid item xs={12}>
+              <Tab icon={<CheckIcon />} label="Age & Work" style={{ marginBottom: 10, marginTop: 30}}/>
+          </Grid>
+
+          {/*checked if person is over 18 years old*/}
+          {generalInfo.ageCheck ?
+              <TextField
+                  label="Is the applicant 18 years or older?"
+                  style={{margin: 8}}
+                  fullWidth
+                  className={classes.textField}
+                  value="Yes"
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+              />
+              :
+              <TextField
+                  label="Is the applicant 18 years or older?"
+                  style={{margin: 8}}
+                  fullWidth
+                  className={classes.textField}
+                  value="No"
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+              />
+          }
+
+          {/*checked if person is authorixed to work in the U.S.*/}
+          {generalInfo.authorizedCheck ?
+              <TextField
+                  label="Is the applicant authorized to work in the United States?"
+                  style={{margin: 8}}
+                  fullWidth
+                  className={classes.textField}
+                  value="Yes"
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+              />
+              :
+              <TextField
+                  label="Is the applicant authorized to work in the United States?"
+                  style={{margin: 8}}
+                  fullWidth
+                  className={classes.textField}
+                  value="No"
+                  margin="normal"
+                  variant="filled"
+                  disabled={true}
+              />
+          }
+
+
       </form>
     );
   }

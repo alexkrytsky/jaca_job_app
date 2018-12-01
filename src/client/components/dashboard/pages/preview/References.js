@@ -59,7 +59,22 @@ class References extends Component {
                     <Tab icon={<PersonIcon />} label="References" style={{ marginBottom: 10, marginTop: 10}}/>
                 </Grid>
 
-                {/*map that loops over array and shows each part as entry*/}
+              {/*If statement to check if there is any listing. If its is empty show message*/}
+              {references.references.length === 0 ?
+                <TextField
+                  label=""
+                  className={classes.textField}
+                  value="No references were added"
+                  margin="normal"
+                  variant="filled"
+                  fullWidth
+                  disabled={true}
+                />
+                :
+                ""
+              }
+
+              {/*map that loops over array and shows each part as entry*/}
                 {references.references.map(entry => (
                         /*expansion panel to hold the data*/
                     <ExpansionPanel expanded={expanded === entry.schoolName} onChange={this.handleChange(entry.schoolName)} key={entry.id}>

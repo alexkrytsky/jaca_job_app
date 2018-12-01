@@ -120,7 +120,7 @@ export default class Search extends Component {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6} md={12}>
+                  {/*<Grid item xs={6} md={12}>
                     <FormControl fullWidth>
                       <InputLabel htmlFor="state">State</InputLabel>
                       <Select
@@ -137,7 +137,7 @@ export default class Search extends Component {
                         ))}
                       </Select>
                     </FormControl>
-                  </Grid>
+                  </Grid>*/}
                   <Grid item xs={4} md={12}>
                     <FormControlLabel
                       control={(

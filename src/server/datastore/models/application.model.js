@@ -39,6 +39,9 @@ const applicationSchema = new Schema({
   files: {
     type: Array,
   },
+  notes: {
+    type: Array,
+  },
   created: {
     type: Date,
     default: gstore.defaultValues.NOW

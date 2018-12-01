@@ -56,87 +56,104 @@ class Education extends Component {
 
         {/*Title and Icon*/}
         <Grid item xs={12}>
-          <Tab icon={<SchoolIcon />} label="Education" style={{ marginBottom: 10, marginTop: 10}}/>
+          <Tab icon={<SchoolIcon/>} label="Education" style={{
+            marginBottom: 10,
+            marginTop: 10
+          }}/>
         </Grid>
 
+        {/*If statement to check if there is any listing. If its is empty show message*/}
+        {education.school.length === 0 ?
+          <TextField
+            label=""
+            className={classes.textField}
+            value="No school information was added"
+            margin="normal"
+            variant="filled"
+            fullWidth
+            disabled={true}
+          />
+        :
+         ""
+        }
         {/*map that loops over array and shows each part as entry*/}
         {education.school.map(entry => (
           /*expansion panel to hold the data*/
-        <ExpansionPanel expanded={expanded === entry.schoolName} onChange={this.handleChange(entry.schoolName)} key={entry.id}>
-          {/*Main title the admin will see*/}
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-           {/*holds the diploma information*/}
-            <TextField
-              label="Diploma/Degree/Certificate"
-              className={classes.textField}
-              value={entry.diploma}
-              margin="normal"
-              variant="filled"
-              fullWidth
-              disabled={true}
-            />
-          </ExpansionPanelSummary>
-          {/*holds the school name information*/}
-          <ExpansionPanelDetails>
-            <TextField
-              label="School Name"
-              className={classes.textField}
-              value={entry.schoolName}
-              margin="normal"
-              variant="filled"
-              fullWidth
-              disabled={true}
-            />
-          </ExpansionPanelDetails>
-          {/*holds the school location information*/}
-          <ExpansionPanelDetails>
-            <TextField
-              label="School Location"
-              className={classes.textField}
-              value={entry.schoolLocation}
-              margin="normal"
-              variant="filled"
-              fullWidth
-              disabled={true}
-            />
-          </ExpansionPanelDetails>
-          {/*holds the education level information*/}
-          <ExpansionPanelDetails>
-            <TextField
-              label="Education Level"
-              className={classes.textField}
-              value={entry.educationLevel}
-              margin="normal"
-              variant="filled"
-              disabled={true}
-            />
-            {/*holds the graduated information*/}
-            <TextField
-              label="Graduated"
-              className={classes.textField}
-              value={entry.graduate}
-              margin="normal"
-              variant="filled"
-              disabled={true}
-            />
-            {/*holds the years completed information*/}
-            <TextField
-              label="Years Completed"
-              className={classes.textField}
-              value={entry.yearsCompleted}
-              margin="normal"
-              variant="filled"
-              disabled={true}
-            />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          <ExpansionPanel expanded={expanded === entry.schoolName}
+                          onChange={this.handleChange(entry.schoolName)} key={entry.id}>
+            {/*Main title the admin will see*/}
+
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                {/*holds the diploma information*/}
+                <TextField
+                  label="Diploma/Degree/Certificate"
+                  className={classes.textField}
+                  value={entry.diploma}
+                  margin="normal"
+                  variant="filled"
+                  fullWidth
+                  disabled={true}
+                />
+              </ExpansionPanelSummary>
+            {/*holds the school name information*/}
+            <ExpansionPanelDetails>
+              <TextField
+                label="School Name"
+                className={classes.textField}
+                value={entry.schoolName}
+                margin="normal"
+                variant="filled"
+                fullWidth
+                disabled={true}
+              />
+            </ExpansionPanelDetails>
+            {/*holds the school location information*/}
+            <ExpansionPanelDetails>
+              <TextField
+                label="School Location"
+                className={classes.textField}
+                value={entry.schoolLocation}
+                margin="normal"
+                variant="filled"
+                fullWidth
+                disabled={true}
+              />
+            </ExpansionPanelDetails>
+            {/*holds the education level information*/}
+            <ExpansionPanelDetails>
+              <TextField
+                label="Education Level"
+                className={classes.textField}
+                value={entry.educationLevel}
+                margin="normal"
+                variant="filled"
+                disabled={true}
+              />
+              {/*holds the graduated information*/}
+              <TextField
+                label="Graduated"
+                className={classes.textField}
+                value={entry.graduate}
+                margin="normal"
+                variant="filled"
+                disabled={true}
+              />
+              {/*holds the years completed information*/}
+              <TextField
+                label="Years Completed"
+                className={classes.textField}
+                value={entry.yearsCompleted}
+                margin="normal"
+                variant="filled"
+                disabled={true}
+              />
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         ))}
       </form>
     );
   }
-
 }
-
 // Tell React that these properties are provided
 Education.wrappedComponent.propTypes = {
   classes: PropTypes.object.isRequired,

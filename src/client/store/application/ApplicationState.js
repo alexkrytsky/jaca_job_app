@@ -121,7 +121,6 @@ export default class ApplicationState {
         generalInfo.state.update(address.state());
         generalInfo.zipCode.update(address.zipCode());
         generalInfo.homePhone.update(phone.phoneNumber());
-        generalInfo.cellPhone.update(phone.phoneNumber());
         generalInfo.ageCheck.update(random.boolean());
         generalInfo.authorizedCheck.update(random.boolean());
         break;
@@ -130,15 +129,9 @@ export default class ApplicationState {
           .then(() => {
             employmentDesired.employmentDesired.update(random.arrayElement(this.root.session.jobs));
           });
-        employmentDesired.startDate.update(`${startDate.getFullYear()}-${toFixed(startDate.getMonth() + 1)}-${toFixed(startDate.getDay() + 1)}`);
         employmentDesired.salaryExpectations.update(`$${finance.amount()}`);
         employmentDesired.applied.update(random.boolean());
         employmentDesired.workedAtMsc.update(random.boolean());
-        employmentDesired.monday.update(random.boolean());
-        employmentDesired.tuesday.update(random.boolean());
-        employmentDesired.wednesday.update(random.boolean());
-        employmentDesired.thursday.update(random.boolean());
-        employmentDesired.friday.update(random.boolean());
         break;
       case 2:
         education.educationLevel.update(random.arrayElement(['High School', 'College', 'Graduate School']));
@@ -152,7 +145,6 @@ export default class ApplicationState {
         education.diploma.update(lorem.sentence());
         break;
       case 3:
-        specialSkills.description.update(name.jobType());
         specialSkills.name.update(company.catchPhrase());
         specialSkills.issuedDate.update(`${issueDate.getFullYear()}-${toFixed(issueDate.getMonth() + 1)}-${toFixed(issueDate.getDay() + 1)}`);
         specialSkills.expirationDate.update(`${expirationDate.getFullYear()}-${toFixed(expirationDate.getMonth() + 1)}-${toFixed(expirationDate.getDay() + 1)}`);
@@ -183,6 +175,7 @@ export default class ApplicationState {
         voluntarySurvey.americanNative.update(random.boolean());
         voluntarySurvey.afroAmerican.update(random.boolean());
         voluntarySurvey.asian.update(random.boolean());
+        voluntarySurvey.otherEthnicity.update(random.boolean());
         voluntarySurvey.pacificIslander.update(random.boolean());
         voluntarySurvey.vietnamVeteran.update(random.boolean());
         voluntarySurvey.activeDutyVeteran.update(random.boolean());
@@ -227,13 +220,11 @@ export default class ApplicationState {
         state: generalInfo.state.value,
         zipCode: generalInfo.zipCode.value,
         homePhone: generalInfo.homePhone.value,
-        cellPhone: generalInfo.cellPhone.value,
         ageCheck: generalInfo.ageCheck.value,
         authorizedCheck: generalInfo.authorizedCheck.value,
       },
       employmentDesired: {
         employmentDesired: employmentDesired.employmentDesired.value,
-        startDate: employmentDesired.startDate.value,
         salaryExpectations: employmentDesired.salaryExpectations.value,
         applied: employmentDesired.applied.value,
         workedAtMsc: employmentDesired.workedAtMsc.value,
@@ -242,7 +233,6 @@ export default class ApplicationState {
         school: toJS(education.school)
       },
       specialSkills: {
-        skills: specialSkills.description.value,
         certificate: toJS(specialSkills.certificate)
       },
       employmentHistory: {
@@ -258,6 +248,7 @@ export default class ApplicationState {
         americanNative: voluntarySurvey.americanNative.value,
         afroAmerican: voluntarySurvey.afroAmerican.value,
         asian: voluntarySurvey.asian.value,
+        otherEthnicity: voluntarySurvey.otherEthnicity.value,
         pacificIslander: voluntarySurvey.pacificIslander.value,
         vietnamVeteran: voluntarySurvey.vietnamVeteran.value,
         activeDutyVeteran: voluntarySurvey.activeDutyVeteran.value,

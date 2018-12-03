@@ -46,6 +46,30 @@ router.get('/search', async (req, res) => {
     // Get all applications
     const results = await Application.list();
     const list = results.entities;
+
+    const promiseCollector = [];
+
+    list.forEach((app) => {
+      // Convert filenames into public urls
+      if (app.files.length > 0) {
+        for (let i = 0; i < app.files.length; i += 1) {
+          // Get signedURL as promise
+          const promise = generateSignedURL(APP_BUCKET, app.files[i]);
+
+          // Add oncomplete action
+          promise.then((url) => {
+            app.files[i] = url;
+          });
+
+          // Add to collector
+          promiseCollector.push(promise);
+        }
+      }
+    });
+
+    // Wait until all urls are generated
+    await Promise.all(promiseCollector);
+
     res.send(list);
   } catch (e) {
     res.sendStatus(400);

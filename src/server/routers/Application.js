@@ -30,6 +30,7 @@ router.get('/list', async (req, res) => {
       email: app.email,
       position: app.employmentDesired.employmentDesired,
       id: app.id,
+      files:app.files,
       created: app.created
     }));
     res.send(list);

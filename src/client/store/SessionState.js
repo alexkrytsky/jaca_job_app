@@ -23,6 +23,9 @@ export default class SessionState extends BaseState {
     references: {
       references: [],
     },
+    files: {
+      files: [],
+    }
   };
 
   constructor(root) {

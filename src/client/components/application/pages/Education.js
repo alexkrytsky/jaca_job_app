@@ -1,3 +1,4 @@
+import * as classnames from 'classnames';
 import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
@@ -23,36 +24,40 @@ import EducationTable from './components/EducationTable';
 const styles = theme => ({
   padding: {
     padding: theme.spacing.unit * 2
+  },
+  error: {
+    color: theme.palette.error.main
   }
 });
 
 @inject('store')
 @observer
 class Education extends Component {
-  state = {
-    adding: false,
-  };
-
   /**
    * Open the form
    */
   openForm = () => {
-    this.setState({ adding: true });
+    const { store } = this.props;
+    const { application } = store;
+    application.education.adding = true;
+    application.popupOpen = true;
   };
 
   /**
    * Close and clear the form
    */
   closeForm = () => {
-    this.setState({ adding: false });
     const { store } = this.props;
-    store.application.education.clear();
+    const { application } = store;
+    application.education.adding = false;
+    application.popupOpen = false;
+    application.education.clear();
   };
 
   render() {
-    const { adding } = this.state;
     const { store, classes } = this.props;
     const {
+      adding,
       school,
       educationLevel,
       schoolName,
@@ -90,8 +95,13 @@ class Education extends Component {
 
             {/*add radio button for type of education*/}
             <Grid item xs={12} sm={12}>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Choose Education Level</FormLabel>
+              <FormControl component="fieldset">
+                <FormLabel
+                  component="legend"
+                  className={classnames(educationLevel.validation && classes.error)}
+                >
+                  Choose Education Level
+                </FormLabel>
                 <ValidatedRadioGroup
                   style={{
                     display: 'flex',
@@ -154,7 +164,12 @@ class Education extends Component {
 
             <Grid item xs={12} sm={12}>
               <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Did you graduate?</FormLabel>
+                <FormLabel
+                  component="legend"
+                  className={classnames(graduate.validation && classes.error)}
+                >
+                  Did you graduate?
+                </FormLabel>
                 <ValidatedRadioGroup
                   style={{
                     display: 'flex',
@@ -211,9 +226,3 @@ Education.wrappedComponent.propTypes = {
 };
 
 export default withStyles(styles)(withRouter(Education));
-
-
-
-
-
-

@@ -29,7 +29,10 @@ const bannerImageHeight = 200;
     display: 'flex',
   },
   content: {
-    marginLeft: '72px',
+    marginLeft: theme.spacing.unit * 7,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit * 9,
+    },
     marginTop: '64px',
     flexGrow: 1,
   },

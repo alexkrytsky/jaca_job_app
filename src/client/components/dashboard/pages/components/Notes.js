@@ -1,30 +1,57 @@
 import {
   Button,
+  Chip,
   Collapse,
   ExpansionPanel,
-  ExpansionPanelSummary,
   ExpansionPanelDetails,
+  ExpansionPanelSummary,
   Grid,
-  Chip,
   Typography,
-  withStyles, ListItemIcon
+  withStyles
 } from '@material-ui/core';
-import {
-  FormatBold,
-  FormatItalic,
-  CheckCircle,
-  FormatUnderlined, NotInterested, Phone, RemoveRedEye, Send, Face
-} from '@material-ui/icons';
+import { CheckCircle, Face, NotInterested, Phone, RemoveRedEye, Send } from '@material-ui/icons';
 import ToggleButton from '@material-ui/lab/ToggleButton/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup/ToggleButtonGroup';
 import classnames from 'classnames';
+import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import RootState from '../../../../store/RootState';
 import ReactiveTextField from '../../../application/pages/components/ReactiveTextField';
-import Note from '@material-ui/icons/note';
 
+const iconMap = [
+  {
+    label: 'Reviewed',
+    icon: <RemoveRedEye />,
+    color: 'default'
+  },
+  {
+    label: 'Phone Screened',
+    icon: <Phone />,
+    color: 'secondary'
+  },
+  {
+    label: 'Interviewed',
+    icon: <Face />,
+    color: 'secondary'
+  },
+  {
+    label: 'Offer Made',
+    icon: <Send />,
+    color: 'primary'
+  },
+  {
+    label: 'Hired',
+    icon: <CheckCircle />,
+    color: 'primary'
+  },
+  {
+    label: 'Rejected',
+    icon: <NotInterested />,
+    color: 'primary'
+  },
+];
 
 @withStyles(theme => ({
   layout: {
@@ -48,9 +75,18 @@ import Note from '@material-ui/icons/note';
     width: 0,
   },
   chip: {
-    margin: theme.spacing.unit,
+    marginLeft: theme.spacing.unit,
     float: 'right',
   },
+  primary: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.getContrastText(theme.palette.primary.main)
+  },
+  secondary: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.getContrastText(theme.palette.secondary.main)
+  },
+  default: {}
 }))
 @inject('store')
 @observer
@@ -89,34 +125,15 @@ class Notes extends Component {
 
     return (
       <div className={classes.layout}>
-        <Grid item xs={12} style={{
-          marginLeft: 80,
-          marginTop: 40
-        }}>
-          <ListItemIcon><Note/></ListItemIcon>
-        </Grid>
-        <Grid item xs={12} style={{
-          marginLeft: 60,
-          marginBottom: 20
-        }}>
-          <Typography style={{ fontSize: 20 }} gutterBottom>
-               NOTES
-          </Typography>
-
-
-
-        </Grid>
         <Grid container spacing={24}>
-
           <Grid item xs={12}>
-
-            <Typography variant="subheading">Staff comments, Interview Times, etc...</Typography>
+            <Typography variant="display2">Notes</Typography>
           </Grid>
           <Grid item xs={12}>
             <Collapse in={!addingNote}>
               <Grid container spacing={24}>
                 <Grid item xs={12}>
-                  <Button color="primary" variant="raised" onClick={this.toggleOpen}>
+                  <Button color="secondary" variant="raised" onClick={this.toggleOpen}>
                     Add Note
                   </Button>
                 </Grid>
@@ -130,17 +147,24 @@ class Notes extends Component {
                           <ExpansionPanelSummary>
                             <Grid container spacing={8} justify="space-between">
                               <Grid item xs>
-                                <Typography>{note.noteName} at {date.toLocaleString()}</Typography>
+                                <Typography
+                                  variant="subheading">{note.noteName} at {date.toLocaleString()}</Typography>
                               </Grid>
                               <Grid item xs>
-                                {note.noteLabels && note.noteLabels.map(label =>
-                                  <Chip key={label} className={classes.chip} label={label} />
-                                )}
+                                {note.noteLabels && note.noteLabels.map(label => (
+                                  <Chip
+                                    key={label}
+                                    icon={iconMap.filter(value => value.label === label)[0].icon}
+                                    color={iconMap.filter(value => value.label === label)[0].color}
+                                    className={classes.chip}
+                                    label={label}
+                                  />
+                                ))}
                               </Grid>
                             </Grid>
                           </ExpansionPanelSummary>
                           <ExpansionPanelDetails>
-                            {note.noteMessage}
+                            <Typography variant="body2">{note.noteMessage}</Typography>
                           </ExpansionPanelDetails>
                         </ExpansionPanel>
                       );
@@ -154,60 +178,21 @@ class Notes extends Component {
                   <Typography variant="subheading">Labels:</Typography>
                   <div className={classes.toggleContainer}>
                     <ToggleButtonGroup value={noteLabels} onChange={this.handleLabels}>
-                      <ToggleButton value="Reviewed">
-                        <RemoveRedEye />
-                        <Collapse
-                          className={classnames(!noteLabels.includes('Reviewed') && classes.hide)}
-                          in={noteLabels.includes('Reviewed')}
+                      {iconMap.map(value => (
+                        <ToggleButton
+                          key={value.label}
+                          value={value.label}
+                          className={classes[value.color]}
                         >
-                          <Typography>Reviewed</Typography>
-                        </Collapse>
-                      </ToggleButton>
-                      <ToggleButton value="Phone Screened">
-                        <Phone />
-                        <Collapse
-                          className={classnames(!noteLabels.includes('Phone Screened') && classes.hide)}
-                          in={noteLabels.includes('Phone Screened')}
-                        >
-                          <Typography>Phone Screened</Typography>
-                        </Collapse>
-                      </ToggleButton>
-                      <ToggleButton value="Interviewed">
-                        <Face />
-                        <Collapse
-                          className={classnames(!noteLabels.includes('Interviewed') && classes.hide)}
-                          in={noteLabels.includes('Interviewed')}
-                        >
-                          <Typography>Interviewed</Typography>
-                        </Collapse>
-                      </ToggleButton>
-                      <ToggleButton value="Offer Made">
-                        <Send />
-                        <Collapse
-                          className={classnames(!noteLabels.includes('Offer Made') && classes.hide)}
-                          in={noteLabels.includes('Offer Made')}
-                        >
-                          <Typography>Offer Made</Typography>
-                        </Collapse>
-                      </ToggleButton>
-                      <ToggleButton value="Rejected">
-                        <NotInterested />
-                        <Collapse
-                          className={classnames(!noteLabels.includes('Rejected') && classes.hide)}
-                          in={noteLabels.includes('Rejected')}
-                        >
-                          <Typography>Rejected</Typography>
-                        </Collapse>
-                      </ToggleButton>
-                      <ToggleButton value="Hired">
-                        <CheckCircle />
-                        <Collapse
-                          className={classnames(!noteLabels.includes('Hired') && classes.hide)}
-                          in={noteLabels.includes('Hired')}
-                        >
-                          <Typography>Hired</Typography>
-                        </Collapse>
-                      </ToggleButton>
+                          {value.icon}
+                          <Collapse
+                            className={classnames(!noteLabels.includes(value.label) && classes.hide)}
+                            in={noteLabels.includes(value.label)}
+                          >
+                            <Typography>{value.label}</Typography>
+                          </Collapse>
+                        </ToggleButton>
+                      ))}
                     </ToggleButtonGroup>
                   </div>
                 </Grid>

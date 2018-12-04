@@ -14,6 +14,8 @@ export default class EducationState extends FormState {
 
   idCounter = 0;
 
+  @observable adding = false;
+
   // Array of entries
   @observable school = [];
 

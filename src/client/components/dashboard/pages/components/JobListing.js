@@ -41,6 +41,15 @@ export default class JobListing extends Component {
     this.setState({ anchorEl: null });
   };
 
+  deleteJob = () => {
+    const { store } = this.props;
+    store.removeJob(this.props.position)
+      .then(() => {
+        this.setState({ anchorEl: null });
+        store.fetchJobs();
+      });
+  };
+
   searchJob = () => {
     const { position, store } = this.props;
     const { filter } = store;
@@ -80,8 +89,7 @@ export default class JobListing extends Component {
             >View All Applications
             </MenuItem>
             <MenuItem
-              disabled
-              onClick={this.handleClose}
+              onClick={this.deleteJob}
             >Remove Position
             </MenuItem>
           </Menu>

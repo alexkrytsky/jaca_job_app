@@ -4,7 +4,7 @@ const gstore = require('gstore-node')();
 const { Storage } = require('@google-cloud/storage');
 const multer = require('multer');
 const Application = require('../datastore/models/application.model');
-const { generateSignedURL, moveFile } = require('../storage/StorageHelper');
+const { generateSignedURL, moveFile, deleteFile } = require('../storage/StorageHelper');
 const { APP_BUCKET } = require('../config/CONSTANTS');
 
 const upload = multer({ dest: 'uploads/' });
@@ -17,31 +17,9 @@ const storage = new Storage({
 });
 
 /**
- * Simple list of everything
- */
-router.get('/list', async (req, res) => {
-  try {
-    // Get all applications
-    const results = await Application.list();
-    // Reduce information to base fields
-    const list = results.entities.map(app => ({
-      firstName: app.firstName,
-      lastName: app.lastName,
-      email: app.email,
-      position: app.employmentDesired.employmentDesired,
-      id: app.id,
-      created: app.created
-    }));
-    res.send(list);
-  } catch (e) {
-    res.sendStatus(400);
-  }
-});
-
-/**
  * Searchable list of everything
  */
-router.get('/search', async (req, res) => {
+router.get('/list', async (req, res) => {
   try {
     // Get all applications
     const results = await Application.list();
@@ -151,7 +129,7 @@ router.post('/note', async (req, res) => {
 /**
  * Application submission action
  */
-router.post('/submit', upload.any(), async (req, res, next) => {
+router.post('/submit', upload.any(), async (req, res) => {
   const data = JSON.parse(req.body.data);
   const { files } = req;
 
@@ -189,7 +167,7 @@ router.post('/submit', upload.any(), async (req, res, next) => {
         // Store in folder using appID under original filename
         const path = `${appID}/${file.originalname}`;
         // Upload file to bucket
-        const uploadedFile = await storage.bucket(bucketName)
+        const uploadedFile = storage.bucket(bucketName)
           .upload(file.path, {
             gzip: true,
             metadata: {
@@ -198,12 +176,13 @@ router.post('/submit', upload.any(), async (req, res, next) => {
             },
           });
 
-        // Rename file to correct path
-        const promise = await moveFile(bucketName, uploadedFile[0].name, path);
-        promise.then(() => {
+        uploadedFile.then((uploaded) => {
+          // Rename file to correct path
+          const promise = moveFile(bucketName, uploaded[0].name, path);
+          promiseCollector.push(promise);
           updates.files.push(path);
         });
-        promiseCollector.push(promise);
+        promiseCollector.push(uploadedFile);
       });
 
       // Wait for renaming to complete
@@ -217,6 +196,43 @@ router.post('/submit', upload.any(), async (req, res, next) => {
     res.sendStatus(200);
   } catch (ex) {
     console.error(ex);
+    res.sendStatus(400);
+  }
+});
+
+router.post('/remove', async (req, res) => {
+  try {
+    const {
+      apps
+    } = req.body;
+
+    const query = [];
+
+    apps.forEach((id) => {
+      const app = Application.get(id);
+      query.push(app);
+      app.then((entity) => {
+        const plain = entity.plain();
+
+        plain.files.forEach((file) => {
+          query.push(deleteFile(APP_BUCKET, file));
+        });
+      });
+    });
+
+    await Promise.all(query);
+
+    const deletion = [];
+
+    apps.forEach((id) => {
+      deletion.push(Application.delete(id));
+    });
+
+    await Promise.all(deletion);
+
+    res.sendStatus(200);
+  } catch (e) {
+    console.error(e);
     res.sendStatus(400);
   }
 });

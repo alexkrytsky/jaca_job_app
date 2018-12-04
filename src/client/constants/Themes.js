@@ -9,14 +9,6 @@ const Themes = [
       secondary: { main: '#009681' },
     }
   }),
-  // MSC General Dark
-  createMuiTheme({
-    palette: {
-      type: 'dark',
-      primary: { main: '#9CAF88' },
-      secondary: { main: '#009681' },
-    }
-  }),
 ];
 
 export default Themes;

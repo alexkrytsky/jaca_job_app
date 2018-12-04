@@ -28,24 +28,27 @@ const styles = theme => ({
 @inject('store')
 @observer
 class References extends Component {
-  state = {
-    adding: false
-  };
-
   // Open the form
   openForm = () => {
-    this.setState({ adding: true });
+    const { store } = this.props;
+    const { application } = store;
+    application.references.adding = true;
+    application.popupOpen = true;
   };
 
   // close and clear the form
   closeForm = () => {
-    this.setState({ adding: false });
+    const { store } = this.props;
+    const { application } = store;
+    application.references.adding = false;
+    application.popupOpen = false;
+    application.references.clear();
   };
 
   render() {
-    const { adding } = this.state;
     const { store, classes } = this.props;
     const {
+      adding,
       references,
       referenceName,
       contactNumber,

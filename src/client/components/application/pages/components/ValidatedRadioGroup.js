@@ -17,13 +17,12 @@ class ValidatedRadioGroup extends Component {
   render() {
     const { props } = this;
     const { state } = props;
-    const { value, validation } = state;
+    const { value } = state;
     return (
       <RadioGroup
         {...props}
         required // The field is required
         value={value} // Value to bind the field to
-        error={validation.toString()} // If true, show validation error
         onChange={this.handleChange} // Event to update state when input changes
       />
     );

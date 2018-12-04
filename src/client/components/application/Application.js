@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import {
   Button,
+  Collapse,
   Menu,
   MenuItem,
   Paper,
@@ -64,6 +65,12 @@ const styles = theme => ({
   padding: {
     padding: theme.spacing.unit * 2
   },
+  hover: {
+    cursor: 'default',
+    '&:hover': {
+      cursor: 'pointer',
+    }
+  },
   devTools: {
     zIndex: 10000,
     position: 'fixed',
@@ -104,7 +111,8 @@ class Application extends Component {
       listOfSteps,
       backStep,
       nextStep,
-      setStep
+      setStep,
+      popupOpen
     } = store.application;
     return (
       <div className={classes.layout}>
@@ -123,6 +131,7 @@ class Application extends Component {
                   {listOfSteps.map((section, index) => (
                     <Step key={section.label}>
                       <StepLabel
+                        className={classes.hover}
                         error={section.error}
                         optional={section.error && (
                           <Typography
@@ -141,23 +150,25 @@ class Application extends Component {
                       <StepContent>
                         <div className={classes.padding}>
                           {section.component}
-                          <div className={classes.buttons}>
-                            {step !== 0 && (
+                          <Collapse in={!popupOpen}>
+                            <div className={classes.buttons}>
+                              {step !== 0 && (
+                                <Button
+                                  onClick={backStep}
+                                  className={classes.button}
+                                >Back
+                                </Button>
+                              )}
                               <Button
-                                onClick={backStep}
+                                variant="contained"
+                                color="primary"
+                                onClick={nextStep}
                                 className={classes.button}
-                              >Back
+                              >
+                                {step === listOfSteps.length - 1 ? 'Submit' : 'Next'}
                               </Button>
-                            )}
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={nextStep}
-                              className={classes.button}
-                            >
-                              {step === listOfSteps.length - 1 ? 'Submit' : 'Next'}
-                            </Button>
-                          </div>
+                            </div>
+                          </Collapse>
                         </div>
                       </StepContent>
                     </Step>

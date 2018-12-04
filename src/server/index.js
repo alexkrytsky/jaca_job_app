@@ -9,6 +9,7 @@ const path = require('path');
 const { ApplicationSession } = require('./session/ApplicationSession');
 const Authentication = require('./routers/Authentication');
 const Application = require('./routers/Application');
+const Jobs = require('./routers/Jobs');
 
 
 const projectId = process.env.GOOGLE_CLOUD_PROJECT;
@@ -69,25 +70,7 @@ app.use(express.static('dist'));
 // Routers
 app.use('/api/auth', Authentication);
 app.use('/api/app', Application);
-
-// API paths
-app.get('/api/jobs', (req, res) => res.send({ jobs }));
-
-// app.get('/api/identities', (req, res) => {
-//   Identity.queryAll()
-//     .then((list) => {
-//       res.send(list);
-//     });
-// });
-//
-// app.get('/api/identities/:id', (req, res) => {
-//   const key = Store.key(['Identity', Number.parseInt(req.params.id, 10)]);
-//   console.log(key);
-//   Identity.query(key)
-//     .then((identity) => {
-//       res.send(identity);
-//     });
-// });
+app.use('/api/job', Jobs);
 
 // All other routes should redirect to index
 app.get('/*', (req, res) => {

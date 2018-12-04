@@ -15,6 +15,8 @@ export default class ReferencesState extends FormState {
 
   idCounter = 0;
 
+  @observable adding = false;
+
   // Array of reference entries
   @observable references = [];
 

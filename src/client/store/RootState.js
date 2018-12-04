@@ -38,6 +38,7 @@ export default class RootState {
   @observable noteLabels = [];
 
   @action saveNote = () => {
+    const lastID = this.session.identity.id;
     axios.post('/api/app/note', {
       id: this.session.identity.id,
       noteName: this.noteName.value,
@@ -49,12 +50,21 @@ export default class RootState {
         this.noteName.update('');
         this.noteLabels = [];
         this.addingNote = false;
-        this.fetchApps(true);
+        this.fetchApps()
+          .then(() => {
+            this.session.identity = this.session.apps.filter(a => (a.id || a.key.id) === lastID)[0];
+          });
       })
       .catch((e) => {
         console.error(e);
       });
   };
+
+  @action addJob = job => axios.post('/api/job/add', { job });
+
+  @action removeJob = job => axios.post('/api/job/remove', { job });
+
+  @action removeApps = apps => axios.post('/api/app/remove', { apps });
 
   @action toggleDrawer = () => {
     this.open = !this.open;
@@ -67,23 +77,20 @@ export default class RootState {
   /**
    * Fetch jobs from the backend
    */
-  @action fetchJobs = () => {
-    return new Promise((resolve => {
-      fetch('/api/jobs')
-        .then(res => res.json())
-        .then((res) => {
-          this.session.jobs.replace(res.jobs);
-          resolve();
-        });
-    }));
-  };
+  @action fetchJobs = () => new Promise((resolve => {
+    fetch('/api/job/list')
+      .then(res => res.json())
+      .then((res) => {
+        this.session.jobs.replace(res.map(job => job.job));
+        resolve();
+      });
+  }));
 
-  @action fetchApps(full = false) {
+  @action fetchApps() {
     return new Promise((resolve) => {
-      axios.get(full ? '/api/app/search' : '/api/app/list')
+      axios.get('/api/app/list')
         .then((response) => {
           this.session.apps.replace(response.data);
-          this.session.identity = this.session.apps[0];
           resolve();
         });
     });

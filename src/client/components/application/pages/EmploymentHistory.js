@@ -28,28 +28,31 @@ const styles = theme => ({
 @inject('store')
 @observer
 class EmploymentHistory extends Component {
-  state = {
-    adding: false
-  };
-
   /**
    * Open the form
    */
   openForm = () => {
-    this.setState({ adding: true });
+    const { store } = this.props;
+    const { application } = store;
+    application.employmentHistory.adding = true;
+    application.popupOpen = true;
   };
 
   /**
    * Close and clear the form
    */
   closeForm = () => {
-    this.setState({ adding: false });
+    const { store } = this.props;
+    const { application } = store;
+    application.employmentHistory.adding = false;
+    application.popupOpen = false;
+    application.employmentHistory.clear();
   };
 
   render() {
-    const { adding } = this.state;
     const { store, classes } = this.props;
     const {
+      adding,
       history,
       employer,
       address,

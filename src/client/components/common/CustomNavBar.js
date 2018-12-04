@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
 import { AppBar, IconButton, Toolbar, Typography, withStyles } from '@material-ui/core';
-import { withRouter } from 'react-router';
-import { inject, observer } from 'mobx-react';
-import { BrightnessHigh, BrightnessLow, Menu } from '@material-ui/icons';
+import { Menu } from '@material-ui/icons';
 import classNames from 'classnames';
+import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import RootState from '../../store/RootState';
 import MSC from '../../msc.png';
+import RootState from '../../store/RootState';
 
 // Drawer width when extended
 const drawerWidth = 240;
 
-// Component Styles
-const styles = theme => ({
+/**
+ * Top Navbar component
+ */
+@withStyles(theme => ({
   grow: {
     flexGrow: 1,
   },
@@ -46,20 +48,27 @@ const styles = theme => ({
   flex: {
     display: 'flex'
   },
-});
-
-/**
- * Top Navbar component
- */
+}))
+@withRouter
 @inject('store')
 @observer
-class CustomNavBar extends Component {
-  /**
-   * Increment the theme counter until it ticks over
-   */
-  toggleTheme = () => {
-    const { store } = this.props;
-    store.local.paletteType = (store.local.paletteType + 1) % 2;
+export default class CustomNavBar extends Component {
+  // Tell React to use default properties if not provided
+  static defaultProps = {
+    useDrawer: false,
+  };
+
+  // Tell React what properties to expect
+  static propTypes = {
+    useDrawer: PropTypes.bool,
+  };
+
+  // Tell React that these properties are provided
+  static wrappedComponent = {
+    propTypes: {
+      classes: PropTypes.object.isRequired,
+      store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
+    }
   };
 
   /**
@@ -95,37 +104,25 @@ class CustomNavBar extends Component {
           }
 
           {/* Left Navbar */}
-          <Link to="/"><img src={MSC} alt="MSC" height={64} /></Link>
-          <Typography to="/" component={Link} className={classes.title} variant="display1" noWrap>Multi-Service Center</Typography>
+          <Link to="/">
+            <img src={MSC} alt="MSC" height={64} />
+          </Link>
+          <Typography
+            to="/"
+            component={Link}
+            className={classes.title}
+            variant="display1"
+            noWrap
+          >
+            Multi-Service Center
+          </Typography>
 
           <div className={classes.grow} />
 
           {/* Right Navbar */}
-          <div className={classes.flex}>
-            <IconButton color="inherit" onClick={this.toggleTheme}>
-              {store.local.paletteType === 0 ? <BrightnessHigh /> : <BrightnessLow />}
-            </IconButton>
-          </div>
+          <div className={classes.flex} />
         </Toolbar>
       </AppBar>
     );
   }
 }
-
-// Tell React to use default properties if not provided
-CustomNavBar.defaultProps = {
-  useDrawer: false,
-};
-
-// Tell React what properties to expect
-CustomNavBar.propTypes = {
-  useDrawer: PropTypes.bool,
-};
-
-// Tell React that these properties are provided
-CustomNavBar.wrappedComponent.propTypes = {
-  classes: PropTypes.object.isRequired,
-  store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
-};
-
-export default withStyles(styles)(withRouter(CustomNavBar));

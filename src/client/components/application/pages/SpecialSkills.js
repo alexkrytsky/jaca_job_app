@@ -19,34 +19,35 @@ const styles = theme => ({
 @inject('store')
 @observer
 class SpecialSkills extends Component {
-  state = {
-    adding: false
-  };
-
   /**
    * Open the form
    */
   openForm = () => {
-    this.setState({ adding: true });
+    const { store } = this.props;
+    const { application } = store;
+    application.specialSkills.adding = true;
+    application.popupOpen = true;
   };
 
   /**
    * Close and clear the form
    */
   closeForm = () => {
-    this.setState({ adding: false });
     const { store } = this.props;
-    store.application.specialSkills.clear();
+    const { application } = store;
+    application.specialSkills.adding = false;
+    application.popupOpen = false;
+    application.specialSkills.clear();
   };
 
   render() {
-    const { adding } = this.state;
     const { store } = this.props;
     const {
+      adding,
       certificate,
-      name: name,
-      issuedDate: issuedDate,
-      expirationDate: expirationDate,
+      name,
+      issuedDate,
+      expirationDate,
       save,
     } = store.application.specialSkills;
 

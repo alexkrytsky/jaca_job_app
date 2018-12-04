@@ -21,8 +21,8 @@ import EmploymentDesired from './preview/EmploymentDesired';
 import GeneralInfo from './preview/GeneralInfo';
 import Education from './preview/Education';
 import References from './preview/References';
-import VoluntarySurvey from "./preview/VoluntarySurvey";
-import Resume from "./preview/Resume";
+import VoluntarySurvey from './preview/VoluntarySurvey';
+import Resume from './preview/Resume';
 
 const topOffset = 60;
 
@@ -53,9 +53,12 @@ class ApplicationView extends Component {
 
   componentWillMount() {
     const { store, match } = this.props;
-    store.fetchApps(true)
+    const { session } = store;
+    const { apps } = session;
+
+    store.fetchApps()
       .then(() => {
-        store.session.identity = store.session.apps.filter(a => (a.id || a.key.id) === match.params.appId)[0];
+        session.identity = apps.filter(a => (a.id || a.key.id) === match.params.appId)[0];
       });
   }
 
@@ -68,32 +71,24 @@ class ApplicationView extends Component {
     const { store, classes } = this.props;
     const { identity } = store.session;
 
-    //const generalInfo = identity != null && 'generalInfo' in identity ? identity.generalInfo : {};
-    // const employmentDesired = identity != null && 'employmentDesired' in identity ? identity.employmentDesired : {};
-    //const education = identity != null && 'education' in identity ? identity.education : {};
     const specialSkills = identity != null && 'specialSkills' in identity ? identity.specialSkills : {};
     const employmentHistory = identity != null && 'employmentHistory' in identity ? identity.employmentHistory : {};
-
-    const documents = identity != null && 'files' in identity ? identity.files : {};
-
-    //const references = identity != null && 'references' in identity ? identity.references : {};
-    //const voluntarySurvey = identity != null && 'voluntarySurvey' in identity ? identity.voluntarySurvey : {};
 
     const sections = [
       {
         label: 'General Information',
         subLabel: 'Address, phone, etc...',
-        component: (<GeneralInfo/>),
+        component: (<GeneralInfo />),
       },
       {
         label: 'Employment Desired',
         subLabel: 'Start date, availability, etc...',
-        component: (<EmploymentDesired/>),
+        component: (<EmploymentDesired />),
       },
       {
         label: 'Education',
         subLabel: 'College, High School, Degrees, etc...',
-        component: (<Education/>),
+        component: (<Education />),
       },
       {
         label: 'Special Skills',
@@ -120,18 +115,17 @@ class ApplicationView extends Component {
       {
         label: 'References',
         subLabel: 'Co-workers, Bosses, etc...',
-        component: (<References/>)
+        component: (<References />)
       },
       {
         label: 'Voluntary Survey',
         subLabel: 'Gender, Ethnicity, etc...',
-        component: (<VoluntarySurvey/>)
+        component: (<VoluntarySurvey />)
       }, {
         label: 'Resume',
         subLabel: 'Download or View Resume',
         component:
-        (
-        <Resume/>)
+          (<Resume />)
       },
       {
         label: 'Notes',

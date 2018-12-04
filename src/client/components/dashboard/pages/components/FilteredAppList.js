@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import RootState from '../../../../store/RootState';
 import ReactiveTextField from '../../../application/pages/components/ReactiveTextField';
 
 /**
@@ -166,7 +167,6 @@ class SortableTableHead extends Component {
               </TableCell>
             </Hidden>
           ), this)}
-          <TableCell />
         </TableRow>
       </TableHead>
     );
@@ -208,10 +208,11 @@ class SortableTableToolbar extends Component {
 
   static propTypes = {
     numSelected: PropTypes.number.isRequired,
+    deleteApps: PropTypes.func.isRequired,
   };
 
   render() {
-    const { store, numSelected, classes } = this.props;
+    const { store, numSelected, classes, deleteApps } = this.props;
     const { filter } = store;
     return (
       <Toolbar
@@ -233,7 +234,7 @@ class SortableTableToolbar extends Component {
             <div className={classNames(classes.actions, numSelected > 0 && classes.floatRight)}>
               {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                  <IconButton aria-label="Delete">
+                  <IconButton onClick={deleteApps} aria-label="Delete">
                     <Delete />
                   </IconButton>
                 </Tooltip>
@@ -260,11 +261,13 @@ class SortableTableToolbar extends Component {
   }
 }))
 @withRouter
+@inject('store')
 @observer
 export default class FilteredAppList extends Component {
   static wrappedComponent = {
     propTypes: {
       classes: PropTypes.object.isRequired,
+      store: PropTypes.shape({ store: PropTypes.instanceOf(RootState) }).isRequired
     }
   };
 
@@ -301,6 +304,13 @@ export default class FilteredAppList extends Component {
       return;
     }
     this.setState({ selected: [] });
+  };
+
+  deleteApps = () => {
+    const {store} = this.props;
+    store.removeApps(this.state.selected).then(() => {
+      store.fetchApps();
+    });
   };
 
   handleClick = (event, id) => {
@@ -341,7 +351,7 @@ export default class FilteredAppList extends Component {
 
     return (
       <div className={classes.root}>
-        <SortableTableToolbar numSelected={selected.length} />
+        <SortableTableToolbar deleteApps={this.deleteApps.bind(this)} numSelected={selected.length} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <SortableTableHead
@@ -361,7 +371,7 @@ export default class FilteredAppList extends Component {
                     return (
                       <TableRow
                         hover
-                        onClick={event => this.handleClick(event, app.id)}
+                        // onClick={event => this.handleClick(event, app.id)}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
@@ -369,25 +379,45 @@ export default class FilteredAppList extends Component {
                         selected={isSelected}
                       >
                         <TableCell padding="checkbox">
-                          <Checkbox checked={isSelected} />
+                          <Checkbox
+                            checked={isSelected}
+                            onClick={event => this.handleClick(event, app.id)}
+                          />
                         </TableCell>
-                        <TableCell component="th"
-                                   scope="row">{app.firstName} {app.lastName}</TableCell>
-                        <TableCell padding="none">{app.email}</TableCell>
+                        <TableCell
+                          style={{textDecoration: 'none'}}
+                          component={Link}
+                          to={`/application/${app.id}`}
+                          scope="row"
+                        >
+                          {app.firstName} {app.lastName}
+                        </TableCell>
+                        <TableCell
+                          style={{textDecoration: 'none'}}
+                          padding="none"
+                          component={Link}
+                          to={`/application/${app.id}`}
+                        >
+                          {app.email}
+                        </TableCell>
                         <Hidden mdDown>
                           <TableCell
-                            padding="none">{app.position || app.employmentDesired.employmentDesired}</TableCell>
+                            style={{textDecoration: 'none'}}
+                            component={Link}
+                            to={`/application/${app.id}`}
+                            padding="none"
+                          >
+                            {app.employmentDesired.employmentDesired}
+                          </TableCell>
                           <TableCell
-                            padding="none">{new Date(app.created).toLocaleString()}</TableCell>
+                            style={{textDecoration: 'none'}}
+                            component={Link}
+                            to={`/application/${app.id}`}
+                            padding="none"
+                          >
+                            {new Date(app.created).toLocaleString()}
+                          </TableCell>
                         </Hidden>
-                        <TableCell>
-                          <Tooltip title="View Application">
-                            <IconButton component={Link} to={`/application/${app.id}`}
-                                        aria-label="View Application">
-                              <OpenInNew fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
                       </TableRow>
                     );
                   })}

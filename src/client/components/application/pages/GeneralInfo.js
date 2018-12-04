@@ -58,7 +58,7 @@ class GeneralInfo extends Component {
 
     return (
       <Fragment>
-        <Grid container spacing={24}>
+        <Grid container spacing={16}>
           <Grid item xs={12} sm={4}>
             <ValidatedTextField state={firstName} label="First Name" />
           </Grid>
@@ -69,18 +69,18 @@ class GeneralInfo extends Component {
             <ReactiveTextField state={middleName} label="Middle Name" />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="subheading">Present Address</Typography>
+            <Typography variant="title">Present Address</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <ValidatedTextField state={address1} label="Address 1" />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <ReactiveTextField state={address2} label="Address 2" />
           </Grid>
           <Grid item xs={12} sm={6}>
             <ValidatedTextField state={city} label="City" />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={3}>
             <FormControl
               required
               fullWidth
@@ -88,20 +88,25 @@ class GeneralInfo extends Component {
               error={state.validation}
             >
               <InputLabel htmlFor="state">State</InputLabel>
-              <Select value={state.value} onChange={event => state.update(event.target.value)}>
+              <Select
+                native
+                value={state.value}
+                onChange={event => state.update(event.target.value)}
+              >
+                <option value="" />
                 {StatesList.map(s => (
-                  <MenuItem key={s.name} value={s.name}>
+                  <option style={{ color: '#000' }} key={s.name} value={s.name}>
                     {s.name}
-                  </MenuItem>
+                  </option>
                 ))}
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={3}>
             <ValidatedTextField state={zipCode} label="Zip Code" />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="subheading">Contact Information</Typography>
+            <Typography variant="title">Contact Information</Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <ValidatedTextField state={homePhone} label="Primary Phone" />

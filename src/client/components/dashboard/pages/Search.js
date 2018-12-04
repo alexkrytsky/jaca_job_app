@@ -62,7 +62,7 @@ export default class Search extends Component {
   componentWillMount() {
     const { store } = this.props;
     store.fetchJobs();
-    store.fetchApps(true);
+    store.fetchApps();
   }
 
   handleToggle = () => {
@@ -120,24 +120,6 @@ export default class Search extends Component {
                       </Select>
                     </FormControl>
                   </Grid>
-                  {/*<Grid item xs={6} md={12}>
-                    <FormControl fullWidth>
-                      <InputLabel htmlFor="state">State</InputLabel>
-                      <Select
-                        native
-                        value={filter.state.value}
-                        onChange={event => filter.state.update(event.target.value)}
-                      >
-                        <option value="" />
-                        {StatesList.map(s => (
-                          <option style={{ color: '#000' }} key={s.name} value={s.name}>
-
-                            {s.name}
-                          </option>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>*/}
                   <Grid item xs={4} md={12}>
                     <FormControlLabel
                       control={(

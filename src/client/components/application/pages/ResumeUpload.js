@@ -1,5 +1,7 @@
 import {
   Button,
+  FormLabel,
+  TextField,
   Grid,
   Table,
   TableBody,
@@ -36,11 +38,11 @@ class ResumeUpload extends Component {
             type="file"
             onChange={event => (save(event.target.files) ? '' : 'Hello please fix the errors')}
           />
-          <label htmlFor="raised-button-file">
-            <Button variant="raised" component="span">
+          <FormLabel htmlFor="raised-button-file">
+            <Button variant="raised" color="secondary" component="span">
               Upload
             </Button>
-          </label>
+          </FormLabel>
 
           {fileIssues !== '' && <Typography color="error">{fileIssues}</Typography>}
 

@@ -86,8 +86,8 @@ class Login extends Component {
             <Avatar className={classes.avatar}>
               <Lock />
             </Avatar>
-            <Typography variant="display3">
-              Sign in
+            <Typography variant="display2">
+              Staff Sign in
             </Typography>
             {error !== '' ? (<Chip label={error} color="secondary" icon={<Error />} />) : (
               <Fragment />)}

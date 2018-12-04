@@ -14,6 +14,8 @@ import ResumeUploadState from './ResumeUploadState';
 export default class ApplicationState {
   @observable step = 0;
 
+  @observable popupOpen = false;
+
   @observable generalInfo = new GeneralInfoState();
 
   @observable employmentDesired = new EmploymentDesiredState();
@@ -27,6 +29,7 @@ export default class ApplicationState {
   @observable references = new ReferencesState();
 
   @observable voluntarySurvey = new VoluntarySurveyState();
+
   @observable resumeUpload = new ResumeUploadState();
 
   @observable submit = new SubmitState();
@@ -52,28 +55,48 @@ export default class ApplicationState {
   @action reset = () => {
     this.listOfSteps.forEach(value => value.reset());
     this.step = 0;
+    this.popupOpen = false;
+    this.education.adding = false;
+    this.specialSkills.adding = false;
+    this.employmentHistory.adding = false;
+    this.references.adding = false;
   };
 
   @action setStep = (step) => {
     if (step <= this.step || this.validate()) {
+      this.popupOpen = false;
+      this.education.adding = false;
+      this.specialSkills.adding = false;
+      this.employmentHistory.adding = false;
+      this.references.adding = false;
       this.step = step;
-      window.scrollTo(0, 0);
     }
+    window.scrollTo(0, 0);
   };
 
   @action backStep = () => {
+    this.popupOpen = false;
+    this.education.adding = false;
+    this.specialSkills.adding = false;
+    this.employmentHistory.adding = false;
+    this.references.adding = false;
     this.step -= 1;
     window.scrollTo(0, 0);
   };
 
   @action nextStep = () => {
     if (this.validate()) {
+      this.popupOpen = false;
+      this.education.adding = false;
+      this.specialSkills.adding = false;
+      this.employmentHistory.adding = false;
+      this.references.adding = false;
       this.step += 1;
       if (this.step >= this.listOfSteps.length) {
         this.submitToServer();
       }
-      window.scrollTo(0, 0);
     }
+    window.scrollTo(0, 0);
   };
 
   @action fillData = () => {
@@ -278,6 +301,9 @@ export default class ApplicationState {
         return !this.generalInfo.validateFields();
       case 1:
         return !this.employmentDesired.validateFields();
+      case 8: // Pre submit validation check
+        return (!this.generalInfo.validateFields()
+          && !this.employmentDesired.validateFields());
       default:
         return true;
     }

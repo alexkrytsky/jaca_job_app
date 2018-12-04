@@ -7,9 +7,10 @@ import {
   withStyles,
 } from '@material-ui/core';
 import File_Copy from '@material-ui/icons/filecopy';
+import DownLoad from '@material-ui/icons/archive';
+
 import RootState from '../../../../store/RootState';
-import { Link } from 'react-router-dom';
-import { Dashboard } from '@material-ui/icons';
+
 
 // Component Styles
 const styles = theme => ({
@@ -47,11 +48,21 @@ class Resume extends Component {
 
 
       {/* Title and Icon */}
-      <Grid item xs={12} style={{ marginLeft: 80, marginTop: 40 }}>
-        <Typography style={{ fontSize: 15 }} gutterBottom>
-          <span style={{ fontWeight: 'bold' }}>Documents</span>
+        <Grid item xs={12} style={{
+          marginLeft: 80,
+          marginTop: 40
+        }}>
+        <ListItemIcon><File_Copy/></ListItemIcon>
+        </Grid>
+      <Grid item xs={12} style={{
+        marginLeft: 40,
+        marginBottom: 20
+      }}>
+        <Typography style={{ fontSize: 20 }} gutterBottom>
+          DOCUMENTS
         </Typography>
       </Grid>
+
       {/* If statement to check if there are any files. If its is empty show message */}
       {documents.files === 0
         ? (
@@ -71,7 +82,8 @@ class Resume extends Component {
          <List>
 
              <ListItem button to="/" component={(props) => <a target="_blank" href={entry.url} {...props} />}>
-               <ListItemIcon><File_Copy/></ListItemIcon>
+               <ListItemIcon>
+                 <DownLoad/></ListItemIcon>
                <ListItemText inset primary={entry.name} />
              </ListItem>
 

@@ -7,7 +7,7 @@ import {
   Grid,
   Chip,
   Typography,
-  withStyles
+  withStyles, ListItemIcon
 } from '@material-ui/core';
 import {
   FormatBold,
@@ -23,6 +23,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import RootState from '../../../../store/RootState';
 import ReactiveTextField from '../../../application/pages/components/ReactiveTextField';
+import Note from '@material-ui/icons/note';
+
 
 @withStyles(theme => ({
   layout: {
@@ -87,9 +89,27 @@ class Notes extends Component {
 
     return (
       <div className={classes.layout}>
+        <Grid item xs={12} style={{
+          marginLeft: 80,
+          marginTop: 40
+        }}>
+          <ListItemIcon><Note/></ListItemIcon>
+        </Grid>
+        <Grid item xs={12} style={{
+          marginLeft: 60,
+          marginBottom: 20
+        }}>
+          <Typography style={{ fontSize: 20 }} gutterBottom>
+               NOTES
+          </Typography>
+
+
+
+        </Grid>
         <Grid container spacing={24}>
+
           <Grid item xs={12}>
-            <Typography variant="title">Notes</Typography>
+
             <Typography variant="subheading">Staff comments, Interview Times, etc...</Typography>
           </Grid>
           <Grid item xs={12}>

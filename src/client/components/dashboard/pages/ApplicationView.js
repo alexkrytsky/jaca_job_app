@@ -22,6 +22,7 @@ import GeneralInfo from './preview/GeneralInfo';
 import Education from './preview/Education';
 import References from './preview/References';
 import VoluntarySurvey from "./preview/VoluntarySurvey";
+import Resume from "./preview/Resume";
 
 const topOffset = 60;
 
@@ -72,7 +73,7 @@ class ApplicationView extends Component {
     //const education = identity != null && 'education' in identity ? identity.education : {};
     const specialSkills = identity != null && 'specialSkills' in identity ? identity.specialSkills : {};
     const employmentHistory = identity != null && 'employmentHistory' in identity ? identity.employmentHistory : {};
-    console.log(identity);
+
     const documents = identity != null && 'files' in identity ? identity.files : {};
 
     //const references = identity != null && 'references' in identity ? identity.references : {};
@@ -130,11 +131,7 @@ class ApplicationView extends Component {
         subLabel: 'Download or View Resume',
         component:
         (
-        <DataPanel
-          title="Documents"
-          subTitle="Resume, Cover Letter..."
-          data={documents}
-        />)
+        <Resume/>)
       },
       {
         label: 'Notes',

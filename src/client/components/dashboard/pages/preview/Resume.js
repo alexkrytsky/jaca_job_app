@@ -2,12 +2,14 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Grid, ListItemIcon, Typography,
+  Drawer,
+  Grid, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography,
   withStyles,
 } from '@material-ui/core';
 import File_Copy from '@material-ui/icons/filecopy';
 import RootState from '../../../../store/RootState';
-
+import { Link } from 'react-router-dom';
+import { Dashboard } from '@material-ui/icons';
 
 // Component Styles
 const styles = theme => ({
@@ -38,16 +40,17 @@ class Resume extends Component {
     const { store, classes } = this.props;
     const { expanded } = this.state;
     const { identity } = store.session;
-    // Getting Files
-    // const resume = identity != null && 'resume' in identity ? identity.files : [];
-    const documents = identity.files;
+
+    const documents = identity != null && 'files' in identity ? identity.files : {};
+
     return (<form className={classes.container} noValidate autoComplete="off">
-      {console.dir(documents)};
-      {console.dir(identity)};
+
 
       {/* Title and Icon */}
       <Grid item xs={12} style={{ marginLeft: 80, marginTop: 40 }}>
-        <ListItemIcon><File_Copy /></ListItemIcon>
+        <Typography style={{ fontSize: 15 }} gutterBottom>
+          <span style={{ fontWeight: 'bold' }}>Documents</span>
+        </Typography>
       </Grid>
       {/* If statement to check if there are any files. If its is empty show message */}
       {documents.files === 0
@@ -63,12 +66,19 @@ class Resume extends Component {
       {/*
         ---Mapping the files---
         */}
-      {/* {resume.files.map(entry, id => ( */}
-      {/* <Grid item xs={12}  key={entry.id}> */}
+       {documents.map((entry, id) => (
+       <Grid item xs={12}  key={id}>
+         <List>
 
-      {/* <iframe src={resume.files[id]}/> */}
-      {/* </Grid> */}
-      {/* ))} */}
+             <ListItem button to="/" component={(props) => <a target="_blank" href={entry.url} {...props} />}>
+               <ListItemIcon><File_Copy/></ListItemIcon>
+               <ListItemText inset primary={entry.name} />
+             </ListItem>
+
+       </List>
+
+       </Grid>
+       ))}
 
 
             </form>

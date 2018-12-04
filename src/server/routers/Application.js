@@ -58,7 +58,10 @@ router.get('/search', async (req, res) => {
 
           // Add oncomplete action
           promise.then((url) => {
-            app.files[i] = url;
+            app.files[i] = {
+              url,
+              name: app.files[i].split('/')[1]
+            };
           });
 
           // Add to collector
